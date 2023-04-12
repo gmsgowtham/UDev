@@ -1,0 +1,10 @@
+pre-commit:
+  commands:
+    lint:
+      glob: '*.{js,ts,jsx,tsx}'
+      run: yarn run lint {staged_files}
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: yarn run commitlint --edit

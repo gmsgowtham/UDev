@@ -16,6 +16,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
   Colors,
@@ -55,7 +57,7 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
-function App(): JSX.Element {
+function HomeScreen(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -95,6 +97,18 @@ function App(): JSX.Element {
     </SafeAreaView>
   );
 }
+
+function App(): JSX.Element {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+const Stack = createNativeStackNavigator();
 
 const styles = StyleSheet.create({
   sectionContainer: {

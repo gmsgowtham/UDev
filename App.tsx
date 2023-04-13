@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleProvider } from "react-native-zephyr";
 import Router from "./src/router";
 import { StyledSafeAreaView } from "./src/zephyr/styled";

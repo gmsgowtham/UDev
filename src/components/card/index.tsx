@@ -1,6 +1,11 @@
 import React, { FunctionComponent } from "react";
 import FastImage from "react-native-fast-image";
-import { StyledView, StyledFastImage, StyledText } from "../../zephyr/styled";
+import {
+	StyledView,
+	StyledFastImage,
+	StyledText,
+	StyledTouchableOpacity,
+} from "../../zephyr/styled";
 
 export interface author {
 	imageUri: string;
@@ -8,23 +13,34 @@ export interface author {
 }
 
 export interface CardProps {
+	id: number;
 	title: string;
 	description: string;
 	author: author;
 	dateReadable: string;
+	onItemClick: (id: number, title: string) => void;
 	organizationName?: string;
 	coverImageUri?: string | null;
 }
 
 const Card: FunctionComponent<CardProps> = ({
+	id,
 	title,
 	description,
 	coverImageUri,
 	author,
 	dateReadable,
+	onItemClick,
 }) => {
+	const onClick = () => {
+		onItemClick(id, title);
+	};
+
 	return (
-		<StyledView classes={["px:1", "py:3", "gap:2"]}>
+		<StyledTouchableOpacity
+			classes={["px:1", "py:3", "gap:2"]}
+			onPress={onClick}
+		>
 			{coverImageUri && (
 				<StyledFastImage
 					source={{ uri: coverImageUri }}
@@ -65,7 +81,7 @@ const Card: FunctionComponent<CardProps> = ({
 					</StyledText>
 				</StyledView>
 			</StyledView>
-		</StyledView>
+		</StyledTouchableOpacity>
 	);
 };
 

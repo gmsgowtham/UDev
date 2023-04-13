@@ -1,17 +1,39 @@
-import React from "react";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { data } from "../../utils/const";
+import { shallow } from "zustand/shallow";
 import Card from "../../components/card";
 import { StyledView } from "../../zephyr/styled";
+import hr from "../../components/hr";
+import { useArticleListStore } from "../../store/articles";
+import { FunctionComponent, useEffect } from "react";
+import { ArticleListItem } from "../../store/types";
+import { StackParamList } from "../../router/types";
 
-const ItemSeparator = () => (
-	<StyledView classes={["border-b:hairline", "border-color:gray-300"]} />
-);
+type Props = NativeStackScreenProps<StackParamList, "Landing">;
 
-const LandingScreen = () => {
-	const renderItem: ListRenderItem<typeof data[0]> = ({ item }) => {
+const LandingScreen: FunctionComponent<Props> = ({ navigation }) => {
+	const { articles, fetchArticles } = useArticleListStore(
+		(state) => ({
+			articles: state.articles,
+			fetchArticles: state.fetchArticles,
+		}),
+		shallow,
+	);
+
+	useEffect(() => {
+		fetchArticles();
+	}, []);
+
+	const onItemClick = (id: number, title: string) => {
+		navigation.navigate("Article", {
+			id: id,
+		});
+	};
+
+	const renderItem: ListRenderItem<ArticleListItem> = ({ item }) => {
 		return (
 			<Card
+				id={item.id}
 				title={item.title}
 				description={item.description}
 				dateReadable={item.readable_publish_date}
@@ -20,6 +42,7 @@ const LandingScreen = () => {
 					name: item.user.name,
 					imageUri: item.user.profile_image_90,
 				}}
+				onItemClick={onItemClick}
 			/>
 		);
 	};
@@ -27,10 +50,10 @@ const LandingScreen = () => {
 	return (
 		<StyledView classes={["p:2", "flex:1"]}>
 			<FlashList
-				data={data}
+				data={articles}
 				renderItem={renderItem}
 				estimatedItemSize={400}
-				ItemSeparatorComponent={ItemSeparator}
+				ItemSeparatorComponent={hr}
 			/>
 		</StyledView>
 	);

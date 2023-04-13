@@ -1,3 +1,4 @@
+export const API_BASE_URL = "https://dev.to/api";
 export const data = [
 	{
 		type_of: "article",

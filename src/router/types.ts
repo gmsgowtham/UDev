@@ -1,4 +1,15 @@
+import { NavigatorScreenParams } from "@react-navigation/native";
+
+export type TabParamList = {
+	Latest: undefined;
+	Home: undefined;
+	Trending: undefined;
+};
+
 export type StackParamList = {
-	Landing: undefined;
-	Article: { id: number };
+	Landing: NavigatorScreenParams<TabParamList>;
+	Article: {
+		id: number;
+		title?: string;
+	};
 };

@@ -1,16 +1,18 @@
 import { FunctionComponent, useEffect } from "react";
+import { View } from "react-native";
 import { shallow } from "zustand/shallow";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import Markdown, { Renderer, RendererInterface } from "react-native-marked";
-import { StyledView } from "../../zephyr/styled";
+import Markdown from "react-native-marked";
 import { StackParamList } from "../../router/types";
 import { useArticleStore } from "../../store/articles";
 import MDRenderer from "../../components/markdown/renderer";
+import { useTheme } from "react-native-paper";
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 
 const ArticleScreen: FunctionComponent<Props> = ({ route }) => {
 	const { params } = route;
 	const { id } = params;
+	const theme = useTheme();
 
 	const { article, fetchArticle, fetching } = useArticleStore(
 		(state) => ({
@@ -26,7 +28,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route }) => {
 	}, []);
 
 	return (
-		<StyledView classes={["flex:1"]}>
+		<View style={{ flex: 1 }}>
 			{!fetching && article?.body_markdown && (
 				<Markdown
 					value={article?.body_markdown}
@@ -37,9 +39,14 @@ const ArticleScreen: FunctionComponent<Props> = ({ route }) => {
 						},
 					}}
 					renderer={MDRenderer}
+					styles={{
+						container: {
+							backgroundColor: theme.colors.background,
+						},
+					}}
 				/>
 			)}
-		</StyledView>
+		</View>
 	);
 };
 

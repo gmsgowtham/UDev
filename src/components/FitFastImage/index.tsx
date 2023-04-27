@@ -1,7 +1,6 @@
 import { FunctionComponent, memo, useEffect, useState } from "react";
 import { ActivityIndicator, Image, LayoutChangeEvent } from "react-native";
-import { StyledFastImage } from "../../zephyr/styled";
-import { ResizeMode } from "react-native-fast-image";
+import FastImage, { ResizeMode } from "react-native-fast-image";
 
 type FitFastImageProps = {
 	uri: string;
@@ -73,7 +72,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 	};
 
 	return (
-		<StyledFastImage
+		<FastImage
 			onLayout={onLayout}
 			onLoad={onLoad}
 			onLoadStart={onLoadStart}
@@ -84,7 +83,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 			aria-label={label}
 		>
 			{isLoading ? <ActivityIndicator size={"small"} /> : null}
-		</StyledFastImage>
+		</FastImage>
 	);
 };
 

@@ -1,4 +1,4 @@
-export interface ArticleListItem {
+export interface ApiArticleFeedItem {
 	type_of: string;
 	id: number;
 	title: string;
@@ -58,7 +58,7 @@ export interface User {
 }
 
 // TODO: unify
-export interface ArticleItem {
+export interface ApiArticleItem {
 	type_of: string;
 	id: number;
 	title: string;
@@ -88,3 +88,5 @@ export interface ArticleItem {
 	user: User;
 	organization: Organization;
 }
+
+export type ArticleFeedApiState = "fresh" | "rising";

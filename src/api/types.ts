@@ -73,6 +73,9 @@ export interface ApiArticleItem {
 	published_timestamp: string;
 	positive_reactions_count: number;
 	cover_image: string;
+	cover_image_width: number;
+	cover_image_height: number;
+	cover_image_aspect_ratio: number;
 	social_image: string;
 	canonical_url: string;
 	created_at: string;

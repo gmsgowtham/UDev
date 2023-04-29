@@ -15,6 +15,7 @@ import {
 import { ToastAndroid } from "react-native";
 import { perfArrayConcat } from "../../utils/array";
 import { processMarkdownContent } from "../../utils/markdown";
+import { getImageSize } from "../../utils/image";
 
 export interface ArticleFeedStateBase extends CommonState {
 	articles: ApiArticleFeedItem[];
@@ -27,10 +28,12 @@ export interface ArticleFeedState {
 		refreshLatestArticles: () => void;
 	};
 	featured: ArticleFeedStateBase & {
-		fetchFeaturedArticles: () => void;
+		fetchFeaturedArticles: (page?: number) => void;
+		refreshFeaturedArticles: () => void;
 	};
 	trending: ArticleFeedStateBase & {
-		fetchTrendingArticles: () => void;
+		fetchTrendingArticles: (page?: number) => void;
+		refreshTrendingArticles: () => void;
 	};
 }
 
@@ -49,6 +52,7 @@ const BASE_STATE: ArticleFeedStateBase = {
 	page: 1,
 };
 
+// TODO: reuse common behavior
 export const useArticleFeedStore = create<ArticleFeedState>()((set, get) => ({
 	latest: {
 		...BASE_STATE,
@@ -106,23 +110,59 @@ export const useArticleFeedStore = create<ArticleFeedState>()((set, get) => ({
 	},
 	featured: {
 		...BASE_STATE,
-		fetchFeaturedArticles: async () => {
+		fetchFeaturedArticles: async (page: number = 1) => {
+			const { loading, articles } = get().featured;
+			if (loading) {
+				return;
+			}
+
 			set((state) => ({
 				...state,
 				featured: setFetchingState(state.featured),
 			}));
+
+			try {
+				const response = await getArticlesList(
+					undefined,
+					page,
+					DEFAULT_PAGE_SIZE,
+				);
+				const responseArticles: ApiArticleFeedItem[] = await response.json();
+				set((state) => ({
+					...state,
+					featured: {
+						...state.featured,
+						...BASE_STATE,
+						page,
+						articles: perfArrayConcat(articles, responseArticles),
+					},
+				}));
+			} catch (e) {
+				set((state) => ({ ...state, featured: setErrorState(state.featured) }));
+			}
+		},
+		refreshFeaturedArticles: async () => {
+			if (get().featured.refreshing) {
+				return;
+			}
+
+			set((state) => ({
+				...state,
+				featured: setRefreshingState(state.featured),
+			}));
+
 			try {
 				const response = await getArticlesList(undefined, 1, 10);
 				const articles: ApiArticleFeedItem[] = await response.json();
 				set((state) => ({
 					...state,
-					featured: {
-						...state.featured,
-						articles,
-						fetching: false,
-						error: false,
-					},
+					featured: { ...state.featured, ...BASE_STATE, articles },
 				}));
+				ToastAndroid.showWithGravity(
+					HELP_TEXT.FEED_REFRESHED,
+					ToastAndroid.SHORT,
+					ToastAndroid.TOP,
+				);
 			} catch (e) {
 				set((state) => ({ ...state, featured: setErrorState(state.featured) }));
 			}
@@ -130,23 +170,59 @@ export const useArticleFeedStore = create<ArticleFeedState>()((set, get) => ({
 	},
 	trending: {
 		...BASE_STATE,
-		fetchTrendingArticles: async () => {
+		fetchTrendingArticles: async (page: number = 1) => {
+			const { loading, articles } = get().trending;
+			if (loading) {
+				return;
+			}
+
 			set((state) => ({
 				...state,
 				trending: setFetchingState(state.trending),
 			}));
+
+			try {
+				const response = await getArticlesList(
+					"rising",
+					page,
+					DEFAULT_PAGE_SIZE,
+				);
+				const responseArticles: ApiArticleFeedItem[] = await response.json();
+				set((state) => ({
+					...state,
+					trending: {
+						...state.trending,
+						...BASE_STATE,
+						page,
+						articles: perfArrayConcat(articles, responseArticles),
+					},
+				}));
+			} catch (e) {
+				set((state) => ({ ...state, trending: setErrorState(state.trending) }));
+			}
+		},
+		refreshTrendingArticles: async () => {
+			if (get().trending.refreshing) {
+				return;
+			}
+
+			set((state) => ({
+				...state,
+				trending: setRefreshingState(state.trending),
+			}));
+
 			try {
 				const response = await getArticlesList("rising", 1, 10);
 				const articles: ApiArticleFeedItem[] = await response.json();
 				set((state) => ({
 					...state,
-					trending: {
-						...state.trending,
-						articles,
-						fetching: false,
-						error: false,
-					},
+					trending: { ...state.trending, ...BASE_STATE, articles },
 				}));
+				ToastAndroid.showWithGravity(
+					HELP_TEXT.FEED_REFRESHED,
+					ToastAndroid.SHORT,
+					ToastAndroid.TOP,
+				);
 			} catch (e) {
 				set((state) => ({ ...state, trending: setErrorState(state.trending) }));
 			}
@@ -164,6 +240,12 @@ export const useArticleStore = create<ArticleState>()((set) => ({
 			const response = await fetch(`${API_BASE_URL}/articles/${id}`);
 			const article: ApiArticleItem = await response.json();
 
+			const coverImageSize = await getImageSize(article.cover_image);
+			let aspectRatio = 0;
+			if (coverImageSize.height > 0) {
+				aspectRatio = coverImageSize.width / coverImageSize.height;
+			}
+
 			const md = processMarkdownContent(article.body_markdown);
 
 			set({
@@ -172,6 +254,9 @@ export const useArticleStore = create<ArticleState>()((set) => ({
 				article: {
 					...article,
 					body_markdown: md,
+					cover_image_width: coverImageSize.width,
+					cover_image_height: coverImageSize.height,
+					cover_image_aspect_ratio: aspectRatio,
 				},
 			});
 		} catch (e) {

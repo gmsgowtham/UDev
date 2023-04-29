@@ -14,9 +14,24 @@ interface ArticleFeedItemProps {
 	author: author;
 	dateReadable: string;
 	onItemClick: (id: number, title: string) => void;
+	tags?: string[];
 	organizationName?: string;
 	coverImageUri?: string | null;
 }
+
+const Tags = memo<Record<"tags", string[] | undefined>>(({ tags = [] }) => {
+	if (tags.length < 1) {
+		return null;
+	}
+
+	return (
+		<View style={styles.tags}>
+			{tags.map((t, index) => (
+				<Text key={`${t}${index}`}>#{t}</Text>
+			))}
+		</View>
+	);
+});
 
 const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	id,
@@ -26,6 +41,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	author,
 	dateReadable,
 	onItemClick,
+	tags,
 }) => {
 	const onClick = () => {
 		onItemClick(id, title);
@@ -34,45 +50,57 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	const theme = useTheme();
 
 	return (
-		<Card
-			style={{ marginVertical: 12, paddingBottom: 4 }}
-			mode="contained"
-			onPress={onClick}
-		>
+		<Card style={styles.card} mode="contained" onPress={onClick}>
 			{coverImageUri && (
 				<Card.Cover
 					source={{ uri: coverImageUri }}
-					style={{
-						height: 212,
-						borderWidth: StyleSheet.hairlineWidth,
-						borderColor: theme.colors.elevation.level5,
-					}}
+					style={[styles.cover, { borderColor: theme.colors.elevation.level5 }]}
 				/>
 			)}
-			<Card.Content style={{ marginVertical: 8 }}>
-				<Text variant="titleLarge" style={{ marginBottom: 8 }}>
+			<Card.Title
+				title={author.name}
+				subtitle={dateReadable}
+				subtitleVariant="bodySmall"
+				left={({ size }) => (
+					<Avatar.Image size={size} source={{ uri: author.imageUri }} />
+				)}
+			/>
+			<Card.Content>
+				<Text variant="titleLarge" style={styles.title}>
 					{title}
 				</Text>
 				<Text variant="bodyMedium">{description}</Text>
+				<Tags tags={tags} />
 			</Card.Content>
-			<Card.Actions style={{ flexDirection: "row-reverse" }}>
-				<View
-					style={{
-						flexDirection: "row",
-						gap: 8,
-						alignItems: "center",
-						justifyContent: "center",
-					}}
-				>
-					<Avatar.Image size={42} source={{ uri: author.imageUri }} />
-					<View>
-						<Text variant="titleMedium">{author.name}</Text>
-						<Text variant="bodySmall">{dateReadable}</Text>
-					</View>
-				</View>
-			</Card.Actions>
 		</Card>
 	);
 };
+
+const styles = StyleSheet.create({
+	card: {
+		marginVertical: 12,
+	},
+	cover: {
+		height: 212,
+		borderWidth: StyleSheet.hairlineWidth,
+	},
+	content: {
+		marginTop: 16,
+	},
+	title: {
+		marginBottom: 8,
+	},
+	tags: {
+		flexDirection: "row",
+		gap: 8,
+		marginTop: 8,
+	},
+	actionsWrapper: {
+		flexDirection: "row",
+		gap: 8,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+});
 
 export default memo(ArticleFeedItem);

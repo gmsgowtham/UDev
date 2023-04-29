@@ -1,21 +1,10 @@
-import { FunctionComponent, memo, useEffect } from "react";
-import { View } from "react-native";
+import { FunctionComponent, memo } from "react";
 import { shallow } from "zustand/shallow";
-import type { CompositeScreenProps } from "@react-navigation/native";
-import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import type { StackScreenProps } from "@react-navigation/stack";
-import ArticleFeed from "../../components/ArticleFeed";
-import type { TabParamList, StackParamList } from "../../router/types";
-import HomeAppbar from "../../components/Appbar/HomeAppbar";
+
 import { useArticleFeedStore } from "../../store/articles";
-import { ActivityIndicator } from "react-native-paper";
+import ArticleFeedScreen from "../Common/ArticleFeed";
 
-type Props = CompositeScreenProps<
-	BottomTabScreenProps<TabParamList, "Latest">,
-	StackScreenProps<StackParamList>
->;
-
-const LatestScreen: FunctionComponent<Props> = ({ navigation }) => {
+const LatestScreen: FunctionComponent = () => {
 	const {
 		articles,
 		fetchArticles,
@@ -35,37 +24,16 @@ const LatestScreen: FunctionComponent<Props> = ({ navigation }) => {
 		shallow,
 	);
 
-	useEffect(() => {
-		fetchArticles(page);
-	}, []);
-
-	const onItemClick = (id: number, title: string) => {
-		navigation.navigate("Article", { id, title });
-	};
-
-	const onEndReached = () => {
-		console.log("onEndReached");
-		const next = page + 1;
-		fetchArticles(next);
-	};
-
 	return (
-		<>
-			<HomeAppbar title="Latest" mode="small" />
-			<View style={{ flex: 1, paddingHorizontal: 16 }}>
-				<ArticleFeed
-					data={articles}
-					onItemClick={onItemClick}
-					listProps={{
-						refreshing,
-						onRefresh: refreshArticles,
-						onEndReached: onEndReached,
-						onEndReachedThreshold: 0.85,
-						getItemType: (item) => item.type_of,
-					}}
-				/>
-			</View>
-		</>
+		<ArticleFeedScreen
+			title="Latest"
+			articles={articles}
+			fetchArticles={fetchArticles}
+			refreshing={refreshing}
+			refreshArticles={refreshArticles}
+			page={page}
+			loading={loading}
+		/>
 	);
 };
 

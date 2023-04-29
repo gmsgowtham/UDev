@@ -10,6 +10,7 @@ import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import LandingScreen from "../screens/Landing";
 import ArticleScreen from "../screens/Article";
+import TrendingScreen from "../screens/Trending";
 import type { StackParamList, TabParamList } from "./types";
 import LatestScreen from "../screens/Latest";
 
@@ -91,7 +92,7 @@ const BottomTabs = () => {
 			/>
 			<Tab.Screen
 				name="Trending"
-				component={LandingScreen}
+				component={TrendingScreen}
 				options={{
 					tabBarLabel: "Trending",
 					tabBarIcon: ({ color, size }) => {

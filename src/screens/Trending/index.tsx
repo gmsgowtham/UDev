@@ -14,19 +14,19 @@ const LandingScreen = () => {
 		loading,
 	} = useArticleFeedStore(
 		(state) => ({
-			articles: state.featured.articles,
-			fetchArticles: state.featured.fetchFeaturedArticles,
-			refreshing: state.featured.refreshing,
-			refreshArticles: state.featured.refreshFeaturedArticles,
-			page: state.featured.page,
-			loading: state.featured.loading,
+			articles: state.trending.articles,
+			fetchArticles: state.trending.fetchTrendingArticles,
+			refreshing: state.trending.refreshing,
+			refreshArticles: state.trending.refreshTrendingArticles,
+			page: state.trending.page,
+			loading: state.trending.loading,
 		}),
 		shallow,
 	);
 
 	return (
 		<ArticleFeedScreen
-			title="Home"
+			title="Trending"
 			articles={articles}
 			fetchArticles={fetchArticles}
 			refreshing={refreshing}

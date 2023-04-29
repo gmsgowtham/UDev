@@ -21,7 +21,7 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 	onItemClick,
 	listProps = {},
 }) => {
-	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({ item }) => {
+	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({ item, index }) => {
 		return (
 			<ArticleFeedItem
 				id={item.id}
@@ -34,6 +34,7 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 					imageUri: item.user.profile_image_90,
 				}}
 				onItemClick={onItemClick}
+				tags={item.tag_list}
 			/>
 		);
 	};
@@ -44,7 +45,7 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 			{...listProps}
 			data={data}
 			renderItem={renderItem}
-			estimatedItemSize={400}
+			estimatedItemSize={377}
 		/>
 	);
 };

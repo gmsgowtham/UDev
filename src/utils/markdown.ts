@@ -1,4 +1,4 @@
-import fm from "front-matter";
+import FrontMatter from "front-matter";
 import TurndownService from "turndown";
 import Domino from "domino";
 import { HTML_FINDER_REGEX } from "./const";
@@ -12,7 +12,7 @@ TurndownService.prototype.escape = (string) => {
 const turndownService = new TurndownService();
 
 export const stripMetaData = (markdown: string): string => {
-	const content = fm(markdown);
+	const content = FrontMatter(markdown);
 	return content.body;
 };
 
@@ -34,7 +34,6 @@ export const fixTurndownEscaping = (markdown: string): string => {
 };
 
 export const processMarkdownContent = (markdown: string): string => {
-	console.log(markdown);
 	let mdProcessed = markdown.trim();
 	// Check if markdown contains metadata information, if found strip the metadata
 	if (mdProcessed.startsWith("---")) {

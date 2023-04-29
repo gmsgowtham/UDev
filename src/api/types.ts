@@ -92,4 +92,23 @@ export interface ApiArticleItem {
 	organization: Organization;
 }
 
-export type ArticleFeedApiState = "fresh" | "rising";
+export enum ArticleFeedApiStates {
+	Fresh = "fresh",
+	Rising = "rising",
+}
+
+export interface ApiVideoListItem {
+	type_of: VideoTypes;
+	id: number;
+	path: string;
+	cloudinary_video_url: string;
+	title: string;
+	user_id: number;
+	video_duration_in_minutes: string;
+	video_source_url: string;
+	user: User;
+}
+
+export enum VideoTypes {
+	VideoArticle = "video_article",
+}

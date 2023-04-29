@@ -4,7 +4,7 @@ import { shallow } from "zustand/shallow";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Markdown from "react-native-marked";
 import { StackParamList } from "../../router/types";
-import { useArticleStore } from "../../store/articles";
+import useArticleStore from "../../store/articles/article";
 import MDRenderer from "../../components/markdown/renderer";
 import { useTheme } from "react-native-paper";
 type Props = NativeStackScreenProps<StackParamList, "Article">;

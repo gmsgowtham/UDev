@@ -4,6 +4,7 @@ export type TabParamList = {
 	Latest: undefined;
 	Home: undefined;
 	Trending: undefined;
+	Videos: undefined;
 };
 
 export type StackParamList = {

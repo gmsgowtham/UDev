@@ -1,19 +1,21 @@
 import type { FunctionComponent } from "react";
+import { BottomNavigation } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
 	CommonActions,
 	NavigationContainer,
-	type Theme,
+	Theme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { BottomNavigation } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import LandingScreen from "../screens/Landing";
-import ArticleScreen from "../screens/Article";
-import TrendingScreen from "../screens/Trending";
-import type { StackParamList, TabParamList } from "./types";
-import LatestScreen from "../screens/Latest";
 
+import ArticleScreen from "../screens/Article";
+import LandingScreen from "../screens/Landing";
+import LatestScreen from "../screens/LatestFeed";
+import VideosScreen from "../screens/Videos";
+
+import type { StackParamList, TabParamList } from "./types";
 type RouterProps = {
 	theme: Theme;
 };
@@ -71,16 +73,6 @@ const BottomTabs = () => {
 			)}
 		>
 			<Tab.Screen
-				name="Latest"
-				component={LatestScreen}
-				options={{
-					tabBarLabel: "Latest",
-					tabBarIcon: ({ color, size }) => {
-						return <Icon name="new-box" size={size} color={color} />;
-					},
-				}}
-			/>
-			<Tab.Screen
 				name="Home"
 				component={LandingScreen}
 				options={{
@@ -91,12 +83,22 @@ const BottomTabs = () => {
 				}}
 			/>
 			<Tab.Screen
-				name="Trending"
-				component={TrendingScreen}
+				name="Latest"
+				component={LatestScreen}
 				options={{
-					tabBarLabel: "Trending",
+					tabBarLabel: "Latest",
 					tabBarIcon: ({ color, size }) => {
-						return <Icon name="fire" size={size} color={color} />;
+						return <Icon name="new-box" size={size} color={color} />;
+					},
+				}}
+			/>
+			<Tab.Screen
+				name="Videos"
+				component={VideosScreen}
+				options={{
+					tabBarLabel: "Videos",
+					tabBarIcon: ({ color, size }) => {
+						return <Icon name="video-box" size={size} color={color} />;
 					},
 				}}
 			/>

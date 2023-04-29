@@ -1,26 +1,35 @@
+import merge from "deepmerge";
 import { useEffect } from "react";
 import { StatusBar, StatusBarStyle, useColorScheme } from "react-native";
 import {
-	Provider as PaperProvider,
-	MD3LightTheme,
-	MD3DarkTheme,
 	adaptNavigationTheme,
+	MD3DarkTheme,
+	MD3LightTheme,
+	Provider as PaperProvider,
 } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 import {
 	DarkTheme as RNDarkTheme,
 	DefaultTheme as RNDefaultTheme,
 } from "@react-navigation/native";
-import merge from "deepmerge";
+
 import Router from "./src/router";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import Ginger from "./src/theme/colors/ginger";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,
 	reactNavigationDark: RNDarkTheme,
 });
 
-const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
-const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
+const CombinedDefaultTheme = merge(
+	{ ...MD3LightTheme, colors: Ginger.light },
+	LightTheme,
+);
+const CombinedDarkTheme = merge(
+	{ ...MD3DarkTheme, colors: Ginger.dark },
+	DarkTheme,
+);
 
 const App = (): JSX.Element => {
 	const scheme = useColorScheme();

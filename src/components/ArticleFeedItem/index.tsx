@@ -1,6 +1,6 @@
 import { memo, FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Text, Avatar, useTheme } from "react-native-paper";
+import { Card, Text, Avatar, useTheme, MD3Theme } from "react-native-paper";
 
 export interface author {
 	imageUri: string;
@@ -19,15 +19,24 @@ interface ArticleFeedItemProps {
 	coverImageUri?: string | null;
 }
 
-const Tags = memo<Record<"tags", string[] | undefined>>(({ tags = [] }) => {
+interface TagListProps {
+	tags?: string[];
+}
+
+const TagList = memo<TagListProps>(({ tags = [] }) => {
 	if (tags.length < 1) {
 		return null;
 	}
 
+	const theme = useTheme();
+
 	return (
 		<View style={styles.tags}>
 			{tags.map((t, index) => (
-				<Text key={`${t}${index}`}>#{t}</Text>
+				<Text key={`${t}${index}`}>
+					<Text style={{ color: theme.colors.primary }}>#</Text>
+					<Text>{t}</Text>
+				</Text>
 			))}
 		</View>
 	);
@@ -70,7 +79,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 					{title}
 				</Text>
 				<Text variant="bodyMedium">{description}</Text>
-				<Tags tags={tags} />
+				<TagList tags={tags} />
 			</Card.Content>
 		</Card>
 	);
@@ -94,6 +103,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		gap: 8,
 		marginTop: 8,
+		flexWrap: "wrap",
 	},
 	actionsWrapper: {
 		flexDirection: "row",

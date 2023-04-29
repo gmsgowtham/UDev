@@ -1,10 +1,12 @@
 import { FunctionComponent, memo, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import ArticleFeed from "../../../components/ArticleFeed";
-import HomeAppbar from "../../../components/Appbar/HomeAppbar";
+
 import { ApiArticleFeedItem } from "../../../api/types";
+import HomeAppbar from "../../../components/Appbar/HomeAppbar";
+import ArticleFeed from "../../../components/ArticleFeed";
 import { StackParamList } from "../../../router/types";
 
 interface ArticleFeedProps {
@@ -73,7 +75,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 							refreshing,
 							onRefresh: refreshArticles,
 							onEndReached: onEndReached,
-							onEndReachedThreshold: 0.8,
+							onEndReachedThreshold: 0.75,
 							getItemType: (item) => item.type_of,
 							ListFooterComponent: () => <ListFooter loading={loading} />,
 							contentContainerStyle: styles.listContainer,

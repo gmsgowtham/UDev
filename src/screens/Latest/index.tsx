@@ -2,7 +2,7 @@ import { FunctionComponent, memo } from "react";
 import { shallow } from "zustand/shallow";
 
 import { useArticleFeedStore } from "../../store/articles";
-import ArticleFeedScreen from "../Common/ArticleFeed";
+import ArticleFeedScreen from "../Common/ArticleList";
 
 const LatestScreen: FunctionComponent = () => {
 	const {

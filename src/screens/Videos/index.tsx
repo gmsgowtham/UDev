@@ -3,14 +3,20 @@ import { StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { shallow } from "zustand/shallow";
 
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import {
+	CompositeScreenProps,
+	NavigationProp,
+	useNavigation,
+} from "@react-navigation/native";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 
 import { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
 import VideoFeedItem from "../../components/VideoFeedItem";
-import { StackParamList } from "../../router/types";
+import { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { StackScreenProps } from "@react-navigation/stack";
 
 interface ListFooterProps {
 	loading: boolean;
@@ -29,7 +35,12 @@ const ListFooter = memo<ListFooterProps>(({ loading }) => {
 	return null;
 });
 
-const VideosScreen: FunctionComponent = () => {
+type VideosScreenProps = CompositeScreenProps<
+	BottomTabScreenProps<TabParamList, "Videos">,
+	StackScreenProps<StackParamList>
+>;
+
+const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 	const { videos, fetchVideos, refreshing, refreshVideos, page, loading } =
 		useVideoFeedStore(
 			(state) => ({
@@ -47,10 +58,8 @@ const VideosScreen: FunctionComponent = () => {
 		fetchVideos(page);
 	}, []);
 
-	const navigation = useNavigation<NavigationProp<StackParamList>>();
-
 	const onItemClick = (id: number, title: string) => {
-		navigation.navigate("Article", { id, title });
+		// navigation.navigate("Article", { id, title });
 	};
 
 	const onEndReached = () => {

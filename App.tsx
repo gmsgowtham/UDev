@@ -12,6 +12,7 @@ import {
 } from "@react-navigation/native";
 import merge from "deepmerge";
 import Router from "./src/router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,
@@ -33,7 +34,9 @@ const App = (): JSX.Element => {
 
 	return (
 		<PaperProvider theme={theme}>
-			<Router theme={theme} />
+			<SafeAreaProvider>
+				<Router theme={theme} />
+			</SafeAreaProvider>
 		</PaperProvider>
 	);
 };

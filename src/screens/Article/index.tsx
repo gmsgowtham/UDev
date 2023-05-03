@@ -37,13 +37,11 @@ const ArticleScreen: FunctionComponent<Props> = ({ route }) => {
 							margin: 8,
 							padding: 4,
 						},
-					}}
-					renderer={MDRenderer}
-					styles={{
-						container: {
+						style: {
 							backgroundColor: theme.colors.background,
 						},
 					}}
+					renderer={MDRenderer}
 				/>
 			)}
 		</View>

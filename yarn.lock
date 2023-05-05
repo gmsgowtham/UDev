@@ -5625,10 +5625,10 @@ react-native-gradle-plugin@^0.71.17:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.17.tgz#cf780a27270f0a32dca8184eff91555d7627dd00"
   integrity sha512-OXXYgpISEqERwjSlaCiaQY6cTY5CH6j73gdkWpK0hedxtiWMWgH+i5TOi4hIGYitm9kQBeyDu+wim9fA8ROFJA==
 
-react-native-marked@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-4.0.0.tgz#513a2ffb1eea6f8eac1801508cf4a2ec2ecac717"
-  integrity sha512-evQcQ6YCTahDoVwSw+FGYDqCGAbINvRYidybE4EOGkMWcpG2DHdys8ZceTDdjnlBIIPDCZHy+24jpOz1obFJOQ==
+react-native-marked@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-4.0.2.tgz#24666494f72aa87f21c7221d7755083474851782"
+  integrity sha512-dm/qNhZX6mIaGa2Qrf/weuO6Rvt5nl0LHL5LSPwHw68w7QbA/ZtAij8l0lQSjTseVCS5/WoZ20CXkYCuPm85PQ==
   dependencies:
     "@jsamr/counter-style" "2.0.2"
     "@jsamr/react-native-li" "2.3.1"

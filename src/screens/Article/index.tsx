@@ -42,6 +42,15 @@ const ArticleScreen: FunctionComponent<Props> = ({ route }) => {
 						},
 					}}
 					renderer={MDRenderer}
+					theme={{
+						colors: {
+							background: theme.colors.background,
+							code: theme.colors.elevation.level2,
+							link: theme.colors.primary,
+							text: theme.colors.onBackground,
+							border: theme.colors.primary,
+						},
+					}}
 				/>
 			)}
 		</View>

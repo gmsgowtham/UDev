@@ -14,14 +14,7 @@ class MDRenderer extends Renderer implements RendererInterface {
 		uri: string,
 		alt?: string | undefined,
 		_style?: ImageStyle | undefined,
-	): ReactNode => (
-		<FitFastImage
-			key={this.getKey()}
-			uri={uri}
-			label={alt}
-			resizeMode={FastImage.resizeMode.cover}
-		/>
-	);
+	): ReactNode => <FitFastImage key={this.getKey()} uri={uri} label={alt} />;
 
 	code = (
 		text: string,

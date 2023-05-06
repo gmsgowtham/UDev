@@ -4,35 +4,17 @@ import FastImage, { ResizeMode } from "react-native-fast-image";
 
 type FitFastImageProps = {
 	uri: string;
-	resizeMode: ResizeMode;
 	label?: string;
 };
 
-// TODO: fix oversize issues, re-render issues
-const FitFastImage: FunctionComponent<FitFastImageProps> = ({
-	uri,
-	label,
-	resizeMode,
-}) => {
+const FitFastImage: FunctionComponent<FitFastImageProps> = ({ uri, label }) => {
 	let isFirstLoad = false;
 	const [isLoading, setIsLoading] = useState(false);
-	const [layoutWidth, setLayoutWidth] = useState(0);
-	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+	const [aspectRatio, setAspectRatio] = useState<number>(0);
 
 	useEffect(() => {
 		fetchOriginalSizeFromRemoteImage();
 	}, []);
-
-	const onLayout = (event: LayoutChangeEvent) => {
-		const { width: layoutWidth } = event.nativeEvent.layout;
-		setLayoutWidth(layoutWidth);
-	};
-
-	const onLoad = () => {
-		if (isLoading) {
-			setIsLoading(false);
-		}
-	};
 
 	const onLoadStart = () => {
 		if (isFirstLoad) {
@@ -41,45 +23,26 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 		}
 	};
 
-	const onError = () => {
+	const onLoadEndOrOnError = () => {
 		if (isLoading) {
 			setIsLoading(false);
 		}
 	};
 
 	const fetchOriginalSizeFromRemoteImage = () => {
-		Image.getSize(uri, setOriginalSize);
-	};
-
-	const setOriginalSize = (width: number, height: number) => {
-		setImageSize({ width, height });
-	};
-
-	const getHeight = () => {
-		return Math.round(getOriginalHeight() * getRatio());
-	};
-
-	const getOriginalHeight = () => imageSize.height || 0;
-
-	const getOriginalWidth = () => imageSize.width || 0;
-
-	const getRatio = () => {
-		if (getOriginalWidth() === 0) {
-			return 0;
-		}
-
-		return layoutWidth / getOriginalWidth();
+		Image.getSize(uri, (width: number, height: number) => {
+			setAspectRatio(width / height);
+		});
 	};
 
 	return (
 		<FastImage
-			onLayout={onLayout}
-			onLoad={onLoad}
 			onLoadStart={onLoadStart}
-			onError={onError}
+			onLoadEnd={onLoadEndOrOnError}
+			onError={onLoadEndOrOnError}
 			source={{ uri: uri }}
-			style={{ height: getHeight(), width: "100%" }}
-			resizeMode={resizeMode}
+			style={{ width: "100%", aspectRatio }}
+			resizeMode={FastImage.resizeMode.contain}
 			aria-label={label}
 		>
 			{isLoading ? <ActivityIndicator size={"small"} /> : null}

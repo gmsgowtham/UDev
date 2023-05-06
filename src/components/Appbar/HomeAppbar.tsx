@@ -7,16 +7,16 @@ type Props = {
 	mode?: "small" | "medium" | "large" | "center-aligned";
 };
 
-const HomeAppbar: FunctionComponent<Props> = ({ title, mode }) => {
+const HomeAppbar: FunctionComponent<Props> = ({ title, mode = "small" }) => {
 	return (
 		<Appbar.Header elevated mode={mode}>
-			<Appbar.Content title={title} />
 			<Appbar.Action
 				icon={({ color, size }) => (
-					<Icon name="cog" size={size} color={color} />
+					<Icon name="menu" size={size} color={color} />
 				)}
 				onPress={() => {}}
 			/>
+			<Appbar.Content title={title} />
 		</Appbar.Header>
 	);
 };

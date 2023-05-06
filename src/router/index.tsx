@@ -73,22 +73,22 @@ const BottomTabs = () => {
 			)}
 		>
 			<Tab.Screen
-				name="Home"
-				component={LandingScreen}
-				options={{
-					tabBarLabel: "Featured",
-					tabBarIcon: ({ color, size }) => {
-						return <Icon name="home" size={size} color={color} />;
-					},
-				}}
-			/>
-			<Tab.Screen
 				name="Latest"
 				component={LatestScreen}
 				options={{
 					tabBarLabel: "Latest",
 					tabBarIcon: ({ color, size }) => {
 						return <Icon name="new-box" size={size} color={color} />;
+					},
+				}}
+			/>
+			<Tab.Screen
+				name="Home"
+				component={LandingScreen}
+				options={{
+					tabBarLabel: "Featured",
+					tabBarIcon: ({ color, size }) => {
+						return <Icon name="home" size={size} color={color} />;
 					},
 				}}
 			/>

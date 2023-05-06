@@ -84,7 +84,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<HomeAppbar title={"Videos"} mode="small" />
+			<HomeAppbar title={"Videos"} />
 			{loading && videos.length < 1 ? (
 				<View style={styles.loadingContainer}>
 					<ActivityIndicator />
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 	},
 	listContainer: {
 		paddingVertical: 4,
-		paddingHorizontal: 16,
+		paddingHorizontal: 8,
 	},
 });
 

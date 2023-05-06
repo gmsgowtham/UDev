@@ -57,7 +57,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 
 const styles = StyleSheet.create({
 	card: {
-		marginVertical: 12,
+		marginVertical: 4,
 	},
 	coverWrapper: {
 		position: "relative",

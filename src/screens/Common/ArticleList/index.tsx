@@ -61,7 +61,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	return (
 		<View style={{ flex: 1 }}>
-			<HomeAppbar title={title} mode="small" />
+			<HomeAppbar title={title} />
 			{loading && articles.length < 1 ? (
 				<View style={styles.loadingContainer}>
 					<ActivityIndicator />

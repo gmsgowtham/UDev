@@ -21,7 +21,7 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 	onItemClick,
 	listProps = {},
 }) => {
-	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({ item, index }) => {
+	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({ item }) => {
 		return (
 			<ArticleFeedItem
 				id={item.id}

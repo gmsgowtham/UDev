@@ -34,7 +34,7 @@ const TagList = memo<TagListProps>(({ tags = [] }) => {
 		<View style={styles.tags}>
 			{tags.map((t, index) => (
 				<Text key={`${t}${index}`}>
-					<Text style={{ color: theme.colors.primary }}>#</Text>
+					<Text style={{ color: theme.colors.secondary }}>#</Text>
 					<Text>{t}</Text>
 				</Text>
 			))}
@@ -56,15 +56,10 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 		onItemClick(id, title);
 	};
 
-	const theme = useTheme();
-
 	return (
 		<Card style={styles.card} mode="contained" onPress={onClick}>
 			{coverImageUri && (
-				<Card.Cover
-					source={{ uri: coverImageUri }}
-					style={[styles.cover, { borderColor: theme.colors.elevation.level5 }]}
-				/>
+				<Card.Cover source={{ uri: coverImageUri }} style={[styles.cover]} />
 			)}
 			<Card.Title
 				title={author.name}

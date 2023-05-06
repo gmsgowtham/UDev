@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 	},
 	listContainer: {
 		paddingVertical: 4,
-		paddingHorizontal: 16,
+		paddingHorizontal: 8,
 	},
 });
 

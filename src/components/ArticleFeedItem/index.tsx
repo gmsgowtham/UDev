@@ -82,7 +82,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 
 const styles = StyleSheet.create({
 	card: {
-		marginVertical: 12,
+		marginVertical: 4,
 	},
 	cover: {
 		height: 212,

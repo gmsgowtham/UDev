@@ -2,6 +2,7 @@ import FrontMatter from "front-matter";
 import TurndownService from "turndown";
 import Domino from "domino";
 import { HTML_FINDER_REGEX } from "./const";
+import { replaceNewlines } from "./string";
 
 TurndownService.prototype.escape = (string) => {
 	// Disables string escaping
@@ -18,7 +19,7 @@ export const stripMetaData = (markdown: string): string => {
 
 export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 	try {
-		const withBR = markdown.replace(/(?:\r\n|\r|\n)/gm, "<br/>");
+		const withBR = replaceNewlines(markdown, "<br/>");
 		const document = Domino.createDocument(withBR, true);
 		const output = fixTurndownEscaping(
 			turndownService.turndown(document).trim(),

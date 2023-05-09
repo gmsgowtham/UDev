@@ -25,7 +25,7 @@ interface TagListProps {
 
 const TagList = memo<TagListProps>(({ tags = [] }) => {
 	if (tags.length < 1) {
-		return null;
+		return <></>;
 	}
 
 	const theme = useTheme();
@@ -33,10 +33,7 @@ const TagList = memo<TagListProps>(({ tags = [] }) => {
 	return (
 		<View style={styles.tags}>
 			{tags.map((t, index) => (
-				<Text key={`${t}${index}`}>
-					<Text style={{ color: theme.colors.secondary }}>#</Text>
-					<Text>{t}</Text>
-				</Text>
+				<Text key={`${t}${index}`}>#{t}</Text>
 			))}
 		</View>
 	);

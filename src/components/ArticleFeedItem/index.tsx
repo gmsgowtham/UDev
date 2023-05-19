@@ -54,7 +54,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	};
 
 	return (
-		<Card style={styles.card} mode="contained" onPress={onClick}>
+		<Card style={styles.card} onPress={onClick}>
 			{coverImageUri && (
 				<Card.Cover source={{ uri: coverImageUri }} style={[styles.cover]} />
 			)}

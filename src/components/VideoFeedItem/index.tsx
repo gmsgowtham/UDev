@@ -30,7 +30,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	const theme = useTheme();
 
 	return (
-		<Card style={styles.card} mode="contained" onPress={onClick}>
+		<Card style={styles.card} onPress={onClick}>
 			{coverImageUri && (
 				<View style={styles.coverWrapper}>
 					<Card.Cover

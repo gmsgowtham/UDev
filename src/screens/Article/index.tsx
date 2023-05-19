@@ -68,6 +68,10 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	};
 
 	const renderListHeaderComponent = () => {
+		if (!article) {
+			return null;
+		}
+
 		return (
 			<ArticleCover
 				title={title}
@@ -75,6 +79,11 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					uri: article?.cover_image,
 					aspectRatio: article?.cover_image_aspect_ratio,
 				}}
+				author={{
+					name: article.user.name,
+					imageUri: article.user.profile_image_90,
+				}}
+				dateReadable={article.readable_publish_date}
 			/>
 		);
 	};
@@ -116,7 +125,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 								code: theme.colors.elevation.level2,
 								link: theme.colors.primary,
 								text: theme.colors.onBackground,
-								border: theme.colors.primary,
+								border: theme.colors.secondary,
 							},
 						}}
 					/>

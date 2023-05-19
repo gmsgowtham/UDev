@@ -1,27 +1,33 @@
 import type { FunctionComponent } from "react";
-import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { BottomNavigation } from "react-native-paper";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+	createDrawerNavigator,
+	DrawerContentComponentProps,
+} from "@react-navigation/drawer";
 import {
 	CommonActions,
 	NavigationContainer,
 	Theme,
 } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import ArticleScreen from "../screens/Article";
 import LandingScreen from "../screens/Landing";
 import LatestScreen from "../screens/LatestFeed";
 import VideosScreen from "../screens/Videos";
 
-import type { StackParamList, TabParamList } from "./types";
+import type { DrawerParamList, StackParamList, TabParamList } from "./types";
+import CustomDrawer from "../components/Drawer";
+
 type RouterProps = {
 	theme: Theme;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<StackParamList>();
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const BottomTabs = () => {
 	return (
@@ -104,6 +110,22 @@ const BottomTabs = () => {
 	);
 };
 
+const DrawerNav = () => {
+	return (
+		<Drawer.Navigator
+			initialRouteName="TabNav"
+			screenOptions={{
+				headerShown: false,
+			}}
+			drawerContent={(props: DrawerContentComponentProps) => (
+				<CustomDrawer {...props} />
+			)}
+		>
+			<Drawer.Screen name="TabNav" component={BottomTabs} />
+		</Drawer.Navigator>
+	);
+};
+
 const Router: FunctionComponent<RouterProps> = ({ theme }) => {
 	return (
 		<NavigationContainer theme={theme}>
@@ -111,7 +133,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme }) => {
 				screenOptions={{ headerShown: false }}
 				initialRouteName="Landing"
 			>
-				<Stack.Screen name="Landing" component={BottomTabs} />
+				<Stack.Screen name="Landing" component={DrawerNav} />
 				<Stack.Screen name="Article" component={ArticleScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>

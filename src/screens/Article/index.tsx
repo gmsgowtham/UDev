@@ -1,5 +1,5 @@
-import { FunctionComponent, useCallback } from "react";
-import { Linking, Share, StyleSheet, View } from "react-native";
+import { FunctionComponent, useCallback, useState } from "react";
+import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
 import { shallow } from "zustand/shallow";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Markdown from "react-native-marked";
@@ -10,12 +10,20 @@ import { Appbar, useTheme } from "react-native-paper";
 import PageLoader from "../../components/Loader/PageLoader";
 import { useFocusEffect } from "@react-navigation/native";
 import ArticleCover from "../../components/ArticleCover";
+import {
+	isBookmarked,
+	removeBookmark,
+	savePostToBookmarks,
+} from "../../mmkv/bookmark";
+import { HELP_TEXT } from "../../utils/const";
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { id, title, url } = params;
 	const theme = useTheme();
+	const _isPostBookmarked = isBookmarked(id);
+	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 
 	const { article, loading, fetchArticle, resetArticle } = useArticleStore(
 		(state) => ({
@@ -67,6 +75,36 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		await Linking.openURL(url);
 	};
 
+	const onBookmarkActionPress = () => {
+		if (isPostBookmarked) {
+			setIsPostBookmarked(false);
+			removeBookmark(id);
+			ToastAndroid.showWithGravity(
+				HELP_TEXT.BOOKMARK.REMOVED,
+				ToastAndroid.SHORT,
+				ToastAndroid.TOP,
+			);
+		} else {
+			if (!article) return;
+			setIsPostBookmarked(true);
+			savePostToBookmarks({
+				id,
+				title,
+				url,
+				type: article.type_of,
+				author: {
+					name: article.user.name,
+					imageUri: article.user.profile_image_90,
+				},
+			});
+			ToastAndroid.showWithGravity(
+				HELP_TEXT.BOOKMARK.ADDED,
+				ToastAndroid.SHORT,
+				ToastAndroid.TOP,
+			);
+		}
+	};
+
 	const renderListHeaderComponent = () => {
 		if (!article) {
 			return null;
@@ -104,6 +142,12 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					onPress={onShareActionPress}
 					accessibilityHint="Share post"
 					accessibilityLabel="Share post"
+				/>
+				<Appbar.Action
+					icon={isPostBookmarked ? "bookmark" : "bookmark-outline"}
+					onPress={onBookmarkActionPress}
+					accessibilityHint="Bookmark post"
+					accessibilityLabel="Bookmark post"
 				/>
 			</Appbar.Header>
 

@@ -15,22 +15,14 @@ import {
 } from "@react-navigation/native";
 
 import Router from "./src/router";
-import Ginger from "./src/theme/colors/ginger";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,
 	reactNavigationDark: RNDarkTheme,
 });
 
-const CombinedDefaultTheme = merge(
-	{ ...MD3LightTheme, colors: Ginger.light },
-	LightTheme,
-);
-const CombinedDarkTheme = merge(
-	{ ...MD3DarkTheme, colors: Ginger.dark },
-	DarkTheme,
-);
-
+const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
+const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
 const App = (): JSX.Element => {
 	const scheme = useColorScheme();
 	const theme = scheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;

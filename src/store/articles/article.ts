@@ -6,17 +6,18 @@ import { getImageSize } from "../../utils/image";
 
 export interface ArticleState {
 	article?: ApiArticleItem;
-	fetching: boolean;
+	loading: boolean;
 	error: boolean;
 	fetchArticle: (id: number) => void;
+	reset: () => void;
 }
 
 const useArticleStore = create<ArticleState>()((set) => ({
 	article: undefined,
-	fetching: false,
+	loading: false,
 	error: false,
 	fetchArticle: async (id: number) => {
-		set({ fetching: true, error: false });
+		set({ loading: true, error: false });
 		try {
 			const response = await fetch(`${API_BASE_URL}/articles/${id}`);
 			const article: ApiArticleItem = await response.json();
@@ -30,7 +31,7 @@ const useArticleStore = create<ArticleState>()((set) => ({
 			const md = processMarkdownContent(article.body_markdown);
 
 			set({
-				fetching: false,
+				loading: false,
 				error: false,
 				article: {
 					...article,
@@ -41,9 +42,15 @@ const useArticleStore = create<ArticleState>()((set) => ({
 				},
 			});
 		} catch (e) {
-			console.log("error", e);
-			set({ fetching: false, error: true });
+			set({ loading: false, error: true });
 		}
+	},
+	reset: () => {
+		set({
+			loading: false,
+			error: false,
+			article: undefined,
+		});
 	},
 }));
 

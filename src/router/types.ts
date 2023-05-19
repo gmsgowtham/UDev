@@ -11,6 +11,7 @@ export type StackParamList = {
 	Landing: NavigatorScreenParams<TabParamList>;
 	Article: {
 		id: number;
-		title?: string;
+		title: string;
+		url: string;
 	};
 };

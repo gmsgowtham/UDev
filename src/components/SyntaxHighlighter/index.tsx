@@ -6,6 +6,8 @@ import {
 	useColorScheme,
 	ViewStyle,
 	ScrollView,
+	StyleSheet,
+	ToastAndroid,
 } from "react-native";
 import SyntaxHighlighter, {
 	SyntaxHighlighterProps,
@@ -15,22 +17,35 @@ import {
 	tomorrowNight as darkStyle,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import transform, { StyleTuple } from "css-to-react-native";
+import { IconButton, Text as PaperText } from "react-native-paper";
+import Clipboard from "@react-native-clipboard/clipboard";
 import { replaceNewlines } from "../../utils/string";
+import { HELP_TEXT } from "../../utils/const";
 
-type StyleSheet = { [key: string]: TextStyle };
+type HighlighterStyleSheet = { [key: string]: TextStyle };
 
-interface HighlighterProps extends SyntaxHighlighterProps {
+interface HighlighterProps extends Partial<SyntaxHighlighterProps> {
+	code: string;
 	containerStyle?: ViewStyle;
 	textStyle?: TextStyle;
 }
 
 export const Highlighter: React.FunctionComponent<HighlighterProps> = ({
-	children,
+	code,
 	containerStyle,
 	textStyle,
 	...rest
 }) => {
 	const colorScheme = useColorScheme();
+
+	const onCopyCodePress = () => {
+		Clipboard.setString(code);
+		ToastAndroid.showWithGravity(
+			HELP_TEXT.CODE_COPY,
+			ToastAndroid.SHORT,
+			ToastAndroid.TOP,
+		);
+	};
 
 	const cleanStyle = (style: React.CSSProperties) => {
 		const styles = Object.entries(style).map<StyleTuple>(([key, value]) => [
@@ -46,7 +61,7 @@ export const Highlighter: React.FunctionComponent<HighlighterProps> = ({
 		[colorScheme],
 	);
 
-	const stylesheet: StyleSheet = useMemo(
+	const stylesheet: HighlighterStyleSheet = useMemo(
 		() =>
 			Object.fromEntries(
 				Object.entries(hlsStyles).map(([className, style]) => [
@@ -85,9 +100,28 @@ export const Highlighter: React.FunctionComponent<HighlighterProps> = ({
 	const nativeRenderer = (props: rendererProps) => {
 		const { rows } = props;
 		return (
-			<ScrollView horizontal contentContainerStyle={containerStyle}>
-				<View>{renderNode(rows)}</View>
-			</ScrollView>
+			<>
+				<View
+					style={[
+						styles.header,
+						{ backgroundColor: containerStyle?.backgroundColor },
+					]}
+				>
+					<PaperText variant="labelMedium" style={styles.title}>{`${
+						rest.language || "code"
+					} snippet`}</PaperText>
+					<IconButton
+						icon="content-copy"
+						size={16}
+						accessibilityLabel="copy code"
+						aria-label="copy code"
+						onPress={onCopyCodePress}
+					/>
+				</View>
+				<ScrollView horizontal contentContainerStyle={containerStyle}>
+					<View>{renderNode(rows)}</View>
+				</ScrollView>
+			</>
 		);
 	};
 
@@ -99,9 +133,23 @@ export const Highlighter: React.FunctionComponent<HighlighterProps> = ({
 			PreTag={View}
 			style={{}}
 		>
-			{children}
+			{code}
 		</SyntaxHighlighter>
 	);
 };
+
+const styles = StyleSheet.create({
+	header: {
+		paddingLeft: 16,
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		borderBottomWidth: StyleSheet.hairlineWidth,
+	},
+	title: {
+		textTransform: "uppercase",
+	},
+});
 
 export default Highlighter;

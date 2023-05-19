@@ -34,7 +34,7 @@ const useVideoFeedStore = create<VideoFeedState>()((set, get) => ({
 	error: false,
 	refreshing: false,
 	page: 1,
-	fetchVideos: async (page: number = 1) => {
+	fetchVideos: async (page = 1) => {
 		const { loading, videos } = get();
 		if (loading) {
 			return;

@@ -4,8 +4,8 @@ import type { ArticleFeedApiStates } from "./types";
 
 export const getArticlesList = (
 	state?: ArticleFeedApiStates,
-	page: number = 1,
-	perPage: number = 10,
+	page = 1,
+	perPage = 10,
 ) => {
 	const params = buildURLParams({ state, page, per_page: perPage });
 	return fetch(`${API_BASE_URL}/articles?${params}`);

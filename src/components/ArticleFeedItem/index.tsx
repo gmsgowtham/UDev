@@ -13,7 +13,8 @@ interface ArticleFeedItemProps {
 	description: string;
 	author: author;
 	dateReadable: string;
-	onItemClick: (id: number, title: string) => void;
+	url: string;
+	onItemClick: (id: number, title: string, url: string) => void;
 	tags?: string[];
 	organizationName?: string;
 	coverImageUri?: string | null;
@@ -27,8 +28,6 @@ const TagList = memo<TagListProps>(({ tags = [] }) => {
 	if (tags.length < 1) {
 		return <></>;
 	}
-
-	const theme = useTheme();
 
 	return (
 		<View style={styles.tags}>
@@ -48,9 +47,10 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	dateReadable,
 	onItemClick,
 	tags,
+	url,
 }) => {
 	const onClick = () => {
-		onItemClick(id, title);
+		onItemClick(id, title, url);
 	};
 
 	return (

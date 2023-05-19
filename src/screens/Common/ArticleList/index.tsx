@@ -8,6 +8,7 @@ import { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import { StackParamList } from "../../../router/types";
+import PageLoader from "../../../components/Loader/PageLoader";
 
 interface ArticleFeedProps {
 	title: string;
@@ -50,8 +51,8 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	const navigation = useNavigation<NavigationProp<StackParamList>>();
 
-	const onItemClick = (id: number, title: string) => {
-		navigation.navigate("Article", { id, title });
+	const onItemClick = (id: number, title: string, url: string) => {
+		navigation.navigate("Article", { id, title, url });
 	};
 
 	const onEndReached = () => {
@@ -63,9 +64,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 		<View style={{ flex: 1 }}>
 			<HomeAppbar title={title} />
 			{loading && articles.length < 1 ? (
-				<View style={styles.loadingContainer}>
-					<ActivityIndicator />
-				</View>
+				<PageLoader />
 			) : (
 				<View style={styles.listWrapper}>
 					<ArticleFeed
@@ -88,11 +87,6 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 };
 
 const styles = StyleSheet.create({
-	loadingContainer: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-	},
 	listWrapper: {
 		flex: 1,
 	},

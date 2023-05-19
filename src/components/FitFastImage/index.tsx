@@ -10,7 +10,7 @@ type FitFastImageProps = {
 const FitFastImage: FunctionComponent<FitFastImageProps> = ({ uri, label }) => {
 	let isFirstLoad = false;
 	const [isLoading, setIsLoading] = useState(false);
-	const [aspectRatio, setAspectRatio] = useState<number>(0);
+	const [aspectRatio, setAspectRatio] = useState<number | undefined>(undefined);
 
 	useEffect(() => {
 		fetchOriginalSizeFromRemoteImage();

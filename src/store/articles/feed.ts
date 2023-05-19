@@ -39,7 +39,7 @@ const BASE_STATE: ArticleFeedStateBase = {
 const useArticleFeedStore = create<ArticleFeedState>()((set, get) => ({
 	latest: {
 		...BASE_STATE,
-		fetchLatestArticles: async (page: number = 1) => {
+		fetchLatestArticles: async (page = 1) => {
 			const { loading, articles } = get().latest;
 			if (loading) {
 				return;
@@ -97,7 +97,7 @@ const useArticleFeedStore = create<ArticleFeedState>()((set, get) => ({
 	},
 	featured: {
 		...BASE_STATE,
-		fetchFeaturedArticles: async (page: number = 1) => {
+		fetchFeaturedArticles: async (page = 1) => {
 			const { loading, articles } = get().featured;
 			if (loading) {
 				return;

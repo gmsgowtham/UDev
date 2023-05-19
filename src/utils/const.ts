@@ -4,4 +4,3 @@ export const HELP_TEXT = {
 	FEED_REFRESHED: "Feed refreshed",
 	CODE_COPY: "Code copied to clipboard",
 };
-export const HTML_FINDER_REGEX = new RegExp(/<\/?[a-z][\s\S]*>/, "gim");

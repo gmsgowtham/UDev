@@ -1,7 +1,6 @@
 import FrontMatter from "front-matter";
 import TurndownService from "turndown";
 import Domino from "domino";
-import { HTML_FINDER_REGEX } from "./const";
 import { replaceNewlines } from "./string";
 
 TurndownService.prototype.escape = (string) => {
@@ -38,9 +37,9 @@ export const processMarkdownContent = (markdown: string): string => {
 		mdProcessed = stripMetaData(mdProcessed);
 	}
 
-	// Check if markdown contains html tags, if found transform them to markdown
+	// Check if markdown contains html tags, if found transform them to Markdown
 	// This function has caveat, it'll return true if a code block contains some html
-	if (HTML_FINDER_REGEX.test(mdProcessed)) {
+	if (/<\/?[a-z][\s\S]*>/gim.test(mdProcessed)) {
 		mdProcessed = convertHtmlInMarkdownToMarkdown(mdProcessed);
 	}
 

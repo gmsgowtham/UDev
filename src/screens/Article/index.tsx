@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback, useMemo } from "react";
+import { FunctionComponent, useCallback } from "react";
 import { Linking, Share, StyleSheet, View } from "react-native";
 import { shallow } from "zustand/shallow";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

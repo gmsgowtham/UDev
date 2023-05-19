@@ -42,10 +42,6 @@ export interface Organization {
 	profile_image_90: string;
 }
 
-export enum ArticleTypes {
-	Article = "article",
-}
-
 export interface User {
 	name: string;
 	username: string;
@@ -109,6 +105,4 @@ export interface ApiVideoListItem {
 	user: User;
 }
 
-export enum VideoTypes {
-	VideoArticle = "video_article",
-}
+export enum VideoTypes {}

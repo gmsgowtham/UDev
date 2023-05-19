@@ -1,6 +1,6 @@
 import { FunctionComponent, memo } from "react";
 import { StyleSheet, View } from "react-native";
-import { Avatar, Card, Text, useTheme } from "react-native-paper";
+import { Avatar, Card, Text } from "react-native-paper";
 
 interface author {
 	imageUri: string;

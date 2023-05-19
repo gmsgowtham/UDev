@@ -3,11 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { shallow } from "zustand/shallow";
 
-import {
-	CompositeScreenProps,
-	NavigationProp,
-	useNavigation,
-} from "@react-navigation/native";
+import { CompositeScreenProps } from "@react-navigation/native";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 
 import { ApiVideoListItem } from "../../api/types";
@@ -40,7 +36,7 @@ type VideosScreenProps = CompositeScreenProps<
 	StackScreenProps<StackParamList>
 >;
 
-const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
+const VideosScreen: FunctionComponent<VideosScreenProps> = () => {
 	const { videos, fetchVideos, refreshing, refreshVideos, page, loading } =
 		useVideoFeedStore(
 			(state) => ({
@@ -58,7 +54,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 		fetchVideos(page);
 	}, []);
 
-	const onItemClick = (id: number, title: string) => {
+	const onItemClick = () => {
 		// navigation.navigate("Article", { id, title });
 	};
 
@@ -67,7 +63,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 		fetchVideos(next);
 	};
 
-	const renderItem: ListRenderItem<ApiVideoListItem> = ({ item, index }) => {
+	const renderItem: ListRenderItem<ApiVideoListItem> = ({ item }) => {
 		return (
 			<VideoFeedItem
 				id={item.id}

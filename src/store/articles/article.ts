@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { API_BASE_URL } from "./../../utils/const";
-import { ApiArticleItem } from "./../../api/types";
+import { API_BASE_URL } from "../../utils/const";
+import { ApiArticleItem } from "../../api/types";
 import { processMarkdownContent } from "../../utils/markdown";
 import { getImageSize } from "../../utils/image";
 

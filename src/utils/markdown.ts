@@ -21,10 +21,7 @@ export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 	try {
 		const withBR = replaceNewlines(markdown, "<br/>");
 		const document = Domino.createDocument(withBR, true);
-		const output = fixTurndownEscaping(
-			turndownService.turndown(document).trim(),
-		);
-		return output;
+		return fixTurndownEscaping(turndownService.turndown(document).trim());
 	} catch (e) {
 		return markdown;
 	}
@@ -42,7 +39,7 @@ export const processMarkdownContent = (markdown: string): string => {
 	}
 
 	// Check if markdown contains html tags, if found transform them to markdown
-	// This function has caveat, it'll return true if a codeblock contains some html
+	// This function has caveat, it'll return true if a code block contains some html
 	if (HTML_FINDER_REGEX.test(mdProcessed)) {
 		mdProcessed = convertHtmlInMarkdownToMarkdown(mdProcessed);
 	}

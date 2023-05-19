@@ -60,14 +60,12 @@ const BottomTabs = () => {
 					}}
 					getLabelText={({ route }) => {
 						const { options } = descriptors[route.key];
-						const label =
-							options.tabBarLabel !== undefined &&
+						return options.tabBarLabel !== undefined &&
 							typeof options.tabBarLabel === "string"
-								? options.tabBarLabel
-								: options.title !== undefined
-								? options.title
-								: route.name;
-						return label;
+							? options.tabBarLabel
+							: options.title !== undefined
+							? options.title
+							: route.name;
 					}}
 				/>
 			)}

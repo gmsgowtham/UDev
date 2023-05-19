@@ -1,6 +1,6 @@
 import { FunctionComponent, memo, useEffect, useState } from "react";
-import { ActivityIndicator, Image, LayoutChangeEvent } from "react-native";
-import FastImage, { ResizeMode } from "react-native-fast-image";
+import { ActivityIndicator, Image } from "react-native";
+import FastImage from "react-native-fast-image";
 
 type FitFastImageProps = {
 	uri: string;

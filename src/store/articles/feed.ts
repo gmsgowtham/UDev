@@ -1,13 +1,13 @@
 import { create } from "zustand";
-import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "./../../utils/const";
-import { ApiArticleFeedItem, ArticleFeedApiStates } from "./../../api/types";
-import { getArticlesList } from "./../../api";
+import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "../../utils/const";
+import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
+import { getArticlesList } from "../../api";
 import {
 	CommonState,
 	setErrorState,
 	setFetchingState,
 	setRefreshingState,
-} from "./../helpers";
+} from "../helpers";
 import { ToastAndroid } from "react-native";
 import { perfArrayConcat } from "../../utils/array";
 

@@ -12,7 +12,7 @@ export const getImageSize = async (uri: string): Promise<ImageSize> => {
 			(width: number, height: number) => {
 				resolve({ width, height });
 			},
-			(e) => resolve({ width: 0, height: 0 }),
+			() => resolve({ width: 0, height: 0 }),
 		);
 	});
 };

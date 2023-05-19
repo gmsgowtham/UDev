@@ -1,5 +1,5 @@
 import merge from "deepmerge";
-import { useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { StatusBar, StatusBarStyle, useColorScheme } from "react-native";
 import {
 	adaptNavigationTheme,
@@ -23,7 +23,7 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 
 const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
 const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
-const App = (): JSX.Element => {
+const App: FunctionComponent = () => {
 	const scheme = useColorScheme();
 	const theme = scheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
 	const statusBarStyle: StatusBarStyle =

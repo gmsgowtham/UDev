@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from "react";
+import { FunctionComponent, memo, useCallback } from "react";
 import {
 	FlashList,
 	FlashListProps,
@@ -21,24 +21,27 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 	onItemClick,
 	listProps = {},
 }) => {
-	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({ item }) => {
-		return (
-			<ArticleFeedItem
-				id={item.id}
-				title={item.title}
-				description={item.description}
-				dateReadable={item.readable_publish_date}
-				coverImageUri={item.cover_image}
-				url={item.canonical_url}
-				author={{
-					name: item.user.name,
-					imageUri: item.user.profile_image_90,
-				}}
-				onItemClick={onItemClick}
-				tags={item.tag_list}
-			/>
-		);
-	};
+	const renderItem: ListRenderItem<ApiArticleFeedItem> = useCallback(
+		({ item }: { item: ApiArticleFeedItem }) => {
+			return (
+				<ArticleFeedItem
+					id={item.id}
+					title={item.title}
+					description={item.description}
+					dateReadable={item.readable_publish_date}
+					coverImageUri={item.cover_image}
+					url={item.canonical_url}
+					author={{
+						name: item.user.name,
+						imageUri: item.user.profile_image_90,
+					}}
+					onItemClick={onItemClick}
+					tags={item.tag_list}
+				/>
+			);
+		},
+		[],
+	);
 
 	return (
 		<FlashList

@@ -3,6 +3,8 @@ import { Renderer, RendererInterface } from "react-native-marked";
 import { ImageStyle, TextStyle, ViewStyle } from "react-native";
 import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
+import DevEmbed from "./../Embed/Dev";
+import { Surface } from "react-native-paper";
 
 class MDRenderer extends Renderer implements RendererInterface {
 	image = (
@@ -26,6 +28,15 @@ class MDRenderer extends Renderer implements RendererInterface {
 			/>
 		);
 	};
+
+	custom(
+		_identifier: string,
+		_text: string,
+		_raw: string,
+		children: ReactNode[],
+	): ReactNode {
+		return <DevEmbed>{children}</DevEmbed>;
+	}
 }
 
 export default new MDRenderer();

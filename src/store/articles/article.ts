@@ -19,6 +19,7 @@ const useArticleStore = create<ArticleState>()((set) => ({
 	fetchArticle: async (id: number) => {
 		set({ loading: true, error: false });
 		try {
+			// const response = await fetch(`${API_BASE_URL}/articles/${1474010}`);
 			const response = await fetch(`${API_BASE_URL}/articles/${id}`);
 			const article: ApiArticleItem = await response.json();
 

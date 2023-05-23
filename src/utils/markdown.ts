@@ -12,8 +12,12 @@ TurndownService.prototype.escape = (string) => {
 const turndownService = new TurndownService();
 
 export const stripMetaData = (markdown: string): string => {
-	const content = FrontMatter(markdown);
-	return content.body;
+	try {
+		return FrontMatter(markdown).body;
+	} catch (e) {
+		// TODO: catch exception
+		return markdown.replace(/^---[\s\S]*---/gm, "").trim();
+	}
 };
 
 export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
@@ -22,6 +26,7 @@ export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 		const document = Domino.createDocument(withBR, true);
 		return fixTurndownEscaping(turndownService.turndown(document).trim());
 	} catch (e) {
+		// TODO: catch exception
 		return markdown;
 	}
 };

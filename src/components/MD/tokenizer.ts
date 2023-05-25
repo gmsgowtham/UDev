@@ -6,7 +6,7 @@ import {
 
 class MDTokenizer extends MarkedTokenizer<CustomToken> {
 	paragraph(this: MarkedTokenizer<CustomToken>, src: string) {
-		const match = src.match(/^{%(.*?)%}/);
+		const match = src.match(/^.?{%(.*?)%}.?/);
 		if (match?.[1]) {
 			const value = match[1].trim();
 			const [identifier = "", text = ""] = value.split(" ");

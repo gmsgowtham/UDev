@@ -23,12 +23,6 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 }) => {
 	return (
 		<View style={styles.wrapper}>
-			{cover.uri && cover.aspectRatio ? (
-				<Image
-					source={{ uri: cover.uri }}
-					style={[styles.image, { aspectRatio: cover.aspectRatio }]}
-				/>
-			) : null}
 			<View style={styles.authorContainer}>
 				<Avatar.Image size={50} source={{ uri: author.imageUri }} />
 				<View style={styles.authorInfo}>
@@ -36,6 +30,12 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 					<Text variant="labelMedium">{dateReadable}</Text>
 				</View>
 			</View>
+			{cover.uri && cover.aspectRatio ? (
+				<Image
+					source={{ uri: cover.uri }}
+					style={[styles.image, { aspectRatio: cover.aspectRatio }]}
+				/>
+			) : null}
 			<Text variant="headlineMedium">{title}</Text>
 		</View>
 	);
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		width: "100%",
+		borderRadius: 16,
 	},
 	authorContainer: {
 		flex: 1,

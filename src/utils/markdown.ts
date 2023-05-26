@@ -2,6 +2,7 @@ import FrontMatter from "front-matter";
 import TurndownService from "turndown";
 import Domino from "domino";
 import { replaceNewlines } from "./string";
+import { logError } from "./log";
 
 TurndownService.prototype.escape = (string) => {
 	// Disables string escaping
@@ -15,7 +16,7 @@ export const stripMetaData = (markdown: string): string => {
 	try {
 		return FrontMatter(markdown).body;
 	} catch (e) {
-		// TODO: catch exception
+		logError(e as Error, "fn: stripMetaData exception");
 		return markdown.replace(/^---[\s\S]*---/gm, "").trim();
 	}
 };
@@ -26,7 +27,7 @@ export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 		const document = Domino.createDocument(withBR, true);
 		return fixTurndownEscaping(turndownService.turndown(document).trim());
 	} catch (e) {
-		// TODO: catch exception
+		logError(e as Error, "fn: convertHtmlInMarkdownToMarkdown exception");
 		return markdown;
 	}
 };

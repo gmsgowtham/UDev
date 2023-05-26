@@ -1,6 +1,5 @@
-// TODO: capture error
-
 import { MMKV } from "react-native-mmkv";
+import { logError } from "../utils/log";
 
 export interface PostBookmarkItem {
 	id: number;
@@ -21,7 +20,11 @@ const bookmarkStorage = new MMKV({
 const BOOKMARKS_KEY = "udev_bookmarks";
 
 const saveBookmarks = (bookmarks: PostBookmarkItem[]) => {
-	bookmarkStorage.set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+	try {
+		bookmarkStorage.set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+	} catch (e) {
+		logError(e as Error, "fn: saveBookmarks exception");
+	}
 };
 
 const getPostIdCacheKey = (id: number): string => {
@@ -37,6 +40,7 @@ export const savePostToBookmarks = (post: PostBookmarkItem): boolean => {
 		bookmarkStorage.set(getPostIdCacheKey(post.id), true);
 		return true;
 	} catch (e) {
+		logError(e as Error, "fn: savePostToBookmarks exception");
 		return false;
 	}
 };
@@ -50,6 +54,7 @@ export const getBookmarks = (): PostBookmarkItem[] => {
 
 		return JSON.parse(bookmarksStr) as PostBookmarkItem[];
 	} catch (e) {
+		logError(e as Error, "fn: getBookmarks exception");
 		return [];
 	}
 };
@@ -58,6 +63,7 @@ export const isBookmarked = (id: number): boolean => {
 	try {
 		return bookmarkStorage.getBoolean(getPostIdCacheKey(id)) ?? false;
 	} catch (e) {
+		logError(e as Error, "fn: isBookmarked exception");
 		return false;
 	}
 };
@@ -72,12 +78,18 @@ export const removeBookmark = (id: number): boolean => {
 		saveBookmarks(filtered);
 		return true;
 	} catch (e) {
+		logError(e as Error, "fn: removeBookmark exception");
 		return false;
 	}
 };
 
 export const getTotalBookmarks = (): number => {
-	return Math.max(bookmarkStorage.getAllKeys().length - 1, 0);
+	try {
+		return Math.max(bookmarkStorage.getAllKeys().length - 1, 0);
+	} catch (e) {
+		logError(e as Error, "fn: getTotalBookmarks exception");
+		return 0;
+	}
 };
 
 export default bookmarkStorage;

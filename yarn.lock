@@ -1409,6 +1409,13 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@flyerhq/react-native-link-preview@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-link-preview/-/react-native-link-preview-1.6.0.tgz#c7285ab93a133328edc5d69b011822581bb4414b"
+  integrity sha512-MY2Kxlf3SzLVUAuGU2LXhDU0a2icNBWL7MDCA8BNpmKqsWI+tHjX3mHm5nGpsLweYG5wsajzBd5XS0KCXNPkJA==
+  dependencies:
+    html-entities "^2.3.2"
+
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
@@ -3944,6 +3951,11 @@ hosted-git-info@^4.0.1:
   dependencies:
     lru-cache "^6.0.0"
 
+html-entities@^2.3.2:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.3.3.tgz#117d7626bece327fc8baace8868fa6f5ef856e46"
+  integrity sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==
+
 html-escaper@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
@@ -6136,10 +6148,10 @@ react-native-gradle-plugin@^0.71.18:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz#20ef199bc85be32e45bb6cc069ec2e7dcb1a74a6"
   integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
 
-react-native-marked@5.0.0-rc.0:
-  version "5.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.0-rc.0.tgz#e78d2a71bd404b9a09fab7e4894970ee5ac9b1a8"
-  integrity sha512-jOTvJXy5WnsKYSUe9YFLhtTsw3Xq8KSmu3Wc6GBHb335VJys015YQskeKj1wGaczELnnQPC6LMFRkuzxWFSSKQ==
+react-native-marked@5.0.0-rc.1:
+  version "5.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.0-rc.1.tgz#f83c761dd517479d7100fbaddfb4ea7ff7c01827"
+  integrity sha512-78fFCgZyOB9WodQDOyijWOr9Dc32dgR7csNj8796JdQGxxlcutTwiaEaz5NAVVuYCxTEO4d1p94IeyhFK+UZWQ==
   dependencies:
     "@jsamr/counter-style" "2.0.2"
     "@jsamr/react-native-li" "2.3.1"

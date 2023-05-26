@@ -4,7 +4,7 @@ import { ImageStyle, TextStyle, ViewStyle } from "react-native";
 import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/Dev";
-import { Surface } from "react-native-paper";
+import CTAButton from "../CTAButton";
 
 class MDRenderer extends Renderer implements RendererInterface {
 	image = (
@@ -30,12 +30,25 @@ class MDRenderer extends Renderer implements RendererInterface {
 	};
 
 	custom(
-		_identifier: string,
-		_text: string,
+		identifier: string,
+		text: string,
 		_raw: string,
-		children: ReactNode[],
+		_children: ReactNode[],
+		args: Record<string, unknown> = {},
 	): ReactNode {
-		return <DevEmbed>{children}</DevEmbed>;
+		if (identifier === "cta" && args.text && args.cta) {
+			return (
+				<CTAButton
+					key={this.getKey()}
+					text={args.text as string}
+					url={args.cta as string}
+				/>
+			);
+		}
+		if (identifier === "embed" && text.length) {
+			return <DevEmbed key={this.getKey()} url={text} />;
+		}
+		return null;
 	}
 }
 

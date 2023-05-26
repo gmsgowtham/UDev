@@ -5,6 +5,7 @@ import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/Dev";
 import CTAButton from "../CTAButton";
+import { isStringOf } from "../../utils/typeof";
 
 class MDRenderer extends Renderer implements RendererInterface {
 	image = (
@@ -31,12 +32,11 @@ class MDRenderer extends Renderer implements RendererInterface {
 
 	custom(
 		identifier: string,
-		text: string,
 		_raw: string,
 		_children: ReactNode[],
 		args: Record<string, unknown> = {},
 	): ReactNode {
-		if (identifier === "cta" && args.text && args.cta) {
+		if (identifier === "cta" && isStringOf(args.text) && isStringOf(args.cta)) {
 			return (
 				<CTAButton
 					key={this.getKey()}
@@ -45,8 +45,8 @@ class MDRenderer extends Renderer implements RendererInterface {
 				/>
 			);
 		}
-		if (identifier === "embed" && text.length) {
-			return <DevEmbed key={this.getKey()} url={text} />;
+		if (identifier === "embed" && isStringOf(args.text)) {
+			return <DevEmbed key={this.getKey()} url={args.text as string} />;
 		}
 		return null;
 	}

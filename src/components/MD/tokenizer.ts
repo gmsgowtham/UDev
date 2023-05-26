@@ -20,7 +20,6 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 				raw: ctaMatch[0],
 				identifier: "cta",
 				type: "custom",
-				text,
 				args: {
 					cta,
 					text,
@@ -41,11 +40,13 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		const match = src.match(/^[*]?{% (embed|link)[*]? (.*?)[*]?%}[*]?/);
 		if (match && match.length > 2) {
 			const token: CustomToken = {
-				text: match[2].trim(),
 				identifier: "embed",
 				type: "custom",
 				raw: match[0],
 				tokens: [],
+				args: {
+					text: match[2].trim(),
+				},
 			};
 			return token;
 		}

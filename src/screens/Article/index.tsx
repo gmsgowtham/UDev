@@ -15,6 +15,7 @@ import {
 	savePostToBookmarks,
 } from "../../mmkv/bookmark";
 import { HELP_TEXT } from "../../utils/const";
+import { logError } from "../../utils/log";
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
@@ -51,13 +52,13 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 
 	const onShareActionPress = async () => {
 		try {
-			const result = await Share.share({
+			await Share.share({
 				message: url,
 				url: url,
 				title: title,
 			});
-		} catch (error: unknown) {
-			console.log(error);
+		} catch (e) {
+			logError(e as Error, "fn: onShareActionPress exception");
 		}
 	};
 

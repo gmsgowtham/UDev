@@ -26,7 +26,7 @@ const LandingScreen = () => {
 
 	return (
 		<ArticleFeedScreen
-			title="Home"
+			title="Featured"
 			articles={articles}
 			fetchArticles={fetchArticles}
 			refreshing={refreshing}

@@ -13,8 +13,8 @@ import SyntaxHighlighter, {
 	SyntaxHighlighterProps,
 } from "react-syntax-highlighter";
 import {
-	githubGist as lightStyle,
-	dracula as darkStyle,
+	stackoverflowLight as lightStyle,
+	stackoverflowDark as darkStyle,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import transform, { StyleTuple } from "css-to-react-native";
 import { IconButton, Text as PaperText } from "react-native-paper";

@@ -14,7 +14,7 @@ import {
 } from "@react-navigation/native";
 
 import ArticleScreen from "../screens/Article";
-import LandingScreen from "../screens/Landing";
+import LandingScreen from "../screens/LandingFeed";
 import LatestScreen from "../screens/LatestFeed";
 import VideosScreen from "../screens/Videos";
 

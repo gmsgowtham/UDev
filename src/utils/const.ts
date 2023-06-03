@@ -15,3 +15,5 @@ export const LANG_ALIAS_MAP: Record<string, string> = {
 	ts: "typescript",
 };
 export const MAX_BOOKMARKS = 100;
+export const ARTICLE_COVER_IMAGE_ASPECT_RATIO = 2.380952380952381; // 1000:420
+export const VIDEO_COVER_IMAGE_ASPECT_RATIO = 1.7764227642; // 874:492

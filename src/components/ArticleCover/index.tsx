@@ -1,11 +1,11 @@
 import { FunctionComponent, memo } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Text, Avatar } from "react-native-paper";
+import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 
 interface ArticleCoverProps {
 	cover: {
 		uri?: string;
-		aspectRatio?: number;
 	};
 	title: string;
 	author: {
@@ -30,11 +30,8 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 					<Text variant="labelMedium">{dateReadable}</Text>
 				</View>
 			</View>
-			{cover.uri && cover.aspectRatio ? (
-				<Image
-					source={{ uri: cover.uri }}
-					style={[styles.image, { aspectRatio: cover.aspectRatio }]}
-				/>
+			{cover.uri ? (
+				<Image source={{ uri: cover.uri }} style={styles.image} />
 			) : null}
 			<Text variant="headlineMedium">{title}</Text>
 		</View>
@@ -48,7 +45,8 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		width: "100%",
-		borderRadius: 16,
+		borderRadius: 12,
+		aspectRatio: ARTICLE_COVER_IMAGE_ASPECT_RATIO,
 	},
 	authorContainer: {
 		flex: 1,

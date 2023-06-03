@@ -109,7 +109,6 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				title={title}
 				cover={{
 					uri: article?.cover_image,
-					aspectRatio: article?.cover_image_aspect_ratio,
 				}}
 				author={{
 					name: article.user.name,
@@ -146,12 +145,12 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 			</Appbar.Header>
 
 			{!loading ? (
-				typeof article?.body_markdown !== "undefined" && (
+				typeof article?.body_markdown !== "undefined" ? (
 					<RenderMarkdown
 						value={article?.body_markdown}
 						HeaderComponent={renderListHeaderComponent}
 					/>
-				)
+				) : null
 			) : (
 				<PageLoader />
 			)}

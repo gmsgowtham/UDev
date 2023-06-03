@@ -1,6 +1,8 @@
 import { FunctionComponent, memo } from "react";
 import { StyleSheet, View } from "react-native";
+import FastImage from "react-native-fast-image";
 import { Avatar, Card, Text } from "react-native-paper";
+import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 
 interface author {
 	imageUri: string;
@@ -55,9 +57,13 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 
 	return (
 		<Card style={styles.card} onPress={onClick}>
-			{coverImageUri && (
-				<Card.Cover source={{ uri: coverImageUri }} style={[styles.cover]} />
-			)}
+			{coverImageUri ? (
+				<FastImage
+					source={{ uri: coverImageUri }}
+					style={styles.cover}
+					resizeMode={FastImage.resizeMode.contain}
+				/>
+			) : null}
 			<Card.Title
 				title={author.name}
 				subtitle={dateReadable}
@@ -82,8 +88,10 @@ const styles = StyleSheet.create({
 		marginVertical: 4,
 	},
 	cover: {
-		height: 212,
-		borderWidth: StyleSheet.hairlineWidth,
+		width: "100%",
+		aspectRatio: ARTICLE_COVER_IMAGE_ASPECT_RATIO,
+		borderTopLeftRadius: 12,
+		borderTopRightRadius: 12,
 	},
 	content: {
 		marginTop: 16,

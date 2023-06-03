@@ -1,40 +1,33 @@
-import React, { useMemo } from "react";
+import React, { memo, useMemo, FunctionComponent } from "react";
 import {
-	Text,
 	TextStyle,
 	View,
 	useColorScheme,
 	ViewStyle,
-	ScrollView,
 	StyleSheet,
 	ToastAndroid,
 } from "react-native";
-import SyntaxHighlighter, {
-	SyntaxHighlighterProps,
-} from "react-syntax-highlighter";
+import CodeHighlighter from "react-native-code-highlighter";
 import {
 	stackoverflowLight as lightStyle,
 	stackoverflowDark as darkStyle,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import transform, { StyleTuple } from "css-to-react-native";
 import { IconButton, Text as PaperText } from "react-native-paper";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { replaceNewlines } from "../../utils/string";
 import { HELP_TEXT } from "../../utils/const";
 
-type HighlighterStyleSheet = { [key: string]: TextStyle };
-
-interface HighlighterProps extends Partial<SyntaxHighlighterProps> {
+interface HighlighterProps {
 	code: string;
 	containerStyle?: ViewStyle;
 	textStyle?: TextStyle;
+	language?: string;
 }
 
-export const Highlighter: React.FunctionComponent<HighlighterProps> = ({
+export const Highlighter: FunctionComponent<HighlighterProps> = ({
 	code,
 	containerStyle,
 	textStyle,
-	...rest
+	language,
 }) => {
 	const colorScheme = useColorScheme();
 
@@ -47,94 +40,39 @@ export const Highlighter: React.FunctionComponent<HighlighterProps> = ({
 		);
 	};
 
-	const cleanStyle = (style: React.CSSProperties) => {
-		const styles = Object.entries(style).map<StyleTuple>(([key, value]) => [
-			key,
-			value,
-		]);
-
-		return transform(styles);
-	};
-
 	const hlsStyles = useMemo(
 		() => (colorScheme === "light" ? lightStyle : darkStyle),
 		[colorScheme],
 	);
 
-	const stylesheet: HighlighterStyleSheet = useMemo(
-		() =>
-			Object.fromEntries(
-				Object.entries(hlsStyles).map(([className, style]) => [
-					className,
-					cleanStyle(style),
-				]),
-			),
-		[hlsStyles],
-	);
-
-	const renderNode = (nodes: rendererNode[], keyPrefix = "row") =>
-		nodes.reduce<React.ReactNode[]>((acc, node, index) => {
-			const keyPrefixWithIndex = `${keyPrefix}_${index}`;
-			if (node.children) {
-				const styles = [
-					{ color: stylesheet.hljs.color, ...textStyle }, // default style for fallback
-					...(node.properties?.className || [])
-						.map((c) => stylesheet[c])
-						.filter((c) => !!c), // fetch styles from element class name
-				];
-				acc.push(
-					<Text style={styles} key={keyPrefixWithIndex}>
-						{renderNode(node.children, `${keyPrefixWithIndex}_child`)}
-					</Text>,
-				);
-			}
-
-			if (node.value) {
-				const value = replaceNewlines(String(node.value), "");
-				acc.push(<Text key={keyPrefixWithIndex}>{value}</Text>);
-			}
-
-			return acc;
-		}, []);
-
-	const nativeRenderer = (props: rendererProps) => {
-		const { rows } = props;
-		return (
-			<>
-				<View
-					style={[
-						styles.header,
-						{ backgroundColor: containerStyle?.backgroundColor },
-					]}
-				>
-					<PaperText variant="labelMedium" style={styles.title}>{`${
-						rest.language || "code"
-					} snippet`}</PaperText>
-					<IconButton
-						icon="content-copy"
-						size={16}
-						accessibilityLabel="copy code"
-						aria-label="copy code"
-						onPress={onCopyCodePress}
-					/>
-				</View>
-				<ScrollView horizontal contentContainerStyle={containerStyle}>
-					<View>{renderNode(rows)}</View>
-				</ScrollView>
-			</>
-		);
-	};
-
 	return (
-		<SyntaxHighlighter
-			{...rest}
-			renderer={nativeRenderer}
-			CodeTag={View}
-			PreTag={View}
-			style={{}}
-		>
-			{code}
-		</SyntaxHighlighter>
+		<>
+			<View
+				style={[
+					styles.header,
+					{ backgroundColor: containerStyle?.backgroundColor },
+				]}
+			>
+				<PaperText variant="labelMedium" style={styles.title}>{`${
+					language || "code"
+				} snippet`}</PaperText>
+				<IconButton
+					icon="content-copy"
+					size={16}
+					accessibilityLabel="copy code"
+					aria-label="copy code"
+					onPress={onCopyCodePress}
+				/>
+			</View>
+			<CodeHighlighter
+				hljsStyle={hlsStyles}
+				language={language}
+				containerStyle={containerStyle}
+				textStyle={textStyle}
+			>
+				{code}
+			</CodeHighlighter>
+		</>
 	);
 };
 
@@ -152,4 +90,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Highlighter;
+export default memo(Highlighter);

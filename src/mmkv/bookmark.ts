@@ -1,5 +1,6 @@
 import { MMKV } from "react-native-mmkv";
 import { logError } from "../utils/log";
+import { HELP_TEXT, MAX_BOOKMARKS } from "../utils/const";
 
 export interface PostBookmarkItem {
 	id: number;
@@ -12,6 +13,11 @@ export interface PostBookmarkItem {
 	type: string;
 }
 
+interface BookmarkResponse {
+	success: boolean;
+	message: string;
+}
+
 const bookmarkStorage = new MMKV({
 	id: "udev_bookmarks",
 	encryptionKey: "POST_BOOKMARKS",
@@ -20,28 +26,40 @@ const bookmarkStorage = new MMKV({
 const BOOKMARKS_KEY = "udev_bookmarks";
 
 const saveBookmarks = (bookmarks: PostBookmarkItem[]) => {
-	try {
-		bookmarkStorage.set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
-	} catch (e) {
-		logError(e as Error, "fn: saveBookmarks exception");
-	}
+	bookmarkStorage.set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
 };
 
 const getPostIdCacheKey = (id: number): string => {
 	return `${BOOKMARKS_KEY}.${id}`;
 };
 
-export const savePostToBookmarks = (post: PostBookmarkItem): boolean => {
+export const savePostToBookmarks = (
+	post: PostBookmarkItem,
+): BookmarkResponse => {
 	try {
 		// rome-ignore lint: Array mutation using push
 		let bookmarks = getBookmarks();
+
+		if (bookmarks.length === MAX_BOOKMARKS) {
+			return {
+				success: false,
+				message: HELP_TEXT.BOOKMARK.MAX_ERR,
+			};
+		}
+
 		bookmarks.push(post);
 		saveBookmarks(bookmarks);
 		bookmarkStorage.set(getPostIdCacheKey(post.id), true);
-		return true;
+		return {
+			success: true,
+			message: HELP_TEXT.BOOKMARK.ADDED,
+		};
 	} catch (e) {
 		logError(e as Error, "fn: savePostToBookmarks exception");
-		return false;
+		return {
+			success: false,
+			message: HELP_TEXT.BOOKMARK.COMMON_ERR,
+		};
 	}
 };
 

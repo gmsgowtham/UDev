@@ -6,5 +6,12 @@ export const HELP_TEXT = {
 	BOOKMARK: {
 		ADDED: "Bookmark saved",
 		REMOVED: "Bookmark removed",
+		MAX_ERR: "Maxmimum number of bookmarks reached",
+		COMMON_ERR: "Error while saving bookmark",
 	},
 };
+export const LANG_ALIAS_MAP: Record<string, string> = {
+	js: "javascript",
+	ts: "typescript",
+};
+export const MAX_BOOKMARKS = 100;

@@ -17,4 +17,5 @@ export type StackParamList = {
 		title: string;
 		url: string;
 	};
+	Bookmarks: undefined;
 };

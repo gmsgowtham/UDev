@@ -5407,10 +5407,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-4.3.0.tgz#796362821b019f734054582038b116481b456cf3"
-  integrity sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==
+marked@5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-5.0.4.tgz#69bc2b43de2e58ca46f5ff2ff294e9825c7f5cd1"
+  integrity sha512-r0W8/DK56fAkV0qfUCO9cEt/VlFWUzoJOqEigvijmsVkTuPOHckh7ZutNJepRO1AxHhK96/9txonHg4bWd/aLA==
 
 mdn-data@2.0.14:
   version "2.0.14"
@@ -6396,6 +6396,14 @@ react-devtools-core@^4.26.1:
     shell-quote "^1.6.1"
     ws "^7"
 
+react-dom@18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
+  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.23.0"
+
 react-freeze@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.3.tgz#5e3ca90e682fed1d73a7cb50c2c7402b3e85618d"
@@ -6415,6 +6423,15 @@ react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-native-code-highlighter@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.0.0.tgz#729f5b9885bf4f3c982dc07aac3c92f314e9b9fb"
+  integrity sha512-FYzBJ7VkBsqtOUqZbLugdzC+yCe0gb4PR3zQ7lx7U8cbubIIelXqzcovf7IoKV2wONE3LLpt+Pr7246QFvy1Gw==
+  dependencies:
+    css-to-react-native "3.2.0"
+    react-syntax-highlighter "15.5.0"
+    trim-newlines "5.0.0"
 
 react-native-codegen@^0.71.5:
   version "0.71.5"
@@ -6447,14 +6464,14 @@ react-native-gradle-plugin@^0.71.18:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz#20ef199bc85be32e45bb6cc069ec2e7dcb1a74a6"
   integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
 
-react-native-marked@5.0.0-rc.2:
-  version "5.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.0-rc.2.tgz#002579509b92dd05756607e467f4a08eba6275f8"
-  integrity sha512-j6RGW0rG2f+TfTCx6zRe3uDlNeTJK/ktoTBXfUikzQtd2sAcu+4ZDk1uUmO/UfyHJ4eL6wXDsYpDo+qWAXcPcg==
+react-native-marked@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.2.tgz#ff2862ea566754dee03f7aa39032d669ac156a2e"
+  integrity sha512-MonfSK0yj9BWcflzmi4wfjYM7lErJXd12l7T3QQGr49uvywf10BFolBliobZNUI2mLWHHHCjMPrM9B54Y60v9A==
   dependencies:
     "@jsamr/counter-style" "2.0.2"
     "@jsamr/react-native-li" "2.3.1"
-    marked "4.3.0"
+    marked "5.0.4"
     react-native-svg "13.9.0"
     react-native-table-component "1.2.2"
     svg-parser "2.0.4"
@@ -7464,6 +7481,11 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
+
+trim-newlines@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-5.0.0.tgz#fbe350dc9d5fe15e80793b86c09bc7436a3da383"
+  integrity sha512-kstfs+hgwmdsOadN3KgA+C68wPJwnZq4DN6WMDCvZapDWEF34W2TyPKN2v2+BJnZgIz5QOfxFeldLyYvdgRAwg==
 
 trim-newlines@^3.0.0:
   version "3.0.1"

@@ -17,6 +17,7 @@ import ArticleScreen from "../screens/Article";
 import LandingScreen from "../screens/LandingFeed";
 import LatestScreen from "../screens/LatestFeed";
 import VideosScreen from "../screens/Videos";
+import BookmarksScreen from "../screens/Bookmarks";
 
 import type { DrawerParamList, StackParamList, TabParamList } from "./types";
 import CustomDrawer from "../components/Drawer";
@@ -135,6 +136,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme }) => {
 			>
 				<Stack.Screen name="Landing" component={DrawerNav} />
 				<Stack.Screen name="Article" component={ArticleScreen} />
+				<Stack.Screen name="Bookmarks" component={BookmarksScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

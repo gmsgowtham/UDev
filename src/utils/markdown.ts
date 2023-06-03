@@ -3,6 +3,7 @@ import TurndownService from "turndown";
 import Domino from "domino";
 import { replaceNewlines } from "./string";
 import { logError } from "./log";
+import { LANG_ALIAS_MAP } from "./const";
 
 TurndownService.prototype.escape = (string) => {
 	// Disables string escaping
@@ -50,4 +51,11 @@ export const processMarkdownContent = (markdown: string): string => {
 	}
 
 	return mdProcessed;
+};
+
+export const getActualLangForCodeSnippet = (
+	alias?: string,
+): string | undefined => {
+	if (!alias) return undefined;
+	return LANG_ALIAS_MAP[alias] ?? alias;
 };

@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
 import RenderMarkdown from "../../components/MD";
-import { Appbar, useTheme } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import PageLoader from "../../components/Loader/PageLoader";
 import { useFocusEffect } from "@react-navigation/native";
 import ArticleCover from "../../components/ArticleCover";
@@ -21,7 +21,6 @@ type Props = NativeStackScreenProps<StackParamList, "Article">;
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { id, title, url } = params;
-	const theme = useTheme();
 	const _isPostBookmarked = isBookmarked(id);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 
@@ -78,7 +77,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		} else {
 			if (!article) return;
 			setIsPostBookmarked(true);
-			savePostToBookmarks({
+			const response = savePostToBookmarks({
 				id,
 				title,
 				url,
@@ -88,15 +87,19 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					imageUri: article.user.profile_image_90,
 				},
 			});
+			if (!response.success) {
+				// reset state
+				setIsPostBookmarked(false);
+			}
 			ToastAndroid.showWithGravity(
-				HELP_TEXT.BOOKMARK.ADDED,
+				response.message,
 				ToastAndroid.SHORT,
 				ToastAndroid.TOP,
 			);
 		}
 	};
 
-	const renderListHeaderComponent = () => {
+	const renderListHeaderComponent = useCallback(() => {
 		if (!article) {
 			return null;
 		}
@@ -115,7 +118,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				dateReadable={article.readable_publish_date}
 			/>
 		);
-	};
+	}, [article]);
 
 	return (
 		<View style={styles.container}>

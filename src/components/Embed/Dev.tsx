@@ -1,6 +1,6 @@
 import { FunctionComponent, memo } from "react";
-import { StyleSheet, View } from "react-native";
-import { Surface, useTheme, Text, Badge, Avatar } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { Surface, useTheme, Text } from "react-native-paper";
 import { LinkPreview } from "@flyerhq/react-native-link-preview";
 
 interface DevEmbedProps {
@@ -11,23 +11,28 @@ interface DevEmbedProps {
 const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 	const theme = useTheme();
 
-	const renderText = () => {
-		return <Avatar.Icon size={24} icon="link" />;
+	const renderText = (url: string) => {
+		return (
+			<Text variant="bodySmall" numberOfLines={2}>
+				{url}
+			</Text>
+		);
 	};
 
 	const renderTitle = (title: string) => {
 		return (
 			<Text
-				variant="headlineMedium"
+				variant="titleMedium"
 				style={[styles.title, { color: theme.colors.primary }]}
+				numberOfLines={2}
 			>
 				{title}
 			</Text>
 		);
 	};
 
-	const renderDescription = (desc: string) => {
-		return <Text variant="bodyMedium">{desc}</Text>;
+	const renderDescription = () => {
+		return null;
 	};
 
 	const renderImage = () => null;
@@ -49,6 +54,7 @@ const styles = StyleSheet.create({
 	container: {
 		borderRadius: 4,
 		marginVertical: 8,
+		height: 130,
 	},
 	title: {
 		marginBottom: 8,

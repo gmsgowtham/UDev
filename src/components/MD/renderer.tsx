@@ -6,13 +6,12 @@ import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/Dev";
 import CTAButton from "../CTAButton";
 import { isStringOf } from "../../utils/typeof";
+import { getActualLangForCodeSnippet } from "../../utils/markdown";
 
 class MDRenderer extends Renderer implements RendererInterface {
-	image = (
-		uri: string,
-		alt?: string | undefined,
-		_style?: ImageStyle | undefined,
-	): ReactNode => <FitFastImage key={this.getKey()} uri={uri} label={alt} />;
+	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => (
+		<FitFastImage key={this.getKey()} uri={uri} label={alt} />
+	);
 
 	code = (
 		text: string,
@@ -20,9 +19,10 @@ class MDRenderer extends Renderer implements RendererInterface {
 		containerStyle?: ViewStyle | undefined,
 		_textStyle?: TextStyle | undefined,
 	): ReactNode => {
+		const lang = getActualLangForCodeSnippet(language);
 		return (
 			<SyntaxHighlighter
-				language={language}
+				language={lang}
 				key={this.getKey()}
 				containerStyle={containerStyle}
 				code={text}

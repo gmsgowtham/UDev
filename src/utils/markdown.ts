@@ -5,13 +5,20 @@ import { replaceNewlines } from "./string";
 import { logError } from "./log";
 import { LANG_ALIAS_MAP } from "./const";
 
-TurndownService.prototype.escape = (string) => {
-	// Disables string escaping
-	// ref: https://github.com/mixmark-io/turndown#overriding-turndownserviceprototypeescape
-	return string;
-};
+let turndownService: TurndownService;
+const getTurndownService = (options?: TurndownService.Options) => {
+	if (!turndownService) {
+		TurndownService.prototype.escape = (string) => {
+			// Disables string escaping
+			// ref: https://github.com/mixmark-io/turndown#overriding-turndownserviceprototypeescape
+			return string;
+		};
 
-const turndownService = new TurndownService();
+		turndownService = new TurndownService(options);
+	}
+
+	return turndownService;
+};
 
 export const stripMetaData = (markdown: string): string => {
 	try {
@@ -26,7 +33,7 @@ export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 	try {
 		const withBR = replaceNewlines(markdown, "<br/>");
 		const document = Domino.createDocument(withBR, true);
-		return fixTurndownEscaping(turndownService.turndown(document).trim());
+		return fixTurndownEscaping(getTurndownService().turndown(document).trim());
 	} catch (e) {
 		logError(e as Error, "fn: convertHtmlInMarkdownToMarkdown exception");
 		return markdown;

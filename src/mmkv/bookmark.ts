@@ -18,15 +18,22 @@ interface BookmarkResponse {
 	message: string;
 }
 
-const bookmarkStorage = new MMKV({
-	id: "udev_bookmarks",
-	encryptionKey: "POST_BOOKMARKS",
-});
+let bookmarkStorage: MMKV;
+const getBookmarkStorage = () => {
+	if (!bookmarkStorage) {
+		bookmarkStorage = new MMKV({
+			id: "udev_bookmarks",
+			encryptionKey: "POST_BOOKMARKS",
+		});
+	}
+
+	return bookmarkStorage;
+};
 
 const BOOKMARKS_KEY = "udev_bookmarks";
 
 const saveBookmarks = (bookmarks: PostBookmarkItem[]) => {
-	bookmarkStorage.set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+	getBookmarkStorage().set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
 };
 
 const getPostIdCacheKey = (id: number): string => {
@@ -49,7 +56,7 @@ export const savePostToBookmarks = (
 
 		bookmarks.push(post);
 		saveBookmarks(bookmarks);
-		bookmarkStorage.set(getPostIdCacheKey(post.id), true);
+		getBookmarkStorage().set(getPostIdCacheKey(post.id), true);
 		return {
 			success: true,
 			message: HELP_TEXT.BOOKMARK.ADDED,
@@ -65,7 +72,7 @@ export const savePostToBookmarks = (
 
 export const getBookmarks = (): PostBookmarkItem[] => {
 	try {
-		const bookmarksStr = bookmarkStorage.getString(BOOKMARKS_KEY);
+		const bookmarksStr = getBookmarkStorage().getString(BOOKMARKS_KEY);
 		if (!bookmarksStr) {
 			return [];
 		}
@@ -79,7 +86,7 @@ export const getBookmarks = (): PostBookmarkItem[] => {
 
 export const isBookmarked = (id: number): boolean => {
 	try {
-		return bookmarkStorage.getBoolean(getPostIdCacheKey(id)) ?? false;
+		return getBookmarkStorage().getBoolean(getPostIdCacheKey(id)) ?? false;
 	} catch (e) {
 		logError(e as Error, "fn: isBookmarked exception");
 		return false;
@@ -88,7 +95,7 @@ export const isBookmarked = (id: number): boolean => {
 
 export const removeBookmark = (id: number): boolean => {
 	try {
-		bookmarkStorage.delete(getPostIdCacheKey(id));
+		getBookmarkStorage().delete(getPostIdCacheKey(id));
 		const bookmarks = getBookmarks();
 		const filtered = bookmarks.filter((item) => {
 			return item.id !== id;
@@ -103,7 +110,7 @@ export const removeBookmark = (id: number): boolean => {
 
 export const getTotalBookmarks = (): number => {
 	try {
-		return Math.max(bookmarkStorage.getAllKeys().length - 1, 0);
+		return Math.max(getBookmarkStorage().getAllKeys().length - 1, 0);
 	} catch (e) {
 		logError(e as Error, "fn: getTotalBookmarks exception");
 		return 0;

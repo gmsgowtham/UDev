@@ -2,6 +2,7 @@ import { FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { Surface, useTheme, Text } from "react-native-paper";
 import { LinkPreview } from "@flyerhq/react-native-link-preview";
+import { getAbsURLFromAnchorMarkdown } from "../../utils/markdown";
 
 interface DevEmbedProps {
 	url: string;
@@ -40,7 +41,7 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 	return (
 		<Surface style={styles.container} mode="flat" elevation={2}>
 			<LinkPreview
-				text={url}
+				text={getAbsURLFromAnchorMarkdown(url)}
 				renderImage={renderImage}
 				renderText={renderText}
 				renderTitle={renderTitle}

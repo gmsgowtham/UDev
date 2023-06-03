@@ -59,3 +59,11 @@ export const getActualLangForCodeSnippet = (
 	if (!alias) return undefined;
 	return LANG_ALIAS_MAP[alias] ?? alias;
 };
+
+// Returns abs url from anchor markdown
+// i.e.
+// Input [Example URL](https://www.example.com)
+// Output https://www.example.com
+export const getAbsURLFromAnchorMarkdown = (md: string) => {
+	return md.replace(/\[.*?\]/g, "").replace(/\(|\)/g, "");
+};

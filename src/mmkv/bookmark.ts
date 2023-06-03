@@ -1,6 +1,7 @@
 import { MMKV } from "react-native-mmkv";
 import { logError } from "../utils/log";
 import { HELP_TEXT, MAX_BOOKMARKS } from "../utils/const";
+import { perfArrayConcat } from "../utils/array";
 
 export interface PostBookmarkItem {
 	id: number;
@@ -44,18 +45,16 @@ export const savePostToBookmarks = (
 	post: PostBookmarkItem,
 ): BookmarkResponse => {
 	try {
-		// rome-ignore lint: Array mutation using push
-		let bookmarks = getBookmarks();
-
-		if (bookmarks.length === MAX_BOOKMARKS) {
+		const oldBookmarks = getBookmarks();
+		if (oldBookmarks.length === MAX_BOOKMARKS) {
 			return {
 				success: false,
 				message: HELP_TEXT.BOOKMARK.MAX_ERR,
 			};
 		}
 
-		bookmarks.push(post);
-		saveBookmarks(bookmarks);
+		const newBookmarks = perfArrayConcat(oldBookmarks, [post]);
+		saveBookmarks(newBookmarks);
 		getBookmarkStorage().set(getPostIdCacheKey(post.id), true);
 		return {
 			success: true,

@@ -3,6 +3,8 @@ import { logError } from "../utils/log";
 import { HELP_TEXT, MAX_BOOKMARKS } from "../utils/const";
 import { perfArrayConcat } from "../utils/array";
 
+const BOOKMARKS_KEY = "udev_bookmarks";
+
 export interface PostBookmarkItem {
 	id: number;
 	title: string;
@@ -30,8 +32,6 @@ const getBookmarkStorage = () => {
 
 	return bookmarkStorage;
 };
-
-const BOOKMARKS_KEY = "udev_bookmarks";
 
 const saveBookmarks = (bookmarks: PostBookmarkItem[]) => {
 	getBookmarkStorage().set(BOOKMARKS_KEY, JSON.stringify(bookmarks));
@@ -115,5 +115,3 @@ export const getTotalBookmarks = (): number => {
 		return 0;
 	}
 };
-
-export default bookmarkStorage;

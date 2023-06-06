@@ -1,6 +1,7 @@
 import FrontMatter from "front-matter";
 import TurndownService from "turndown";
 import Domino from "domino";
+import escapeHTML from "escape-html";
 import { replaceNewlines } from "./string";
 import { logError } from "./log";
 import { LANG_ALIAS_MAP } from "./const";
@@ -54,7 +55,9 @@ export const processMarkdownContent = (markdown: string): string => {
 	// Check if markdown contains html tags, if found transform them to Markdown
 	// This function has caveat, it'll return true if a code block contains some html
 	if (/<\/?[a-z][\s\S]*>/gim.test(mdProcessed)) {
-		mdProcessed = convertHtmlInMarkdownToMarkdown(mdProcessed);
+		mdProcessed = convertHtmlInMarkdownToMarkdown(
+			prepareTurndownContent(mdProcessed),
+		);
 	}
 
 	return mdProcessed;
@@ -73,4 +76,22 @@ export const getActualLangForCodeSnippet = (
 // Output https://www.example.com
 export const getAbsURLFromAnchorMarkdown = (md: string) => {
 	return md.replace(/\[.*?\]/g, "").replace(/\(|\)/g, "");
+};
+
+// Escapes HTML to avoid turndown parsing
+export const prepareTurndownContent = (md: string): string => {
+	const codeFenceRegex = new RegExp(/`+\n[\s\S]+?```/gm);
+	const matches = md.match(codeFenceRegex);
+	if (!matches) {
+		return md;
+	}
+
+	let processed = md;
+	matches.forEach(function (match) {
+		if (/<\/?[a-z][\s\S]*>/gim.test(match)) {
+			processed = md.replace(match.trim(), escapeHTML(match));
+		}
+	});
+
+	return processed;
 };

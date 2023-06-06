@@ -6422,10 +6422,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-code-highlighter@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.0.0.tgz#729f5b9885bf4f3c982dc07aac3c92f314e9b9fb"
-  integrity sha512-FYzBJ7VkBsqtOUqZbLugdzC+yCe0gb4PR3zQ7lx7U8cbubIIelXqzcovf7IoKV2wONE3LLpt+Pr7246QFvy1Gw==
+react-native-code-highlighter@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.0.1.tgz#de1dc50e1fbe3a5ba01cfcc49accff75e82dd004"
+  integrity sha512-aeVRAu5QiRHxncmevUGSQRcL9n7owpvWXhEn7C1E62fq/UfFW6P+Y3me4yarZHAHVTVz0/RCx3BrSOXn4k3Ajw==
   dependencies:
     css-to-react-native "3.2.0"
     react-syntax-highlighter "15.5.0"

@@ -52,6 +52,10 @@ export const processMarkdownContent = (markdown: string): string => {
 		mdProcessed = stripMetaData(mdProcessed);
 	}
 
+	// Add new line before and after embeds to ensure it gets picked up by the tokenizer
+	mdProcessed = mdProcessed.replace(/([*]?{%)/, "\n$1");
+	mdProcessed = mdProcessed.replace(/(%}[*]?)/, "$1\n");
+
 	// Check if markdown contains html tags, if found transform them to Markdown
 	// This function has caveat, it'll return true if a code block contains some html
 	if (/<\/?[a-z][\s\S]*>/gim.test(mdProcessed)) {

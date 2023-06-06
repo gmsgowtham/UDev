@@ -1,7 +1,7 @@
 import FrontMatter from "front-matter";
 import TurndownService from "turndown";
 import Domino from "domino";
-import escapeHTML from "escape-html";
+import { escape as escapeHTML, unescape as unescapeHTML } from "html-escaper";
 import { replaceNewlines } from "./string";
 import { logError } from "./log";
 import { LANG_ALIAS_MAP } from "./const";
@@ -80,13 +80,13 @@ export const getAbsURLFromAnchorMarkdown = (md: string) => {
 
 // Escapes HTML to avoid turndown parsing
 export const prepareTurndownContent = (md: string): string => {
+	let processed = unescapeHTML(md);
 	const codeFenceRegex = new RegExp(/`+\n[\s\S]+?```/gm);
 	const matches = md.match(codeFenceRegex);
 	if (!matches) {
-		return md;
+		return processed;
 	}
 
-	let processed = md;
 	matches.forEach(function (match) {
 		if (/<\/?[a-z][\s\S]*>/gim.test(match)) {
 			processed = md.replace(match.trim(), escapeHTML(match));

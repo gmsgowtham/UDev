@@ -5415,10 +5415,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-5.0.4.tgz#69bc2b43de2e58ca46f5ff2ff294e9825c7f5cd1"
-  integrity sha512-r0W8/DK56fAkV0qfUCO9cEt/VlFWUzoJOqEigvijmsVkTuPOHckh7ZutNJepRO1AxHhK96/9txonHg4bWd/aLA==
+marked@5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-5.0.5.tgz#1c7bd284d7d29d7d75d6241b26e5d5bf3b558a12"
+  integrity sha512-auTmKJTBwZM/GLVFOhmkY7pL8v/0DxiDaXRC2kEyajcNJ0XXn9NphLD0106dbWrbPwcyD4Y0Dus16OkCzUMkfg==
 
 mdn-data@2.0.14:
   version "2.0.14"
@@ -6472,14 +6472,14 @@ react-native-gradle-plugin@^0.71.18:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz#20ef199bc85be32e45bb6cc069ec2e7dcb1a74a6"
   integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
 
-react-native-marked@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.3.tgz#1bced7e2e999fc9e6e741a3bf04c7d0f95465690"
-  integrity sha512-zqx4Q3sOW8w+k2TEbIt0OjoTmU7PNS3+PZxI8TadhnkO/Heb/eDblVjggLVk+0oTR5JTGDgnW/A9V1c6NhnCMQ==
+react-native-marked@5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.4.tgz#ad05f9a6feac8c955a461418d4f53fa567e96c81"
+  integrity sha512-SjWnfSfY0ZEqQaezSnISBj8q5wiGdnXrDVK8Y24KK08GN2tpywhbIrbNdods7c/U5PqiuD0bT43d3KabcP9e7w==
   dependencies:
     "@jsamr/counter-style" "2.0.2"
     "@jsamr/react-native-li" "2.3.1"
-    marked "5.0.4"
+    marked "5.0.5"
     react-native-svg "13.9.0"
     react-native-table-component "1.2.2"
     svg-parser "2.0.4"

@@ -30,7 +30,7 @@
     "react-native": "0.71.10",
     "react-native-code-highlighter": "1.0.1",
     "react-native-fast-image": "8.6.3",
-    "react-native-gesture-handler": "2.10.2",
+    "react-native-gesture-handler": "2.11.0",
     "react-native-marked": "5.0.4",
     "react-native-mmkv": "2.8.0",
     "react-native-paper": "5.8.0",

@@ -2,17 +2,16 @@ import { FunctionComponent, memo, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { shallow } from "zustand/shallow";
-
 import { CompositeScreenProps } from "@react-navigation/native";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { StackScreenProps } from "@react-navigation/stack";
 import { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { StackScreenProps } from "@react-navigation/stack";
+import { DEV_TO_HOST } from "../../utils/const";
 
 interface ListFooterProps {
 	loading: boolean;
@@ -36,7 +35,7 @@ type VideosScreenProps = CompositeScreenProps<
 	StackScreenProps<StackParamList>
 >;
 
-const VideosScreen: FunctionComponent<VideosScreenProps> = () => {
+const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 	const { videos, fetchVideos, refreshing, refreshVideos, page, loading } =
 		useVideoFeedStore(
 			(state) => ({
@@ -54,8 +53,14 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = () => {
 		fetchVideos(page);
 	}, []);
 
-	const onItemClick = () => {
-		// navigation.navigate("Article", { id, title });
+	const onItemClick = (
+		id: number,
+		title: string,
+		url: string,
+		source: string,
+		cover: string,
+	) => {
+		navigation.navigate("Video", { id, title, url, source, cover });
 	};
 
 	const onEndReached = () => {
@@ -73,6 +78,8 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = () => {
 				author={{
 					name: item.user.name,
 				}}
+				url={`${DEV_TO_HOST}${item.path}`}
+				source={item.video_source_url}
 				onItemClick={onItemClick}
 			/>
 		);

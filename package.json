@@ -38,6 +38,7 @@
     "react-native-screens": "3.21.0",
     "react-native-svg": "13.9.0",
     "react-native-vector-icons": "9.2.0",
+    "react-native-video": "6.0.0-alpha.6",
     "react-syntax-highlighter": "15.5.0",
     "turndown": "7.1.2",
     "zustand": "4.3.8"
@@ -59,6 +60,7 @@
     "@types/jest": "29.5.2",
     "@types/react": "18.2.12",
     "@types/react-native-vector-icons": "6.4.13",
+    "@types/react-native-video": "^5.0.14",
     "@types/react-syntax-highlighter": "15.5.7",
     "@types/react-test-renderer": "18.0.0",
     "@types/turndown": "5.0.1",

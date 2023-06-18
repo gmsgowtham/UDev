@@ -14,7 +14,15 @@ interface VideoFeedItemProps {
 	author: author;
 	duration: string;
 	coverImageUri: string;
-	onItemClick: (id: number, title: string) => void;
+	url: string;
+	source: string;
+	onItemClick: (
+		id: number,
+		title: string,
+		url: string,
+		source: string,
+		cover: string,
+	) => void;
 }
 
 const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
@@ -23,10 +31,12 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	author,
 	coverImageUri,
 	duration,
+	url,
+	source,
 	onItemClick,
 }) => {
 	const onClick = () => {
-		onItemClick(id, title);
+		onItemClick(id, title, url, source, coverImageUri);
 	};
 
 	return (

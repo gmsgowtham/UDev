@@ -18,4 +18,11 @@ export type StackParamList = {
 		url: string;
 	};
 	Bookmarks: undefined;
+	Video: {
+		id: number;
+		title: string;
+		url: string;
+		source: string;
+		cover: string;
+	};
 };

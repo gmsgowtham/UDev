@@ -2,10 +2,10 @@ import { FunctionComponent, useCallback, useState } from "react";
 import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
 import { shallow } from "zustand/shallow";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Appbar } from "react-native-paper";
 import { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
 import RenderMarkdown from "../../components/MD";
-import { Appbar } from "react-native-paper";
 import PageLoader from "../../components/Loader/PageLoader";
 import { useFocusEffect } from "@react-navigation/native";
 import ArticleCover from "../../components/ArticleCover";
@@ -16,6 +16,7 @@ import {
 } from "../../mmkv/bookmark";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
+
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {

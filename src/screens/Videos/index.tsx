@@ -12,23 +12,7 @@ import VideoFeedItem from "../../components/VideoFeedItem";
 import { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
 import { DEV_TO_HOST } from "../../utils/const";
-
-interface ListFooterProps {
-	loading: boolean;
-}
-
-// Todo move to common
-const ListFooter = memo<ListFooterProps>(({ loading }) => {
-	if (loading) {
-		return (
-			<View>
-				<ActivityIndicator size="small" />
-			</View>
-		);
-	}
-
-	return null;
-});
+import ListFooterLoader from "../../components/List/ListFooterLoader";
 
 type VideosScreenProps = CompositeScreenProps<
 	BottomTabScreenProps<TabParamList, "Videos">,
@@ -103,7 +87,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 						onRefresh={refreshVideos}
 						onEndReached={onEndReached}
 						onEndReachedThreshold={0.75}
-						ListFooterComponent={() => <ListFooter loading={loading} />}
+						ListFooterComponent={() => <ListFooterLoader loading={loading} />}
 						contentContainerStyle={styles.listContainer}
 					/>
 				</View>

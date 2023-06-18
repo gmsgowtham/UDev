@@ -1,14 +1,12 @@
 import { FunctionComponent, memo, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
-
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-
 import { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import { StackParamList } from "../../../router/types";
 import PageLoader from "../../../components/Loader/PageLoader";
+import ListFooterLoader from "../../../components/List/ListFooterLoader";
 
 interface ArticleFeedProps {
 	title: string;
@@ -19,22 +17,6 @@ interface ArticleFeedProps {
 	page: number;
 	loading: boolean;
 }
-
-interface ListFooterProps {
-	loading: boolean;
-}
-
-const ListFooter = memo<ListFooterProps>(({ loading }) => {
-	if (loading) {
-		return (
-			<View>
-				<ActivityIndicator size="small" />
-			</View>
-		);
-	}
-
-	return null;
-});
 
 const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	articles,
@@ -76,7 +58,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 							onEndReached: onEndReached,
 							onEndReachedThreshold: 0.75,
 							getItemType: (item) => item.type_of,
-							ListFooterComponent: () => <ListFooter loading={loading} />,
+							ListFooterComponent: () => <ListFooterLoader loading={loading} />,
 							contentContainerStyle: styles.listContainer,
 						}}
 					/>

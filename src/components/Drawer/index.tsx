@@ -1,7 +1,8 @@
 import { FunctionComponent, memo } from "react";
+import { View, StyleSheet } from "react-native";
 import { Drawer, Text, Divider, Switch } from "react-native-paper";
 import { DrawerContentComponentProps } from "@react-navigation/drawer";
-import { View, StyleSheet } from "react-native";
+import FastImage from "react-native-fast-image";
 import { useUserColorScheme } from "../../mmkv/colorScheme";
 
 const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
@@ -14,18 +15,20 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 	};
 
 	const onThemeSwitchPress = () => {
-		if (userColorScheme === "light") {
-			setUserColorScheme("dark");
-		} else {
+		if (userColorScheme === "dark") {
 			setUserColorScheme("light");
+		} else {
+			setUserColorScheme("dark");
 		}
 	};
 
 	return (
 		<>
 			<View style={styles.logoContainer}>
-				<View style={styles.logo} />
-				<Text variant="headlineMedium">UDev</Text>
+				<FastImage
+					source={require("./../../assets/icon.png")}
+					style={styles.logo}
+				/>
 			</View>
 			<Divider />
 			<View style={styles.itemsContainer}>
@@ -69,10 +72,9 @@ const styles = StyleSheet.create({
 		paddingVertical: 16,
 	},
 	logo: {
-		width: 60,
-		height: 60,
+		width: 100,
+		height: 100,
 		borderRadius: 30,
-		borderWidth: 1,
 	},
 });
 

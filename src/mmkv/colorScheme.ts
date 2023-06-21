@@ -1,5 +1,5 @@
 import { MMKV, useMMKVString } from "react-native-mmkv";
-import { type ColorSchemeName } from "react-native";
+import { Appearance, type ColorSchemeName } from "react-native";
 import { logError } from "../utils/log";
 
 const COLOR_SCHEME_KEY = "udev_theme";
@@ -17,13 +17,20 @@ const getColorSchemeStorage = () => {
 	return colorSchemeStorage;
 };
 
+const getSystemColorScheme = () => {
+	return Appearance.getColorScheme() || DEFAULT_THEME;
+};
+
 export const useUserColorScheme = () => {
-	return useMMKVString(COLOR_SCHEME_KEY);
+	return useMMKVString(COLOR_SCHEME_KEY, getColorSchemeStorage());
 };
 
 export const setUserColorScheme = (theme: ColorSchemeName) => {
 	try {
-		getColorSchemeStorage().set(COLOR_SCHEME_KEY, theme || DEFAULT_THEME);
+		getColorSchemeStorage().set(
+			COLOR_SCHEME_KEY,
+			theme || getSystemColorScheme(),
+		);
 	} catch (e) {
 		logError(e as Error, "fn: setTheme exception");
 	}
@@ -36,5 +43,11 @@ export const getUserColorScheme = (): ColorSchemeName => {
 	} catch (e) {
 		logError(e as Error, "fn: getTheme exception");
 		return DEFAULT_THEME;
+	}
+};
+
+export const setUserColorSchemeOnSetup = () => {
+	if (!getColorSchemeStorage().contains(COLOR_SCHEME_KEY)) {
+		setUserColorScheme(getSystemColorScheme());
 	}
 };

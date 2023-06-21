@@ -1,6 +1,6 @@
 import merge from "deepmerge";
 import { FunctionComponent, useEffect } from "react";
-import { StatusBar, StatusBarStyle, useColorScheme } from "react-native";
+import { StatusBar, StatusBarStyle } from "react-native";
 import {
 	adaptNavigationTheme,
 	MD3DarkTheme,
@@ -13,7 +13,10 @@ import {
 	DefaultTheme as RNDefaultTheme,
 } from "@react-navigation/native";
 import Router from "./src/router";
-import { useUserColorScheme } from "./src/mmkv/colorScheme";
+import {
+	useUserColorScheme,
+	setUserColorSchemeOnSetup,
+} from "./src/mmkv/colorScheme";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,
@@ -23,8 +26,14 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
 const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
 const App: FunctionComponent = () => {
+	useEffect(() => {
+		// TODO: avoid re-render on first install
+		setUserColorSchemeOnSetup();
+	}, []);
+
 	const [userColorScheme] = useUserColorScheme();
 
+	// TODO: possible memoization for theme
 	const theme =
 		userColorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
 	const statusBarStyle: StatusBarStyle =

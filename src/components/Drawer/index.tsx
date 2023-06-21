@@ -39,7 +39,7 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 				<View>
 					<Divider />
 					<Drawer.Item
-						icon="theme-light-dark"
+						icon="white-balance-sunny"
 						label="Dark Theme"
 						right={() => {
 							return (

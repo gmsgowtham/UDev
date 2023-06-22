@@ -26,9 +26,11 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 		<>
 			<View style={styles.logoContainer}>
 				<FastImage
-					source={require("./../../assets/icon.png")}
+					source={require("./../../assets/logo.png")}
 					style={styles.logo}
+					resizeMode={FastImage.resizeMode.cover}
 				/>
+				<Text variant="headlineSmall">UDev</Text>
 			</View>
 			<Divider />
 			<View style={styles.itemsContainer}>
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
 	logo: {
 		width: 100,
 		height: 100,
-		borderRadius: 30,
+		borderRadius: 50,
 	},
 });
 

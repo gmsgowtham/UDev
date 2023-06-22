@@ -8,7 +8,8 @@
     "lint": "rome check ./",
     "format": "rome format ./ --write",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build:android:release": "react-native build-android --mode=release"
   },
   "dependencies": {
     "@flyerhq/react-native-link-preview": "1.6.0",

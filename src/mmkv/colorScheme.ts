@@ -1,9 +1,15 @@
 import { MMKV, useMMKVString } from "react-native-mmkv";
-import { Appearance, type ColorSchemeName } from "react-native";
+import { type ColorSchemeName } from "react-native";
 import { logError } from "../utils/log";
 
 const COLOR_SCHEME_KEY = "udev_theme";
-const DEFAULT_THEME: ColorSchemeName = "light";
+export enum THEME_VALUES {
+	Light = "light",
+	Dark = "dark",
+	System = "system",
+}
+
+export const DEFAULT_THEME: ColorSchemeName = THEME_VALUES.Light;
 
 let colorSchemeStorage: MMKV;
 const getColorSchemeStorage = () => {
@@ -12,13 +18,14 @@ const getColorSchemeStorage = () => {
 			id: "udev_theme",
 			encryptionKey: "THEME",
 		});
+
+		// set theme on first install
+		if (!colorSchemeStorage.contains(COLOR_SCHEME_KEY)) {
+			colorSchemeStorage.set(COLOR_SCHEME_KEY, THEME_VALUES.System);
+		}
 	}
 
 	return colorSchemeStorage;
-};
-
-const getSystemColorScheme = () => {
-	return Appearance.getColorScheme() || DEFAULT_THEME;
 };
 
 export const useUserColorScheme = () => {
@@ -43,11 +50,5 @@ export const getUserColorScheme = (): ColorSchemeName => {
 	} catch (e) {
 		logError(e as Error, "fn: getTheme exception");
 		return DEFAULT_THEME;
-	}
-};
-
-export const setUserColorSchemeOnSetup = () => {
-	if (!getColorSchemeStorage().contains(COLOR_SCHEME_KEY)) {
-		setUserColorScheme(getSystemColorScheme());
 	}
 };

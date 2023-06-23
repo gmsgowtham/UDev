@@ -5,7 +5,7 @@ import { Avatar, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
 	cover: {
-		uri?: string;
+		uri?: string | null;
 	};
 	title: string;
 	author: {

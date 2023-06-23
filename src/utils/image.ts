@@ -5,14 +5,18 @@ interface ImageSize {
 	height: number;
 }
 
-export const getImageSize = async (uri: string): Promise<ImageSize> => {
+export const getImageSize = async (uri?: string | null): Promise<ImageSize> => {
 	return new Promise((resolve) => {
-		Image.getSize(
-			uri,
-			(width: number, height: number) => {
-				resolve({ width, height });
-			},
-			() => resolve({ width: 0, height: 0 }),
-		);
+		if (uri) {
+			Image.getSize(
+				uri,
+				(width: number, height: number) => {
+					resolve({ width, height });
+				},
+				() => resolve({ width: 0, height: 0 }),
+			);
+		}
+
+		resolve({ width: 0, height: 0 });
 	});
 };

@@ -34,10 +34,7 @@ export const useUserColorScheme = () => {
 
 export const setUserColorScheme = (theme: ColorSchemeName) => {
 	try {
-		getColorSchemeStorage().set(
-			COLOR_SCHEME_KEY,
-			theme || getSystemColorScheme(),
-		);
+		getColorSchemeStorage().set(COLOR_SCHEME_KEY, theme ?? DEFAULT_THEME);
 	} catch (e) {
 		logError(e as Error, "fn: setTheme exception");
 	}

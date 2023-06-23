@@ -1,7 +1,13 @@
+import {
+	DEFAULT_THEME,
+	THEME_VALUES,
+	useUserColorScheme,
+} from "../../mmkv/colorScheme";
 import { HELP_TEXT } from "../../utils/const";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { FunctionComponent, memo, useMemo } from "react";
 import {
+	ColorSchemeName,
 	StyleSheet,
 	TextStyle,
 	ToastAndroid,
@@ -23,13 +29,14 @@ interface HighlighterProps {
 	language?: string;
 }
 
-export const Highlighter: FunctionComponent<HighlighterProps> = ({
+export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 	code,
 	containerStyle,
 	textStyle,
 	language,
 }) => {
-	const colorScheme = useColorScheme();
+	const [userColorScheme] = useUserColorScheme();
+	const systemColorScheme = useColorScheme();
 
 	const onCopyCodePress = () => {
 		Clipboard.setString(code);
@@ -40,10 +47,17 @@ export const Highlighter: FunctionComponent<HighlighterProps> = ({
 		);
 	};
 
-	const hlsStyles = useMemo(
-		() => (colorScheme === "light" ? lightStyle : darkStyle),
-		[colorScheme],
-	);
+	const hlsStyles = useMemo(() => {
+		let colorScheme: ColorSchemeName;
+		if (userColorScheme === THEME_VALUES.System) {
+			colorScheme = systemColorScheme ?? DEFAULT_THEME;
+		} else {
+			colorScheme = userColorScheme as ColorSchemeName;
+		}
+
+		if (colorScheme === THEME_VALUES.Light) return lightStyle;
+		return darkStyle;
+	}, [userColorScheme, systemColorScheme]);
 
 	return (
 		<>
@@ -90,4 +104,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default memo(Highlighter);
+export default memo(SyntaxHighlighter);

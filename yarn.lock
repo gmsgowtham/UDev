@@ -6712,10 +6712,10 @@ react-native-marked@5.0.4:
     react-native-table-component "1.2.2"
     svg-parser "2.0.4"
 
-react-native-mmkv@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.9.0.tgz#22ab2c1a2a59ab1cfbf0670d1ae69620fbf621e4"
-  integrity sha512-6nA9bn95N9DkIar2Opm4h46JKFDUJbPUpV0P//Bn3Q/wbGP6T8w5y7D4ezFVv5ESkkIrh7ARbEUGw8rlLCsHPw==
+react-native-mmkv@2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.10.0.tgz#2d8872e3ef67a91648cc06d6c377ee2ce7a85816"
+  integrity sha512-q8WYRjHKIWQMJW1qGJHBMWKOVJkMrl9ggK9uY2QMF18KSC98Bj+HxvO3ztjguE0Z4GWUOzpyyULxSCHJ9p+t2w==
 
 react-native-paper@5.8.0:
   version "5.8.0"

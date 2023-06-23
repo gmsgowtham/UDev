@@ -1,17 +1,17 @@
+import { THEME_VALUES, useUserColorScheme } from "../../mmkv/colorScheme";
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { FunctionComponent, memo, useState } from "react";
-import { View, StyleSheet, ColorSchemeName } from "react-native";
+import { ColorSchemeName, StyleSheet, View } from "react-native";
+import FastImage from "react-native-fast-image";
 import {
-	Drawer,
-	Text,
+	Button,
 	Divider,
+	Drawer,
 	Modal,
 	Portal,
-	Button,
+	Text,
 	useTheme,
 } from "react-native-paper";
-import { DrawerContentComponentProps } from "@react-navigation/drawer";
-import FastImage from "react-native-fast-image";
-import { THEME_VALUES, useUserColorScheme } from "../../mmkv/colorScheme";
 
 const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 	navigation,

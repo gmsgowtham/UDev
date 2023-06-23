@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "../../utils/const";
-import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
 import { getArticlesList } from "../../api";
+import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
+import { perfArrayConcat } from "../../utils/array";
+import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "../../utils/const";
 import {
 	CommonState,
 	setErrorState,
@@ -9,7 +9,7 @@ import {
 	setRefreshingState,
 } from "../helpers";
 import { ToastAndroid } from "react-native";
-import { perfArrayConcat } from "../../utils/array";
+import { create } from "zustand";
 
 export interface ArticleFeedStateBase extends CommonState {
 	articles: ApiArticleFeedItem[];

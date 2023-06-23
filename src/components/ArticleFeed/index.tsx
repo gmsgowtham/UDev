@@ -1,11 +1,11 @@
-import { FunctionComponent, memo, useCallback } from "react";
+import { ApiArticleFeedItem } from "../../api/types";
+import ArticleFeedItem from "../ArticleFeedItem";
 import {
 	FlashList,
 	FlashListProps,
 	type ListRenderItem,
 } from "@shopify/flash-list";
-import { ApiArticleFeedItem } from "../../api/types";
-import ArticleFeedItem from "../ArticleFeedItem";
+import { FunctionComponent, memo, useCallback } from "react";
 
 type ArticleFeed = {
 	data: ApiArticleFeedItem[];

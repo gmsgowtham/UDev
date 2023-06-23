@@ -1,28 +1,28 @@
-import merge from "deepmerge";
-import { FunctionComponent, useEffect, useMemo } from "react";
 import {
-	StatusBar,
-	StatusBarStyle,
-	useColorScheme,
-	ColorSchemeName,
-} from "react-native";
-import {
-	adaptNavigationTheme,
-	MD3DarkTheme,
-	MD3LightTheme,
-	Provider as PaperProvider,
-} from "react-native-paper";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+	DEFAULT_THEME,
+	THEME_VALUES,
+	useUserColorScheme,
+} from "./src/mmkv/colorScheme";
+import Router from "./src/router";
 import {
 	DarkTheme as RNDarkTheme,
 	DefaultTheme as RNDefaultTheme,
 } from "@react-navigation/native";
-import Router from "./src/router";
+import merge from "deepmerge";
+import { FunctionComponent, useEffect, useMemo } from "react";
 import {
-	useUserColorScheme,
-	THEME_VALUES,
-	DEFAULT_THEME,
-} from "./src/mmkv/colorScheme";
+	ColorSchemeName,
+	StatusBar,
+	StatusBarStyle,
+	useColorScheme,
+} from "react-native";
+import {
+	MD3DarkTheme,
+	MD3LightTheme,
+	Provider as PaperProvider,
+	adaptNavigationTheme,
+} from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,

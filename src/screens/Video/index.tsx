@@ -1,10 +1,10 @@
-import { FunctionComponent } from "react";
-import { Linking, Share, StyleSheet, View } from "react-native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Appbar } from "react-native-paper";
-import Video from "react-native-video";
 import { StackParamList } from "../../router/types";
 import { logError } from "../../utils/log";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FunctionComponent } from "react";
+import { Linking, Share, StyleSheet, View } from "react-native";
+import { Appbar } from "react-native-paper";
+import Video from "react-native-video";
 
 type Props = NativeStackScreenProps<StackParamList, "Video">;
 

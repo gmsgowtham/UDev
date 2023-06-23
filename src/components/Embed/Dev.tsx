@@ -1,8 +1,8 @@
+import { getAbsURLFromAnchorMarkdown } from "../../utils/markdown";
+import { LinkPreview } from "@flyerhq/react-native-link-preview";
 import { FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
-import { Surface, useTheme, Text } from "react-native-paper";
-import { LinkPreview } from "@flyerhq/react-native-link-preview";
-import { getAbsURLFromAnchorMarkdown } from "../../utils/markdown";
+import { Surface, Text, useTheme } from "react-native-paper";
 
 interface DevEmbedProps {
 	url: string;

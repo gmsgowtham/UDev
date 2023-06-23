@@ -1,20 +1,20 @@
-import React, { memo, useMemo, FunctionComponent } from "react";
+import { HELP_TEXT } from "../../utils/const";
+import Clipboard from "@react-native-clipboard/clipboard";
+import React, { FunctionComponent, memo, useMemo } from "react";
 import {
-	TextStyle,
-	View,
-	useColorScheme,
-	ViewStyle,
 	StyleSheet,
+	TextStyle,
 	ToastAndroid,
+	View,
+	ViewStyle,
+	useColorScheme,
 } from "react-native";
 import CodeHighlighter from "react-native-code-highlighter";
-import {
-	stackoverflowLight as lightStyle,
-	stackoverflowDark as darkStyle,
-} from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { IconButton, Text as PaperText } from "react-native-paper";
-import Clipboard from "@react-native-clipboard/clipboard";
-import { HELP_TEXT } from "../../utils/const";
+import {
+	stackoverflowDark as darkStyle,
+	stackoverflowLight as lightStyle,
+} from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 interface HighlighterProps {
 	code: string;

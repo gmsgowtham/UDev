@@ -1,7 +1,7 @@
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { FunctionComponent, memo } from "react";
 import { Appbar } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { DrawerActions, useNavigation } from "@react-navigation/native";
 
 type Props = {
 	title: string;

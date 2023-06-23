@@ -1,4 +1,4 @@
-import React, { memo, type FunctionComponent } from "react";
+import React, { type FunctionComponent, memo } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 interface Props {

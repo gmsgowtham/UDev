@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "rome check ./",
+    "lint:apply": "rome check ./ --apply-unsafe",
     "format": "rome format ./ --write",
     "start": "react-native start",
     "test": "jest",

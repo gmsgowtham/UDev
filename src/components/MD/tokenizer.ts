@@ -1,7 +1,7 @@
 import {
-	MarkedTokenizer,
-	MarkedLexer,
 	type CustomToken,
+	MarkedLexer,
+	MarkedTokenizer,
 } from "react-native-marked";
 
 class MDTokenizer extends MarkedTokenizer<CustomToken> {

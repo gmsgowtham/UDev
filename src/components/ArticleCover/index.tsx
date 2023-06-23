@@ -1,7 +1,7 @@
+import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import { FunctionComponent, memo } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Text, Avatar } from "react-native-paper";
-import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
+import { Avatar, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
 	cover: {

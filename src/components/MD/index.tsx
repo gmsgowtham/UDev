@@ -1,9 +1,9 @@
+import renderer from "./renderer";
+import { styles } from "./styles";
+import tokenizer from "./tokenizer";
 import { FunctionComponent, memo } from "react";
 import Markdown from "react-native-marked";
 import { useTheme } from "react-native-paper";
-import renderer from "./renderer";
-import tokenizer from "./tokenizer";
-import { styles } from "./styles";
 
 interface MarkdownRendererProps {
 	HeaderComponent?: () => React.JSX.Element | null;

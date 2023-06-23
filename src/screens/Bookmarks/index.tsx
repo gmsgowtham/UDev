@@ -1,18 +1,18 @@
-import {
-	FunctionComponent,
-	useState,
-	useEffect,
-	useCallback,
-	memo,
-} from "react";
-import { View, StyleSheet } from "react-native";
-import { Appbar } from "react-native-paper";
-import { FlashList, type ListRenderItem } from "@shopify/flash-list";
-import { StackParamList } from "../../router/types";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ArticleFeedItem from "../../components/ArticleFeedItem";
 import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
+import { StackParamList } from "../../router/types";
 import { useIsFocused } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlashList, type ListRenderItem } from "@shopify/flash-list";
+import {
+	FunctionComponent,
+	memo,
+	useCallback,
+	useEffect,
+	useState,
+} from "react";
+import { StyleSheet, View } from "react-native";
+import { Appbar } from "react-native-paper";
 
 type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
 

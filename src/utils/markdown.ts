@@ -1,6 +1,5 @@
 import { LANG_ALIAS_MAP } from "./const";
 import { logError } from "./log";
-import { replaceNewlines } from "./string";
 import DOMParser from "advanced-html-parser";
 import FrontMatter from "front-matter";
 import { escape as escapeHTML, unescape as unescapeHTML } from "html-escaper";

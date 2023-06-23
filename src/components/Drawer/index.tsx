@@ -1,7 +1,7 @@
 import { THEME_VALUES, useUserColorScheme } from "../../mmkv/colorScheme";
 import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { FunctionComponent, memo, useState } from "react";
-import { ColorSchemeName, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import FastImage from "react-native-fast-image";
 import {
 	Button,

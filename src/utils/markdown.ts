@@ -1,7 +1,7 @@
 import { LANG_ALIAS_MAP } from "./const";
 import { logError } from "./log";
 import { replaceNewlines } from "./string";
-import Domino from "domino";
+import DOMParser from "advanced-html-parser";
 import FrontMatter from "front-matter";
 import { escape as escapeHTML, unescape as unescapeHTML } from "html-escaper";
 import TurndownService from "turndown";
@@ -32,9 +32,10 @@ export const stripMetaData = (markdown: string): string => {
 
 export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 	try {
-		const withBR = replaceNewlines(markdown, "<br/>");
-		const document = Domino.createDocument(withBR, true);
-		return fixTurndownEscaping(getTurndownService().turndown(document).trim());
+		const document = DOMParser.parse(`<html>${markdown}</html>`);
+		return fixTurndownEscaping(
+			getTurndownService().turndown(document.documentElement).trim(),
+		);
 	} catch (e) {
 		logError(e as Error, "fn: convertHtmlInMarkdownToMarkdown exception");
 		return markdown;

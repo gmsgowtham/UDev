@@ -10,7 +10,7 @@
     "format": "rome format ./ --write",
     "start": "react-native start",
     "test": "jest",
-    "android:build:release": "react-native build-android --mode=release",
+    "android:release": "react-native build-android --mode=release",
     "android:clean": "cd android && ./gradlew clean && ./gradlew --stop && cd ..",
     "android:bundle": "cd android && ./gradlew bundleRelease && ./gradlew --stop && cd .."
   },

@@ -1,14 +1,18 @@
-import { FunctionComponent, memo, useEffect, useState } from "react";
-import { ActivityIndicator, Image } from "react-native";
+import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
+import { Image, StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
+import { ActivityIndicator } from "react-native-paper";
 
 type FitFastImageProps = {
 	uri: string;
 	label?: string;
 };
 
-const FitFastImage: FunctionComponent<FitFastImageProps> = ({ uri, label }) => {
-	let isFirstLoad = false;
+const FitFastImage: FunctionComponent<FitFastImageProps> = ({
+	uri,
+	label = "image",
+}) => {
+	const isFirstLoad = useRef(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [aspectRatio, setAspectRatio] = useState<number | undefined>(undefined);
 
@@ -17,9 +21,9 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({ uri, label }) => {
 	}, []);
 
 	const onLoadStart = () => {
-		if (isFirstLoad) {
+		if (isFirstLoad.current) {
 			setIsLoading(true);
-			isFirstLoad = false;
+			isFirstLoad.current = false;
 		}
 	};
 
@@ -41,13 +45,23 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({ uri, label }) => {
 			onLoadEnd={onLoadEndOrOnError}
 			onError={onLoadEndOrOnError}
 			source={{ uri: uri }}
-			style={{ width: "100%", aspectRatio }}
+			style={[styles.image, { aspectRatio }]}
 			resizeMode={FastImage.resizeMode.contain}
 			aria-label={label}
+			accessibilityLabel={label}
 		>
-			{isLoading ? <ActivityIndicator size={"small"} /> : null}
+			{isLoading ? <ActivityIndicator style={styles.indicator} /> : null}
 		</FastImage>
 	);
 };
+
+const styles = StyleSheet.create({
+	image: {
+		width: "100%",
+	},
+	indicator: {
+		paddingVertical: 16,
+	},
+});
 
 export default memo(FitFastImage);

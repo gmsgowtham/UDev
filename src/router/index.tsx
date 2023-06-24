@@ -13,6 +13,7 @@ import type { FunctionComponent } from "react";
 import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import AboutScreen from "../screens/About";
 import ArticleScreen from "../screens/Article";
 import BookmarksScreen from "../screens/Bookmarks";
 import LandingScreen from "../screens/LandingFeed";
@@ -139,6 +140,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme }) => {
 				<Stack.Screen name="Article" component={ArticleScreen} />
 				<Stack.Screen name="Bookmarks" component={BookmarksScreen} />
 				<Stack.Screen name="Video" component={VideoScreen} />
+				<Stack.Screen name="About" component={AboutScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

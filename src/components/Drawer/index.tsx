@@ -27,6 +27,10 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 		navigation.navigate("Bookmarks");
 	};
 
+	const onAboutItemPress = () => {
+		navigation.navigate("About");
+	};
+
 	const onThemeSelectPress = (itemValue: string) => {
 		hideModal();
 		setUserColorScheme(itemValue);
@@ -49,6 +53,11 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 						icon="bookmark"
 						label="Bookmarks"
 						onPress={onBookmarksItemPress}
+					/>
+					<Drawer.Item
+						icon="information"
+						label="About"
+						onPress={onAboutItemPress}
 					/>
 				</View>
 				<View>

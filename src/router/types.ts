@@ -25,4 +25,5 @@ export type StackParamList = {
 		source: string;
 		cover: string;
 	};
+	About: undefined;
 };

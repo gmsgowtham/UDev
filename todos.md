@@ -9,3 +9,4 @@
 - [ ] Loading placeholder for feeds
 - [x] Image component loading behaviour
 - [ ] Link preview error handling
+- [x] About page

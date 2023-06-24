@@ -1,6 +1,6 @@
 import {
-	DEFAULT_THEME,
-	THEME_VALUES,
+	COLOR_SCHEME_VALUES,
+	DEFAULT_COLOR_SCHEME,
 	useUserColorScheme,
 } from "./src/mmkv/colorScheme";
 import Router from "./src/router";
@@ -37,8 +37,8 @@ const App: FunctionComponent = () => {
 
 	const [theme, statusBarStyle] = useMemo(() => {
 		let scheme: ColorSchemeName;
-		if (userColorScheme === THEME_VALUES.System || !userColorScheme) {
-			scheme = (systemColorScheme ?? DEFAULT_THEME) as ColorSchemeName;
+		if (userColorScheme === COLOR_SCHEME_VALUES.System || !userColorScheme) {
+			scheme = (systemColorScheme ?? DEFAULT_COLOR_SCHEME) as ColorSchemeName;
 		} else {
 			scheme = userColorScheme as ColorSchemeName;
 		}

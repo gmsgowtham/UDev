@@ -1,6 +1,6 @@
 import {
-	DEFAULT_THEME,
-	THEME_VALUES,
+	COLOR_SCHEME_VALUES,
+	DEFAULT_COLOR_SCHEME,
 	useUserColorScheme,
 } from "../../mmkv/colorScheme";
 import { HELP_TEXT } from "../../utils/const";
@@ -49,13 +49,13 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 
 	const hlsStyles = useMemo(() => {
 		let colorScheme: ColorSchemeName;
-		if (userColorScheme === THEME_VALUES.System) {
-			colorScheme = systemColorScheme ?? DEFAULT_THEME;
+		if (userColorScheme === COLOR_SCHEME_VALUES.System) {
+			colorScheme = systemColorScheme ?? DEFAULT_COLOR_SCHEME;
 		} else {
 			colorScheme = userColorScheme as ColorSchemeName;
 		}
 
-		if (colorScheme === THEME_VALUES.Light) return lightStyle;
+		if (colorScheme === COLOR_SCHEME_VALUES.Light) return lightStyle;
 		return darkStyle;
 	}, [userColorScheme, systemColorScheme]);
 

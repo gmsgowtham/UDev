@@ -1,4 +1,7 @@
-import { THEME_VALUES, useUserColorScheme } from "../../mmkv/colorScheme";
+import {
+	COLOR_SCHEME_VALUES,
+	useUserColorScheme,
+} from "../../mmkv/colorScheme";
 import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { FunctionComponent, memo, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -89,27 +92,27 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 								icon={"palette"}
 								uppercase
 								mode="text"
-								onPress={() => onThemeSelectPress(THEME_VALUES.System)}
+								onPress={() => onThemeSelectPress(COLOR_SCHEME_VALUES.System)}
 							>
-								{THEME_VALUES.System}
+								{COLOR_SCHEME_VALUES.System}
 							</Button>
 							<Button
 								contentStyle={styles.buttonContent}
 								icon={"white-balance-sunny"}
 								uppercase
 								mode="text"
-								onPress={() => onThemeSelectPress(THEME_VALUES.Light)}
+								onPress={() => onThemeSelectPress(COLOR_SCHEME_VALUES.Light)}
 							>
-								{THEME_VALUES.Light}
+								{COLOR_SCHEME_VALUES.Light}
 							</Button>
 							<Button
 								contentStyle={styles.buttonContent}
 								icon={"moon-waning-crescent"}
 								uppercase
 								mode="text"
-								onPress={() => onThemeSelectPress(THEME_VALUES.Dark)}
+								onPress={() => onThemeSelectPress(COLOR_SCHEME_VALUES.Dark)}
 							>
-								{THEME_VALUES.Dark}
+								{COLOR_SCHEME_VALUES.Dark}
 							</Button>
 						</View>
 					</View>

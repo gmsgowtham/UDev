@@ -1,16 +1,20 @@
 import { StackParamList } from "../../router/types";
 import { logError } from "../../utils/log";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent } from "react";
-import { Linking, Share, StyleSheet, View } from "react-native";
-import { Appbar } from "react-native-paper";
-import Video from "react-native-video";
+import { FunctionComponent, useState } from "react";
+import { Dimensions, Linking, Share, StyleSheet, View } from "react-native";
+import { FAB, Text } from "react-native-paper";
+import VideoPlayer from "react-native-video-controls";
 
 type Props = NativeStackScreenProps<StackParamList, "Video">;
+
+const { width } = Dimensions.get("window");
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { source, title, url, cover } = params;
+	const [isFullScreen, setIsFullScreen] = useState(false);
+	const [isControlsVisible, setIsControlsVisible] = useState(true);
 
 	const onBackActionPress = () => {
 		navigation.goBack();
@@ -34,28 +38,44 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<Appbar.Header elevated>
-				<Appbar.BackAction onPress={onBackActionPress} />
-				<Appbar.Content title={title} />
-				<Appbar.Action
-					icon="earth"
-					onPress={onOpenInBrowserActionPress}
-					accessibilityHint="Open in browser"
-					accessibilityLabel="Open in browser"
-				/>
-				<Appbar.Action
-					icon="share"
-					onPress={onShareActionPress}
-					accessibilityHint="Share post"
-					accessibilityLabel="Share post"
-				/>
-			</Appbar.Header>
-			<Video
-				controls
+			<VideoPlayer
+				disableVolume
+				tapAnywhereToPause
+				toggleResizeModeOnFullscreen={false}
+				fullscreen={isFullScreen}
 				source={{ uri: source }}
 				style={styles.backgroundVideo}
 				poster={cover}
+				onBack={onBackActionPress}
+				controlTimeout={5000}
+				onEnterFullscreen={() => setIsFullScreen(true)}
+				onExitFullscreen={() => setIsFullScreen(false)}
+				onHideControls={() => setIsControlsVisible(false)}
+				onShowControls={() => setIsControlsVisible(true)}
 			/>
+			{isControlsVisible ? (
+				<>
+					<View style={styles.titleContainer}>
+						<Text variant="titleLarge" style={styles.title}>
+							{title}
+						</Text>
+					</View>
+					<View style={styles.fabActions}>
+						<FAB
+							icon="share"
+							accessibilityLabel="Share"
+							onPress={onShareActionPress}
+							variant="primary"
+						/>
+						<FAB
+							icon="earth"
+							accessibilityLabel="Open in Browser"
+							onPress={onOpenInBrowserActionPress}
+							variant="tertiary"
+						/>
+					</View>
+				</>
+			) : null}
 		</View>
 	);
 };
@@ -63,6 +83,8 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "#000",
+		position: "relative",
 	},
 	listContainer: {
 		margin: 8,
@@ -71,6 +93,21 @@ const styles = StyleSheet.create({
 	},
 	backgroundVideo: {
 		flex: 1,
+	},
+	titleContainer: {
+		position: "absolute",
+		bottom: 100,
+		left: 16,
+		width: width * (3 / 4),
+	},
+	title: {
+		color: "#fff",
+	},
+	fabActions: {
+		position: "absolute",
+		gap: 16,
+		bottom: 100,
+		right: 16,
 	},
 });
 

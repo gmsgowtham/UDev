@@ -1,4 +1,6 @@
+import Link from "../../components/Link";
 import { StackParamList } from "../../router/types";
+import { NPM_HOST } from "../../utils/const";
 import meta from "./../../../package.json";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { FunctionComponent } from "react";
@@ -21,7 +23,8 @@ const AboutScreen: FunctionComponent<Props> = ({ navigation }) => {
 						<View style={styles.library} key={key}>
 							<Text style={styles.libraryId}>{index + 1}.</Text>
 							<View style={styles.libraryInfo}>
-								<Text>{key}</Text>
+								{/* <Text>{key}</Text> */}
+								<Link url={`${NPM_HOST}/package/${key}`}>{key}</Link>
 								<Text>@{version}</Text>
 							</View>
 						</View>

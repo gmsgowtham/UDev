@@ -14,7 +14,8 @@
     "android:release": "react-native build-android --mode=release",
     "android:clean": "cd android && ./gradlew clean && ./gradlew --stop && cd ..",
     "android:bundle": "cd android && ./gradlew bundleRelease && ./gradlew --stop && cd ..",
-    "check:tsc": "tsc --noEmit"
+    "check:tsc": "tsc --noEmit",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@flyerhq/react-native-link-preview": "1.6.0",

@@ -3,8 +3,8 @@ import { logError } from "../../utils/log";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, useState } from "react";
 import { Dimensions, Linking, Share, StyleSheet, View } from "react-native";
+import VideoPlayer from "react-native-media-console";
 import { FAB, Text } from "react-native-paper";
-import VideoPlayer from "react-native-video-controls";
 
 type Props = NativeStackScreenProps<StackParamList, "Video">;
 

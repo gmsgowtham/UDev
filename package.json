@@ -38,6 +38,7 @@
     "react-native-fast-image": "8.6.3",
     "react-native-gesture-handler": "2.12.0",
     "react-native-marked": "5.0.4",
+    "react-native-media-console": "2.0.6",
     "react-native-mmkv": "2.10.0",
     "react-native-paper": "5.8.0",
     "react-native-reanimated": "3.3.0",
@@ -46,7 +47,6 @@
     "react-native-svg": "13.9.0",
     "react-native-vector-icons": "9.2.0",
     "react-native-video": "6.0.0-alpha.6",
-    "react-native-video-controls": "2.8.1",
     "react-syntax-highlighter": "15.5.0",
     "turndown": "7.1.2",
     "zustand": "4.3.8"

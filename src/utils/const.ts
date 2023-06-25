@@ -1,5 +1,3 @@
-import TurndownService from "turndown";
-
 export const API_BASE_URL = "https://dev.to/api";
 export const DEFAULT_PAGE_SIZE = 10;
 export const HELP_TEXT = {
@@ -20,3 +18,4 @@ export const MAX_BOOKMARKS = 100;
 export const ARTICLE_COVER_IMAGE_ASPECT_RATIO = 2.380952380952381; // 1000:420
 export const VIDEO_COVER_IMAGE_ASPECT_RATIO = 1.7764227642; // 874:492
 export const DEV_TO_HOST = "https://dev.to";
+export const NPM_HOST = "https://www.npmjs.com";

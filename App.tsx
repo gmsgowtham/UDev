@@ -1,22 +1,28 @@
-import merge from "deepmerge";
-import { FunctionComponent, useEffect } from "react";
-import { StatusBar, StatusBarStyle } from "react-native";
 import {
-	adaptNavigationTheme,
-	MD3DarkTheme,
-	MD3LightTheme,
-	Provider as PaperProvider,
-} from "react-native-paper";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+	COLOR_SCHEME_VALUES,
+	DEFAULT_COLOR_SCHEME,
+	useUserColorScheme,
+} from "./src/mmkv/colorScheme";
+import Router from "./src/router";
 import {
 	DarkTheme as RNDarkTheme,
 	DefaultTheme as RNDefaultTheme,
 } from "@react-navigation/native";
-import Router from "./src/router";
+import merge from "deepmerge";
+import { FunctionComponent, useEffect, useMemo } from "react";
 import {
-	useUserColorScheme,
-	setUserColorSchemeOnSetup,
-} from "./src/mmkv/colorScheme";
+	ColorSchemeName,
+	StatusBar,
+	StatusBarStyle,
+	useColorScheme,
+} from "react-native";
+import {
+	MD3DarkTheme,
+	MD3LightTheme,
+	Provider as PaperProvider,
+	adaptNavigationTheme,
+} from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,
@@ -26,18 +32,22 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
 const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
 const App: FunctionComponent = () => {
-	useEffect(() => {
-		// TODO: avoid re-render on first install
-		setUserColorSchemeOnSetup();
-	}, []);
-
 	const [userColorScheme] = useUserColorScheme();
+	const systemColorScheme = useColorScheme();
 
-	// TODO: possible memoization for theme
-	const theme =
-		userColorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
-	const statusBarStyle: StatusBarStyle =
-		userColorScheme === "dark" ? "light-content" : "dark-content";
+	const [theme, statusBarStyle] = useMemo(() => {
+		let scheme: ColorSchemeName;
+		if (userColorScheme === COLOR_SCHEME_VALUES.System || !userColorScheme) {
+			scheme = (systemColorScheme ?? DEFAULT_COLOR_SCHEME) as ColorSchemeName;
+		} else {
+			scheme = userColorScheme as ColorSchemeName;
+		}
+
+		const theme = scheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
+		const statusBarStyle =
+			scheme === "dark" ? "light-content" : ("dark-content" as StatusBarStyle);
+		return [theme, statusBarStyle];
+	}, [userColorScheme, systemColorScheme]);
 
 	useEffect(() => {
 		StatusBar.setBackgroundColor(theme.colors.elevation.level2);

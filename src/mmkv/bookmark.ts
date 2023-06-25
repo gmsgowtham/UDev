@@ -1,7 +1,7 @@
-import { MMKV } from "react-native-mmkv";
-import { logError } from "../utils/log";
-import { HELP_TEXT, MAX_BOOKMARKS } from "../utils/const";
 import { perfArrayConcat } from "../utils/array";
+import { HELP_TEXT, MAX_BOOKMARKS } from "../utils/const";
+import { logError } from "../utils/log";
+import { MMKV } from "react-native-mmkv";
 
 const BOOKMARKS_KEY = "udev_bookmarks";
 

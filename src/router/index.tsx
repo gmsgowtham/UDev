@@ -1,27 +1,28 @@
-import type { FunctionComponent } from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { BottomNavigation } from "react-native-paper";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
-	createDrawerNavigator,
 	DrawerContentComponentProps,
+	createDrawerNavigator,
 } from "@react-navigation/drawer";
 import {
 	CommonActions,
 	NavigationContainer,
 	Theme,
 } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type { FunctionComponent } from "react";
+import { BottomNavigation } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import AboutScreen from "../screens/About";
 import ArticleScreen from "../screens/Article";
+import BookmarksScreen from "../screens/Bookmarks";
 import LandingScreen from "../screens/LandingFeed";
 import LatestScreen from "../screens/LatestFeed";
-import VideosScreen from "../screens/Videos";
-import BookmarksScreen from "../screens/Bookmarks";
 import VideoScreen from "../screens/Video";
+import VideosScreen from "../screens/Videos";
 
-import type { DrawerParamList, StackParamList, TabParamList } from "./types";
 import CustomDrawer from "../components/Drawer";
+import type { DrawerParamList, StackParamList, TabParamList } from "./types";
 
 type RouterProps = {
 	theme: Theme;
@@ -139,6 +140,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme }) => {
 				<Stack.Screen name="Article" component={ArticleScreen} />
 				<Stack.Screen name="Bookmarks" component={BookmarksScreen} />
 				<Stack.Screen name="Video" component={VideoScreen} />
+				<Stack.Screen name="About" component={AboutScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

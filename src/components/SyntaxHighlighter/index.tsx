@@ -1,20 +1,26 @@
-import React, { memo, useMemo, FunctionComponent } from "react";
 import {
-	TextStyle,
-	View,
-	useColorScheme,
-	ViewStyle,
+	COLOR_SCHEME_VALUES,
+	DEFAULT_COLOR_SCHEME,
+	useUserColorScheme,
+} from "../../mmkv/colorScheme";
+import { HELP_TEXT } from "../../utils/const";
+import Clipboard from "@react-native-clipboard/clipboard";
+import React, { FunctionComponent, memo, useMemo } from "react";
+import {
+	ColorSchemeName,
 	StyleSheet,
+	TextStyle,
 	ToastAndroid,
+	View,
+	ViewStyle,
+	useColorScheme,
 } from "react-native";
 import CodeHighlighter from "react-native-code-highlighter";
-import {
-	stackoverflowLight as lightStyle,
-	stackoverflowDark as darkStyle,
-} from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { IconButton, Text as PaperText } from "react-native-paper";
-import Clipboard from "@react-native-clipboard/clipboard";
-import { HELP_TEXT } from "../../utils/const";
+import {
+	stackoverflowDark as darkStyle,
+	stackoverflowLight as lightStyle,
+} from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 interface HighlighterProps {
 	code: string;
@@ -23,13 +29,14 @@ interface HighlighterProps {
 	language?: string;
 }
 
-export const Highlighter: FunctionComponent<HighlighterProps> = ({
+export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 	code,
 	containerStyle,
 	textStyle,
 	language,
 }) => {
-	const colorScheme = useColorScheme();
+	const [userColorScheme] = useUserColorScheme();
+	const systemColorScheme = useColorScheme();
 
 	const onCopyCodePress = () => {
 		Clipboard.setString(code);
@@ -40,10 +47,17 @@ export const Highlighter: FunctionComponent<HighlighterProps> = ({
 		);
 	};
 
-	const hlsStyles = useMemo(
-		() => (colorScheme === "light" ? lightStyle : darkStyle),
-		[colorScheme],
-	);
+	const hlsStyles = useMemo(() => {
+		let colorScheme: ColorSchemeName;
+		if (userColorScheme === COLOR_SCHEME_VALUES.System) {
+			colorScheme = systemColorScheme ?? DEFAULT_COLOR_SCHEME;
+		} else {
+			colorScheme = userColorScheme as ColorSchemeName;
+		}
+
+		if (colorScheme === COLOR_SCHEME_VALUES.Light) return lightStyle;
+		return darkStyle;
+	}, [userColorScheme, systemColorScheme]);
 
 	return (
 		<>
@@ -90,4 +104,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default memo(Highlighter);
+export default memo(SyntaxHighlighter);

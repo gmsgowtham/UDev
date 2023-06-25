@@ -1,18 +1,19 @@
+import ArticleFeedItem from "../../components/ArticleFeedItem";
+import FloatingSvg from "../../components/Svg/Floating";
+import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
+import { StackParamList } from "../../router/types";
+import { useIsFocused } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlashList, type ListRenderItem } from "@shopify/flash-list";
 import {
 	FunctionComponent,
-	useState,
-	useEffect,
-	useCallback,
 	memo,
+	useCallback,
+	useEffect,
+	useState,
 } from "react";
-import { View, StyleSheet } from "react-native";
-import { Appbar } from "react-native-paper";
-import { FlashList, type ListRenderItem } from "@shopify/flash-list";
-import { StackParamList } from "../../router/types";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import ArticleFeedItem from "../../components/ArticleFeedItem";
-import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
-import { useIsFocused } from "@react-navigation/native";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { Appbar, Text } from "react-native-paper";
 
 type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
 
@@ -20,10 +21,11 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 	navigation,
 }) => {
 	const isFocused = useIsFocused();
-	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>();
+	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
 	const onItemClick = (id: number, title: string, url: string) => {
 		navigation.navigate("Article", { id, title, url });
 	};
+	const { width } = Dimensions.get("window");
 
 	useEffect(() => {
 		// Re-fetch bookmarks on focus
@@ -59,17 +61,24 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 				<Appbar.BackAction onPress={() => navigation.goBack()} />
 				<Appbar.Content title={"Bookmarks"} />
 			</Appbar.Header>
-			<View style={styles.listWrapper}>
-				<FlashList
-					showsVerticalScrollIndicator={false}
-					onEndReachedThreshold={0.75}
-					getItemType={(item) => item.type}
-					contentContainerStyle={styles.listContainer}
-					data={bookmarks}
-					renderItem={renderItem}
-					estimatedItemSize={200}
-				/>
-			</View>
+			{bookmarks.length < 1 ? (
+				<View style={styles.noDataContainer}>
+					<FloatingSvg width={width / 1.2} />
+					<Text variant="labelLarge">It's void out there.....</Text>
+				</View>
+			) : (
+				<View style={styles.listWrapper}>
+					<FlashList
+						showsVerticalScrollIndicator={false}
+						onEndReachedThreshold={0.75}
+						getItemType={(item) => item.type}
+						contentContainerStyle={styles.listContainer}
+						data={bookmarks}
+						renderItem={renderItem}
+						estimatedItemSize={200}
+					/>
+				</View>
+			)}
 		</View>
 	);
 };
@@ -84,6 +93,12 @@ const styles = StyleSheet.create({
 	listContainer: {
 		paddingVertical: 4,
 		paddingHorizontal: 8,
+	},
+	noDataContainer: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 24,
 	},
 });
 

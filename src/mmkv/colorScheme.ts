@@ -1,9 +1,15 @@
-import { MMKV, useMMKVString } from "react-native-mmkv";
-import { Appearance, type ColorSchemeName } from "react-native";
 import { logError } from "../utils/log";
+import { type ColorSchemeName } from "react-native";
+import { MMKV, useMMKVString } from "react-native-mmkv";
 
 const COLOR_SCHEME_KEY = "udev_theme";
-const DEFAULT_THEME: ColorSchemeName = "light";
+export enum COLOR_SCHEME_VALUES {
+	Light = "light",
+	Dark = "dark",
+	System = "system",
+}
+
+export const DEFAULT_COLOR_SCHEME: ColorSchemeName = COLOR_SCHEME_VALUES.Light;
 
 let colorSchemeStorage: MMKV;
 const getColorSchemeStorage = () => {
@@ -12,13 +18,14 @@ const getColorSchemeStorage = () => {
 			id: "udev_theme",
 			encryptionKey: "THEME",
 		});
+
+		// set theme on first install
+		if (!colorSchemeStorage.contains(COLOR_SCHEME_KEY)) {
+			colorSchemeStorage.set(COLOR_SCHEME_KEY, COLOR_SCHEME_VALUES.System);
+		}
 	}
 
 	return colorSchemeStorage;
-};
-
-const getSystemColorScheme = () => {
-	return Appearance.getColorScheme() || DEFAULT_THEME;
 };
 
 export const useUserColorScheme = () => {
@@ -29,7 +36,7 @@ export const setUserColorScheme = (theme: ColorSchemeName) => {
 	try {
 		getColorSchemeStorage().set(
 			COLOR_SCHEME_KEY,
-			theme || getSystemColorScheme(),
+			theme ?? DEFAULT_COLOR_SCHEME,
 		);
 	} catch (e) {
 		logError(e as Error, "fn: setTheme exception");
@@ -39,15 +46,9 @@ export const setUserColorScheme = (theme: ColorSchemeName) => {
 export const getUserColorScheme = (): ColorSchemeName => {
 	try {
 		return (getColorSchemeStorage().getString(COLOR_SCHEME_KEY) ||
-			DEFAULT_THEME) as ColorSchemeName;
+			DEFAULT_COLOR_SCHEME) as ColorSchemeName;
 	} catch (e) {
 		logError(e as Error, "fn: getTheme exception");
-		return DEFAULT_THEME;
-	}
-};
-
-export const setUserColorSchemeOnSetup = () => {
-	if (!getColorSchemeStorage().contains(COLOR_SCHEME_KEY)) {
-		setUserColorScheme(getSystemColorScheme());
+		return DEFAULT_COLOR_SCHEME;
 	}
 };

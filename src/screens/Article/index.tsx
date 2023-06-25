@@ -1,21 +1,21 @@
-import { FunctionComponent, useCallback, useState } from "react";
-import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
-import { shallow } from "zustand/shallow";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Appbar } from "react-native-paper";
-import { StackParamList } from "../../router/types";
-import useArticleStore from "../../store/articles/article";
-import RenderMarkdown from "../../components/MD";
-import PageLoader from "../../components/Loader/PageLoader";
-import { useFocusEffect } from "@react-navigation/native";
 import ArticleCover from "../../components/ArticleCover";
+import PageLoader from "../../components/Loader/PageLoader";
+import RenderMarkdown from "../../components/MD";
 import {
 	isBookmarked,
 	removeBookmark,
 	savePostToBookmarks,
 } from "../../mmkv/bookmark";
+import { StackParamList } from "../../router/types";
+import useArticleStore from "../../store/articles/article";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
+import { useFocusEffect } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FunctionComponent, useCallback, useState } from "react";
+import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
+import { Appbar } from "react-native-paper";
+import { shallow } from "zustand/shallow";
 
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 

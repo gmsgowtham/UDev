@@ -1,12 +1,12 @@
-import { ReactNode } from "react";
-import { Renderer, RendererInterface } from "react-native-marked";
-import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { getActualLangForCodeSnippet } from "../../utils/markdown";
+import { isStringOf } from "../../utils/typeof";
+import CTAButton from "../CTAButton";
 import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/Dev";
-import CTAButton from "../CTAButton";
-import { isStringOf } from "../../utils/typeof";
-import { getActualLangForCodeSnippet } from "../../utils/markdown";
+import { ReactNode } from "react";
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { Renderer, RendererInterface } from "react-native-marked";
 
 class MDRenderer extends Renderer implements RendererInterface {
 	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => (

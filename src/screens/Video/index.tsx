@@ -47,7 +47,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				style={styles.backgroundVideo}
 				poster={cover}
 				onBack={onBackActionPress}
-				controlTimeout={5000}
+				controlTimeoutDelay={5000}
 				onEnterFullscreen={() => setIsFullScreen(true)}
 				onExitFullscreen={() => setIsFullScreen(false)}
 				onHideControls={() => setIsControlsVisible(false)}
@@ -65,13 +65,15 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 							icon="share"
 							accessibilityLabel="Share"
 							onPress={onShareActionPress}
-							variant="primary"
+							style={styles.fab}
+							color={"#fff"}
 						/>
 						<FAB
 							icon="earth"
 							accessibilityLabel="Open in Browser"
 							onPress={onOpenInBrowserActionPress}
-							variant="tertiary"
+							style={styles.fab}
+							color={"#fff"}
 						/>
 					</View>
 				</>
@@ -108,6 +110,9 @@ const styles = StyleSheet.create({
 		gap: 16,
 		bottom: 100,
 		right: 16,
+	},
+	fab: {
+		backgroundColor: "transparent",
 	},
 });
 

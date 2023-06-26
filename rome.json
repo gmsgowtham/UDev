@@ -13,6 +13,6 @@
 		"enabled": true
 	},
 	"files": {
-		"ignore": ["android", "ios", "node_modules", "vendor"]
+		"ignore": ["android", "ios", "node_modules", "vendor", "coverage"]
 	}
 }

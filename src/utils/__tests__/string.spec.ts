@@ -1,4 +1,4 @@
-import { replaceNewlines } from "./../string";
+import { replaceNewlines, toTitleCase } from "./../string";
 
 describe(replaceNewlines, () => {
 	it("empty", () => {
@@ -11,5 +11,17 @@ describe(replaceNewlines, () => {
 		expect(replaceNewlines("Hello\rWorld", " ")).toBe("Hello World");
 		expect(replaceNewlines("Hello\r\rWorld", " ")).toBe("Hello  World");
 		expect(replaceNewlines("Hello\n\rWorld", " ")).toBe("Hello  World");
+	});
+});
+
+describe(toTitleCase, () => {
+	it("empty", () => {
+		expect(toTitleCase("")).toBe("");
+		expect(toTitleCase(undefined)).toBe(undefined);
+	});
+	it("valid input", () => {
+		expect(toTitleCase("Hello World")).toBe("Hello World");
+		expect(toTitleCase("hello World")).toBe("Hello World");
+		expect(toTitleCase(" hello World")).toBe(" hello World");
 	});
 });

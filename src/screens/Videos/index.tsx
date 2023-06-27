@@ -1,6 +1,7 @@
 import { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
+import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
@@ -73,9 +74,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 		<View style={{ flex: 1 }}>
 			<HomeAppbar title={"Videos"} />
 			{loading && videos.length < 1 ? (
-				<View style={styles.loadingContainer}>
-					<ActivityIndicator />
-				</View>
+				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
 					<FlashList

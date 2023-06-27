@@ -7,5 +7,14 @@ module.exports = {
 				relativeSourceLocation: true,
 			},
 		],
+		[
+			"module-resolver",
+			{
+				root: ["./"],
+				alias: {
+					"moti/skeleton": "moti/skeleton/react-native-linear-gradient",
+				},
+			},
+		],
 	],
 };

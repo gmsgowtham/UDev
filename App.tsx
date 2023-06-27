@@ -16,12 +16,14 @@ import {
 	StatusBarStyle,
 	useColorScheme,
 } from "react-native";
+import "react-native-gesture-handler";
 import {
 	MD3DarkTheme,
 	MD3LightTheme,
 	Provider as PaperProvider,
 	adaptNavigationTheme,
 } from "react-native-paper";
+import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({

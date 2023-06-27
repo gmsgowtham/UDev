@@ -3,6 +3,7 @@ import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
 import PageLoader from "../../../components/Loader/PageLoader";
+import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
 import { StackParamList } from "../../../router/types";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { FunctionComponent, memo, useEffect } from "react";
@@ -46,7 +47,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 		<View style={{ flex: 1 }}>
 			<HomeAppbar title={title} />
 			{loading && articles.length < 1 ? (
-				<PageLoader />
+				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
 					<ArticleFeed

@@ -3,7 +3,7 @@ import { isStringOf } from "../../utils/typeof";
 import CTAButton from "../CTAButton";
 import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
-import DevEmbed from "./../Embed/Dev";
+import DevEmbed from "./../Embed/DevEmbed";
 import { ReactNode } from "react";
 import { ImageStyle, TextStyle, ViewStyle } from "react-native";
 import { Renderer, RendererInterface } from "react-native-marked";

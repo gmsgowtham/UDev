@@ -9,6 +9,7 @@ export const HELP_TEXT = {
 		MAX_ERR: "Maxmimum number of bookmarks reached",
 		COMMON_ERR: "Error while saving bookmark",
 	},
+	EXTERNAL_LINK: "External Link",
 };
 export const LANG_ALIAS_MAP: Record<string, string> = {
 	js: "javascript",

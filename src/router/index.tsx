@@ -24,10 +24,6 @@ import VideosScreen from "../screens/Videos";
 import CustomDrawer from "../components/Drawer";
 import type { DrawerParamList, StackParamList, TabParamList } from "./types";
 
-type RouterProps = {
-	theme: Theme;
-};
-
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<StackParamList>();
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -129,9 +125,14 @@ const DrawerNav = () => {
 	);
 };
 
-const Router: FunctionComponent<RouterProps> = ({ theme }) => {
+type RouterProps = {
+	theme: Theme;
+	onReady?: () => void;
+};
+
+const Router: FunctionComponent<RouterProps> = ({ theme, onReady }) => {
 	return (
-		<NavigationContainer theme={theme}>
+		<NavigationContainer theme={theme} onReady={onReady}>
 			<Stack.Navigator
 				screenOptions={{ headerShown: false }}
 				initialRouteName="Landing"

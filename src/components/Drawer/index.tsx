@@ -12,6 +12,7 @@ import {
 	Drawer,
 	Modal,
 	Portal,
+	Surface,
 	Text,
 	useTheme,
 } from "react-native-paper";
@@ -40,7 +41,7 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 	};
 
 	return (
-		<>
+		<Surface style={styles.container}>
 			<View style={styles.logoContainer}>
 				<FastImage
 					source={require("./../../assets/logo.png")}
@@ -118,11 +119,14 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 					</View>
 				</Modal>
 			</Portal>
-		</>
+		</Surface>
 	);
 };
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	itemsContainer: {
 		marginTop: 16,
 		justifyContent: "space-between",

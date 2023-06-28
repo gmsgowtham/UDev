@@ -8,6 +8,7 @@ import {
 import merge from "deepmerge";
 import { FunctionComponent, useEffect, useMemo } from "react";
 import { StatusBar, StatusBarStyle } from "react-native";
+import RNBootSplash from "react-native-bootsplash";
 import "react-native-gesture-handler";
 import {
 	MD3DarkTheme,
@@ -42,10 +43,16 @@ const App: FunctionComponent = () => {
 		StatusBar.setBarStyle(statusBarStyle);
 	}, [theme]);
 
+	const onRouterReady = () => {
+		RNBootSplash.hide();
+		// hack: to avoid status bar styles being mixed with splash screen
+		StatusBar.setBarStyle(statusBarStyle);
+	};
+
 	return (
 		<PaperProvider theme={theme}>
 			<SafeAreaProvider>
-				<Router theme={theme} />
+				<Router theme={theme} onReady={onRouterReady} />
 			</SafeAreaProvider>
 		</PaperProvider>
 	);

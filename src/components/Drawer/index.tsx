@@ -44,7 +44,7 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 		<Surface style={styles.container}>
 			<View style={styles.logoContainer}>
 				<FastImage
-					source={require("./../../assets/logo.png")}
+					source={require("./../../../assets/logo.png")}
 					style={styles.logo}
 					resizeMode={FastImage.resizeMode.cover}
 				/>

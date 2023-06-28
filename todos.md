@@ -3,7 +3,7 @@
 ## V1
 
 - [x] Empty screen for bookmarks [4d35b9e](https://github.com/gmsgowtham/dev-to-unofficial/commit/4d35b9ed53bb8acd01aaaa4e830bf165fbaeeeb5)
-- [ ] Splash screen
+- [x] Splash screen [#76](https://github.com/gmsgowtham/dev-to-unofficial/pull/76)
 - [x] Full screen video page, custom icons for video player controls [87398de](https://github.com/gmsgowtham/dev-to-unofficial/commit/87398de7a72fc739480bbc6b65e802746bc130c2), [3a971a3](https://github.com/gmsgowtham/dev-to-unofficial/commit/3a971a37414b3f4254e5d16045eafe4ae3187e54),  [b858130](https://github.com/gmsgowtham/dev-to-unofficial/commit/b858130e2f1456d23f6cb4fcecd8a9f3655ee75b)
 - [x] Loading placeholder for feeds [#71](https://github.com/gmsgowtham/dev-to-unofficial/pull/71)
 - [x] Image component loading behaviour [5196ec6](https://github.com/gmsgowtham/dev-to-unofficial/commit/5196ec677ef4bbc234734b075923a1303af51980)

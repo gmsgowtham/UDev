@@ -1,17 +1,9 @@
-import {
-	COLOR_SCHEME_VALUES,
-	DEFAULT_COLOR_SCHEME,
-	useUserColorScheme,
-} from "../../mmkv/colorScheme";
+import useUserColorScheme from "../../hooks/useUserColorScheme";
+import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
-import {
-	ColorSchemeName,
-	Dimensions,
-	StyleSheet,
-	useColorScheme,
-} from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 interface FeedSkeletonProps {
 	height?: number;
@@ -28,20 +20,12 @@ const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 		return Math.ceil(windowHeight / height);
 	}, [height]);
 
-	const [userColorScheme] = useUserColorScheme();
-	const systemColorScheme = useColorScheme();
+	const colorScheme = useUserColorScheme();
 	const theme = useTheme();
 	const colorMode = useMemo(() => {
-		let colorScheme: ColorSchemeName;
-		if (userColorScheme === COLOR_SCHEME_VALUES.System) {
-			colorScheme = systemColorScheme ?? DEFAULT_COLOR_SCHEME;
-		} else {
-			colorScheme = userColorScheme as ColorSchemeName;
-		}
-
 		if (colorScheme === COLOR_SCHEME_VALUES.Light) return "light";
 		return "dark";
-	}, [userColorScheme, systemColorScheme]);
+	}, [colorScheme]);
 	return (
 		<MotiView
 			transition={{

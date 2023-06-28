@@ -28,7 +28,7 @@ const getColorSchemeStorage = () => {
 	return colorSchemeStorage;
 };
 
-export const useUserColorScheme = () => {
+export const useUserColorSchemeMMKV = () => {
 	return useMMKVString(COLOR_SCHEME_KEY, getColorSchemeStorage());
 };
 

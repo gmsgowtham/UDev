@@ -1,19 +1,14 @@
-import {
-	COLOR_SCHEME_VALUES,
-	DEFAULT_COLOR_SCHEME,
-	useUserColorScheme,
-} from "../../mmkv/colorScheme";
+import useUserColorScheme from "../../hooks/useUserColorScheme";
+import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { HELP_TEXT } from "../../utils/const";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { FunctionComponent, memo, useMemo } from "react";
 import {
-	ColorSchemeName,
 	StyleSheet,
 	TextStyle,
 	ToastAndroid,
 	View,
 	ViewStyle,
-	useColorScheme,
 } from "react-native";
 import CodeHighlighter from "react-native-code-highlighter";
 import { IconButton, Text as PaperText } from "react-native-paper";
@@ -35,8 +30,7 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 	textStyle,
 	language,
 }) => {
-	const [userColorScheme] = useUserColorScheme();
-	const systemColorScheme = useColorScheme();
+	const colorScheme = useUserColorScheme();
 
 	const onCopyCodePress = () => {
 		Clipboard.setString(code);
@@ -48,16 +42,9 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 	};
 
 	const hlsStyles = useMemo(() => {
-		let colorScheme: ColorSchemeName;
-		if (userColorScheme === COLOR_SCHEME_VALUES.System) {
-			colorScheme = systemColorScheme ?? DEFAULT_COLOR_SCHEME;
-		} else {
-			colorScheme = userColorScheme as ColorSchemeName;
-		}
-
 		if (colorScheme === COLOR_SCHEME_VALUES.Light) return lightStyle;
 		return darkStyle;
-	}, [userColorScheme, systemColorScheme]);
+	}, [colorScheme]);
 
 	return (
 		<>

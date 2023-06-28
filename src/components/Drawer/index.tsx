@@ -1,6 +1,6 @@
 import {
 	COLOR_SCHEME_VALUES,
-	useUserColorScheme,
+	useUserColorSchemeMMKV,
 } from "../../mmkv/colorScheme";
 import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import { FunctionComponent, memo, useState } from "react";
@@ -19,7 +19,7 @@ import {
 const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 	navigation,
 }) => {
-	const [userColorScheme, setUserColorScheme] = useUserColorScheme();
+	const [userColorScheme, setUserColorScheme] = useUserColorSchemeMMKV();
 	const theme = useTheme();
 	const [visible, setVisible] = useState(false);
 

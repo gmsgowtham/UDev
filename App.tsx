@@ -5,7 +5,6 @@ import {
 	DarkTheme as RNDarkTheme,
 	DefaultTheme as RNDefaultTheme,
 } from "@react-navigation/native";
-import merge from "deepmerge";
 import { FunctionComponent, useEffect, useMemo } from "react";
 import { StatusBar, StatusBarStyle } from "react-native";
 import RNBootSplash from "react-native-bootsplash";
@@ -19,13 +18,31 @@ import {
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import Iris from "./src/theme/colors/iris";
+
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,
 	reactNavigationDark: RNDarkTheme,
 });
 
-const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
-const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
+const CombinedDefaultTheme = {
+	...MD3LightTheme,
+	...LightTheme,
+	colors: {
+		...Iris.light,
+		...LightTheme.colors,
+	},
+};
+
+const CombinedDarkTheme = {
+	...MD3DarkTheme,
+	...DarkTheme,
+	colors: {
+		...Iris.dark,
+		...DarkTheme.colors,
+	},
+};
+
 const App: FunctionComponent = () => {
 	const colorScheme = useUserColorScheme();
 

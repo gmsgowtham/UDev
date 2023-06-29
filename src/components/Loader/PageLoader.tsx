@@ -1,5 +1,6 @@
 import { memo } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 const PageLoader = () => {
 	return (

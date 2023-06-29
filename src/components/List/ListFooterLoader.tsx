@@ -1,5 +1,6 @@
 import React, { type FunctionComponent, memo } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 interface Props {
 	loading: boolean;

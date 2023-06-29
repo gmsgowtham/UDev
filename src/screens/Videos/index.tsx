@@ -12,7 +12,6 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { FunctionComponent, memo, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import { shallow } from "zustand/shallow";
 
 type VideosScreenProps = CompositeScreenProps<

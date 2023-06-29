@@ -1,6 +1,7 @@
 import useUserColorScheme from "./src/hooks/useUserColorScheme";
 import { COLOR_SCHEME_VALUES } from "./src/mmkv/colorScheme";
 import Router from "./src/router";
+import Iris from "./src/theme/colors/iris";
 import {
 	DarkTheme as RNDarkTheme,
 	DefaultTheme as RNDefaultTheme,
@@ -17,8 +18,6 @@ import {
 } from "react-native-paper";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
-import Iris from "./src/theme/colors/iris";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: RNDefaultTheme,

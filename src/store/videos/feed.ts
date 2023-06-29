@@ -1,6 +1,3 @@
-import { ToastAndroid } from "react-native";
-import { create } from "zustand";
-
 import { getVideos } from "../../api";
 import { ApiVideoListItem } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";
@@ -11,6 +8,8 @@ import {
 	setFetchingState,
 	setRefreshingState,
 } from "../helpers";
+import { ToastAndroid } from "react-native";
+import { create } from "zustand";
 
 export interface VideoFeedState extends CommonState {
 	videos: ApiVideoListItem[];

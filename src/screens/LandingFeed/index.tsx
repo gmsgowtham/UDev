@@ -1,8 +1,7 @@
-import { memo } from "react";
-import { shallow } from "zustand/shallow";
-
 import useArticleFeedStore from "../../store/articles/feed";
 import ArticleFeedScreen from "../Common/ArticleList";
+import { memo } from "react";
+import { shallow } from "zustand/shallow";
 
 const LandingScreen = () => {
 	const {

@@ -2741,10 +2741,10 @@
     "@types/react" "*"
     "@types/react-native" "^0.70"
 
-"@types/react-native-video@5.0.14":
-  version "5.0.14"
-  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.14.tgz#275d08f836280ace088462b2cb267925a6a915f3"
-  integrity sha512-KdcyY4HY/Q1l6f5qQA337BNVN+GsdZy836j9CXbWHZ008VVNzSlnJypJQPsnUgI0EPBw/uG/lyJk6cg9Jj1syg==
+"@types/react-native-video@5.0.15":
+  version "5.0.15"
+  resolved "https://registry.yarnpkg.com/@types/react-native-video/-/react-native-video-5.0.15.tgz#7af0a0df46293333d069102788d4f7db2961a122"
+  integrity sha512-li3yBYQ+D5GqZl0Y+M/vCTPfZwVyUU67CtSjEg+/ERkgEpvHDH+gQaoc9O00ttXr8kvqEzpiC6Ca9juIfeIlMA==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"

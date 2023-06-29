@@ -2,7 +2,6 @@ import { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
-import PageLoader from "../../../components/Loader/PageLoader";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
 import { StackParamList } from "../../../router/types";
 import { NavigationProp, useNavigation } from "@react-navigation/native";

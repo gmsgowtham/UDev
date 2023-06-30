@@ -2,8 +2,8 @@ import { HELP_TEXT } from "../../utils/const";
 import { getAbsURLFromAnchorMarkdown } from "../../utils/markdown";
 import { LinkPreview, PreviewData } from "@flyerhq/react-native-link-preview";
 import { FunctionComponent, memo, useState } from "react";
-import { StyleSheet } from "react-native";
-import { Surface, Text, useTheme } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Avatar, Surface, Text, useTheme } from "react-native-paper";
 
 interface DevEmbedProps {
 	url: string;
@@ -20,13 +20,16 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 	);
 
 	const renderTitle = (title: string) => (
-		<Text
-			variant="titleMedium"
-			style={[styles.title, { color: theme.colors.primary }]}
-			numberOfLines={2}
-		>
-			{title}
-		</Text>
+		<View style={styles.titleContainer}>
+			<Avatar.Icon size={24} icon="launch" />
+			<Text
+				variant="titleMedium"
+				style={[styles.title, { color: theme.colors.primary }]}
+				numberOfLines={2}
+			>
+				{title}
+			</Text>
+		</View>
 	);
 
 	const noRender = () => null;
@@ -61,6 +64,12 @@ const styles = StyleSheet.create({
 		borderRadius: 4,
 		marginVertical: 8,
 		height: 130,
+	},
+	titleContainer: {
+		flexDirection: "row",
+		gap: 8,
+		flexWrap: "wrap",
+		alignItems: "center",
 	},
 	title: {
 		marginBottom: 8,

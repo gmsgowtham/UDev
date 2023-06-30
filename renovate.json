@@ -7,5 +7,6 @@
 		"**/Gemfile",
 		"**/android/**",
 		"**/ios/**"
-	]
+	],
+	"reviewers": ["gmsgowtham"]
 }

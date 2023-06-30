@@ -14,7 +14,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, useCallback, useState } from "react";
 import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
-import { Appbar } from "react-native-paper";
+import { Appbar, Tooltip } from "react-native-paper";
 import { shallow } from "zustand/shallow";
 
 type Props = NativeStackScreenProps<StackParamList, "Article">;
@@ -116,6 +116,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					imageUri: article.user.profile_image_90,
 				}}
 				dateReadable={article.readable_publish_date}
+				tags={article.tags}
 			/>
 		);
 	}, [article]);
@@ -125,24 +126,30 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 			<Appbar.Header elevated>
 				<Appbar.BackAction onPress={onBackActionPress} />
 				<Appbar.Content title={""} />
-				<Appbar.Action
-					icon="earth"
-					onPress={onOpenInBrowserActionPress}
-					accessibilityHint="Open in browser"
-					accessibilityLabel="Open in browser"
-				/>
-				<Appbar.Action
-					icon="share"
-					onPress={onShareActionPress}
-					accessibilityHint="Share post"
-					accessibilityLabel="Share post"
-				/>
-				<Appbar.Action
-					icon={isPostBookmarked ? "bookmark" : "bookmark-outline"}
-					onPress={onBookmarkActionPress}
-					accessibilityHint="Bookmark post"
-					accessibilityLabel="Bookmark post"
-				/>
+				<Tooltip title="Open in browser">
+					<Appbar.Action
+						icon="earth"
+						onPress={onOpenInBrowserActionPress}
+						accessibilityHint="Open in browser"
+						accessibilityLabel="Open in browser"
+					/>
+				</Tooltip>
+				<Tooltip title="Share">
+					<Appbar.Action
+						icon="share"
+						onPress={onShareActionPress}
+						accessibilityHint="Share post"
+						accessibilityLabel="Share post"
+					/>
+				</Tooltip>
+				<Tooltip title="Bookmark">
+					<Appbar.Action
+						icon={isPostBookmarked ? "bookmark" : "bookmark-outline"}
+						onPress={onBookmarkActionPress}
+						accessibilityHint="Bookmark post"
+						accessibilityLabel="Bookmark post"
+					/>
+				</Tooltip>
 			</Appbar.Header>
 
 			{!loading ? (

@@ -1,7 +1,8 @@
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
+import TagList from "../TagList";
 import { FunctionComponent, memo } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Avatar, Text } from "react-native-paper";
+import { Avatar, Chip, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
 	cover: {
@@ -13,6 +14,7 @@ interface ArticleCoverProps {
 		name: string;
 	};
 	dateReadable: string;
+	tags?: string[];
 }
 
 const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
@@ -20,6 +22,7 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 	title,
 	author,
 	dateReadable,
+	tags = [],
 }) => {
 	return (
 		<View style={styles.wrapper}>
@@ -34,25 +37,27 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 				<Image source={{ uri: cover.uri }} style={styles.image} />
 			) : null}
 			<Text variant="headlineMedium">{title}</Text>
+			<TagList tags={tags} />
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	wrapper: {
-		gap: 16,
 		marginBottom: 16,
 	},
 	image: {
 		width: "100%",
 		borderRadius: 12,
 		aspectRatio: ARTICLE_COVER_IMAGE_ASPECT_RATIO,
+		marginBottom: 16,
 	},
 	authorContainer: {
 		flex: 1,
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 16,
+		marginBottom: 16,
 	},
 	authorInfo: {
 		gap: 4,

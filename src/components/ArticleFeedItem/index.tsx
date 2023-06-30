@@ -1,6 +1,7 @@
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
+import TagList from "../TagList";
 import { FunctionComponent, memo } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
 import { Avatar, Card, Text } from "react-native-paper";
 
@@ -21,24 +22,6 @@ interface ArticleFeedItemProps {
 	organizationName?: string;
 	coverImageUri?: string | null;
 }
-
-interface TagListProps {
-	tags?: string[];
-}
-
-const TagList = memo<TagListProps>(({ tags = [] }) => {
-	if (tags.length < 1) {
-		return <></>;
-	}
-
-	return (
-		<View style={styles.tags}>
-			{tags.map((t, index) => (
-				<Text key={`${t}${index}`}>#{t}</Text>
-			))}
-		</View>
-	);
-});
 
 const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	id,
@@ -98,12 +81,6 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		marginBottom: 8,
-	},
-	tags: {
-		flexDirection: "row",
-		gap: 8,
-		marginTop: 8,
-		flexWrap: "wrap",
 	},
 	actionsWrapper: {
 		flexDirection: "row",

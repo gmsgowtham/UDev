@@ -32,9 +32,9 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 	const noRender = () => null;
 
 	const handlePreviewDataFetched = (data: PreviewData) => {
-		if (!data.title) {
+		if (!data.title || !data.link) {
 			// has error
-			setPreviewData({ ...data, title: HELP_TEXT.EXTERNAL_LINK });
+			setPreviewData({ ...data, title: HELP_TEXT.EXTERNAL_LINK, link: url });
 		} else {
 			setPreviewData(data);
 		}

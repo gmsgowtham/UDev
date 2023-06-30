@@ -2,7 +2,7 @@ import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
 import { FunctionComponent, memo } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Avatar, Chip, Text } from "react-native-paper";
+import { Avatar, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
 	cover: {

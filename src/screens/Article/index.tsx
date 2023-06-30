@@ -126,14 +126,6 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 			<Appbar.Header elevated>
 				<Appbar.BackAction onPress={onBackActionPress} />
 				<Appbar.Content title={""} />
-				<Tooltip title="Open in browser">
-					<Appbar.Action
-						icon="earth"
-						onPress={onOpenInBrowserActionPress}
-						accessibilityHint="Open in browser"
-						accessibilityLabel="Open in browser"
-					/>
-				</Tooltip>
 				<Tooltip title="Share">
 					<Appbar.Action
 						icon="share"
@@ -148,6 +140,14 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 						onPress={onBookmarkActionPress}
 						accessibilityHint="Bookmark post"
 						accessibilityLabel="Bookmark post"
+					/>
+				</Tooltip>
+				<Tooltip title="Open in browser">
+					<Appbar.Action
+						icon="launch"
+						onPress={onOpenInBrowserActionPress}
+						accessibilityHint="Open in browser"
+						accessibilityLabel="Open in browser"
 					/>
 				</Tooltip>
 			</Appbar.Header>

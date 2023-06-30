@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, useState } from "react";
 import { Dimensions, Linking, Share, StyleSheet, View } from "react-native";
 import VideoPlayer from "react-native-media-console";
-import { FAB, Text } from "react-native-paper";
+import { FAB, Text, Tooltip } from "react-native-paper";
 
 type Props = NativeStackScreenProps<StackParamList, "Video">;
 
@@ -61,20 +61,24 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 						</Text>
 					</View>
 					<View style={styles.fabActions}>
-						<FAB
-							icon="share"
-							accessibilityLabel="Share"
-							onPress={onShareActionPress}
-							style={styles.fab}
-							color={"#fff"}
-						/>
-						<FAB
-							icon="earth"
-							accessibilityLabel="Open in Browser"
-							onPress={onOpenInBrowserActionPress}
-							style={styles.fab}
-							color={"#fff"}
-						/>
+						<Tooltip title="Open in browser">
+							<FAB
+								icon="launch"
+								accessibilityLabel="Open in browser"
+								onPress={onOpenInBrowserActionPress}
+								style={styles.fab}
+								color={"#fff"}
+							/>
+						</Tooltip>
+						<Tooltip title="Share">
+							<FAB
+								icon="share"
+								accessibilityLabel="Share"
+								onPress={onShareActionPress}
+								style={styles.fab}
+								color={"#fff"}
+							/>
+						</Tooltip>
 					</View>
 				</>
 			) : null}

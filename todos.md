@@ -10,3 +10,4 @@
 - [x] Link preview error handling [#75](https://github.com/gmsgowtham/UDev/pull/75)
 - [x] About page [c634e9e](https://github.com/gmsgowtham/UDev/commit/c634e9e7fedf7295fd27c0bf94f4c4d5c697dec7)
 - [x] Hook to get user selected color scheme [#73](https://github.com/gmsgowtham/UDev/pull/73)
+- [ ] Custom implementation for video page (material icons, loading, etc..)

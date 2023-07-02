@@ -6796,10 +6796,10 @@ react-native-marked@5.0.4:
     react-native-table-component "1.2.2"
     svg-parser "2.0.4"
 
-react-native-media-console@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-media-console/-/react-native-media-console-2.0.6.tgz#3498f28a0997450e354fe1adbf1f8c144895088c"
-  integrity sha512-ZBLWPhRfnnP7lpRXu6QZXa1hGjImHV7zOnhZZozFEOCK8FQCLVfXulTcokDYPoBpK5qT1uOYGW8v6BO5K5MMSA==
+react-native-media-console@2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-media-console/-/react-native-media-console-2.0.7.tgz#3b4ccc31e8c1b4120b53f6e7d8ba6bb95c1f4f94"
+  integrity sha512-COgmAuM3BTELyiZMO7+8Db3KZDPMueVTMY42D9g80fs0nJbkDavq/jFx+QWUmyRMUhp1kFvX2+6yxUJFbYxu4A==
 
 react-native-mmkv@2.10.0:
   version "2.10.0"

@@ -13,6 +13,7 @@
 - [ ] Repo information in the about page
 - [ ] Custom implementation for video page (material icons, loading, etc..)
 - [ ] Network issue banner (handle API errors gracefully)
+- [ ] Settings screen (Terms & privacy, Github, Contact us, Appearance)
 
 
 ## V2

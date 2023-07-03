@@ -6801,10 +6801,10 @@ react-native-media-console@2.0.6:
   resolved "https://registry.yarnpkg.com/react-native-media-console/-/react-native-media-console-2.0.6.tgz#3498f28a0997450e354fe1adbf1f8c144895088c"
   integrity sha512-ZBLWPhRfnnP7lpRXu6QZXa1hGjImHV7zOnhZZozFEOCK8FQCLVfXulTcokDYPoBpK5qT1uOYGW8v6BO5K5MMSA==
 
-react-native-mmkv@2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.10.0.tgz#2d8872e3ef67a91648cc06d6c377ee2ce7a85816"
-  integrity sha512-q8WYRjHKIWQMJW1qGJHBMWKOVJkMrl9ggK9uY2QMF18KSC98Bj+HxvO3ztjguE0Z4GWUOzpyyULxSCHJ9p+t2w==
+react-native-mmkv@2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.10.1.tgz#1a4e64edbf9561fe81a5ae3cefde17e88dfc669f"
+  integrity sha512-MCrYytUJ3JhSVg7LwVXCj7ExbMHe48FoQdDA1xo1q/M4c1/QyI3M9L9d2dyJUhYPnsSO0+5c2mJICm7v39XA0w==
 
 react-native-paper@5.9.0:
   version "5.9.0"

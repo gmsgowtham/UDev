@@ -6942,10 +6942,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-bootsplash@4.7.4:
-  version "4.7.4"
-  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-4.7.4.tgz#5ff2b53751dcb2a380915ef6b853f3352b978a9f"
-  integrity sha512-t1g2KM+sNYj/6pjBz5b6tBzCjRWhfAUD2hhVCcrv9bDVdyM+C0QvASOt8W50VpiN+KW/zzf7HO24+fCx0G5qtA==
+react-native-bootsplash@4.7.5:
+  version "4.7.5"
+  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-4.7.5.tgz#e2ada143cfa556af1a1020a1b10e405291e0e32f"
+  integrity sha512-b49pfOg/4CKpoPlWR03l1pYZLi+zq1QMs7uX/pxpgEcUKHQzA29OFLa47OmzNCXjB7/jWbogjFnSVQbN08iKqw==
   dependencies:
     fs-extra "^11.1.1"
     picocolors "^1.0.0"

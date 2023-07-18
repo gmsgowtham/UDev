@@ -6793,15 +6793,15 @@ react-native-linear-gradient@2.7.3:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.7.3.tgz#f77b71ed7c955e033f9cba5fc8478df57953eb27"
   integrity sha512-iyJszlZ1Ech2c+2qV+isMvvJKyoctR9ashDkhJg1/cuSF0vQaeLV1FAYTT3qW9doxChJGxVAFfYoxotH0yi3Iw==
 
-react-native-marked@5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.6.tgz#bc4081331d449169c288d63ba0cde3886cc702b2"
-  integrity sha512-3iPoRhSHGZBK8HUsv/T/wgvTwn+TFTQzJ8s/7z4uxL+lAB+pIu97aKaBlK5vkBuNJnx2DycCDukX+Rf7an/RsQ==
+react-native-marked@5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-5.0.7.tgz#dba07fd6e72ab5d8b344d10723ca5cf7cdade548"
+  integrity sha512-y4tiuoKFd4uj30pvSIQS9sU0Yg+BOKChM9qb7v+I/jucvten+4w9pVS2UCAXSnrYVe+JlbdxYkgaNiBZGK4Xpg==
   dependencies:
     "@jsamr/counter-style" "2.0.2"
     "@jsamr/react-native-li" "2.3.1"
     marked "5.0.5"
-    react-native-svg "13.9.0"
+    react-native-svg "13.10.0"
     react-native-table-component "1.2.2"
     svg-parser "2.0.4"
 
@@ -6852,14 +6852,6 @@ react-native-svg@13.10.0:
   version "13.10.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.10.0.tgz#d3c6222ea9cc1e21e2af0fd59dfbeafe7a3d0dc1"
   integrity sha512-D/oYTmUi5nsA/2Nw4WYlF1UUi3vZqhpESpiEhpYCIFB/EMd6vz4A/uq3tIzZFcfa5z2oAdGSxRU1TaYr8IcPlQ==
-  dependencies:
-    css-select "^5.1.0"
-    css-tree "^1.1.3"
-
-react-native-svg@13.9.0:
-  version "13.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
-  integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"

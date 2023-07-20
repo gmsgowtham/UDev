@@ -2455,10 +2455,10 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
-"@react-native-firebase/app@18.2.0":
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.2.0.tgz#a8f3f2aa8385d680557157930416a72b7f6146fa"
-  integrity sha512-enVr+2Wl1LfYBb0TT7SI0L7RSXzOX25dPUVREw5W3ip05CTuJv10Nl7ffk7AfB53SU9IhPz5zJMIWncYQNodug==
+"@react-native-firebase/app@18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.3.0.tgz#8e19eb3f9e6d9596c1d0d904bca3a2effafe9d4f"
+  integrity sha512-4sJf5mM551Y6E8D1hQufAU/PNEecJEaJbF4Me0JyclI2RXUHlTxJUpAsB/gxPY74LY99FaogFsDEB+3BuZ2B9w==
   dependencies:
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"

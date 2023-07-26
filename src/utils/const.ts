@@ -22,3 +22,5 @@ export const DEV_TO_HOST = "https://dev.to";
 export const NPM_HOST = "https://www.npmjs.com";
 export const REPO_URL = "https://github.com/gmsgowtham/UDev";
 export const CONTACT_EMAIL = "webappsbygowtham@gmail.com";
+
+export const VIDEO_UI_HIDE_TIMEOUT = 5000; // 5 seconds

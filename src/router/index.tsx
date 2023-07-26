@@ -119,6 +119,7 @@ const DrawerNav = () => {
 			drawerContent={(props: DrawerContentComponentProps) => (
 				<CustomDrawer {...props} />
 			)}
+			useLegacyImplementation={false}
 		>
 			<Drawer.Screen name="TabNav" component={BottomTabs} />
 		</Drawer.Navigator>

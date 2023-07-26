@@ -61,6 +61,7 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		paddingTop: 24,
 	},
 	itemsContainer: {
 		marginTop: 16,

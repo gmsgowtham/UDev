@@ -2,10 +2,12 @@ import { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
+import NetworkBanner from "../../../components/NetworkBanner";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
 import { StackParamList } from "../../../router/types";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { FunctionComponent, memo, useEffect } from "react";
+import { FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 interface ArticleFeedProps {
@@ -16,6 +18,7 @@ interface ArticleFeedProps {
 	refreshArticles: () => void;
 	page: number;
 	loading: boolean;
+	error: boolean;
 }
 
 const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
@@ -26,7 +29,11 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	page,
 	loading,
 	title,
+	error,
 }) => {
+	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
+	const netInfo = useNetInfo();
+
 	useEffect(() => {
 		fetchArticles(page);
 	}, []);
@@ -38,6 +45,8 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	};
 
 	const onEndReached = () => {
+		if (articles.length < 1) return;
+
 		const next = page + 1;
 		fetchArticles(next);
 	};
@@ -45,6 +54,11 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	return (
 		<View style={{ flex: 1 }}>
 			<HomeAppbar title={title} />
+			<NetworkBanner
+				visible={error && !netInfo.isConnected && showNetworkBanner}
+				showCloseAction
+				onCloseActionPress={() => setShowNetworkBanner(false)}
+			/>
 			{loading && articles.length < 1 ? (
 				<FeedSkeleton />
 			) : (

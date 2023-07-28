@@ -43,7 +43,7 @@ const useVideoFeedStore = create<VideoFeedState>()((set, get) => ({
 
 		try {
 			const response = await getVideos(page, DEFAULT_PAGE_SIZE);
-			const responseVideos: ApiVideoListItem[] = await response.json();
+			const responseVideos: ApiVideoListItem[] = await response.data;
 			set((state) => ({
 				...state,
 				...BASE_STATE,
@@ -63,7 +63,7 @@ const useVideoFeedStore = create<VideoFeedState>()((set, get) => ({
 
 		try {
 			const response = await getVideos(1, 10);
-			const videos: ApiVideoListItem[] = await response.json();
+			const videos: ApiVideoListItem[] = await response.data;
 			set((state) => ({
 				...state,
 				...BASE_STATE,

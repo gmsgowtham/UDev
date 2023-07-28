@@ -11,6 +11,7 @@ const LandingScreen = () => {
 		refreshArticles,
 		page,
 		loading,
+		error,
 	} = useArticleFeedStore(
 		(state) => ({
 			articles: state.featured.articles,
@@ -19,6 +20,7 @@ const LandingScreen = () => {
 			refreshArticles: state.featured.refreshFeaturedArticles,
 			page: state.featured.page,
 			loading: state.featured.loading,
+			error: state.featured.error,
 		}),
 		shallow,
 	);
@@ -32,6 +34,7 @@ const LandingScreen = () => {
 			refreshArticles={refreshArticles}
 			page={page}
 			loading={loading}
+			error={error}
 		/>
 	);
 };

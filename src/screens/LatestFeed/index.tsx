@@ -11,6 +11,7 @@ const LatestScreen: FunctionComponent = () => {
 		refreshArticles,
 		page,
 		loading,
+		error,
 	} = useArticleFeedStore(
 		(state) => ({
 			articles: state.latest.articles,
@@ -19,6 +20,7 @@ const LatestScreen: FunctionComponent = () => {
 			refreshArticles: state.latest.refreshLatestArticles,
 			page: state.latest.page,
 			loading: state.latest.loading,
+			error: state.latest.error,
 		}),
 		shallow,
 	);
@@ -32,6 +34,7 @@ const LatestScreen: FunctionComponent = () => {
 			refreshArticles={refreshArticles}
 			page={page}
 			loading={loading}
+			error={error}
 		/>
 	);
 };

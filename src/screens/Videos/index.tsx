@@ -1,16 +1,18 @@
 import { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
+import NetworkBanner from "../../components/NetworkBanner";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
 import { DEV_TO_HOST } from "../../utils/const";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { FunctionComponent, memo, useEffect } from "react";
+import { FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { shallow } from "zustand/shallow";
 
@@ -20,18 +22,29 @@ type VideosScreenProps = CompositeScreenProps<
 >;
 
 const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
-	const { videos, fetchVideos, refreshing, refreshVideos, page, loading } =
-		useVideoFeedStore(
-			(state) => ({
-				videos: state.videos,
-				fetchVideos: state.fetchVideos,
-				refreshing: state.refreshing,
-				refreshVideos: state.refreshVideos,
-				page: state.page,
-				loading: state.loading,
-			}),
-			shallow,
-		);
+	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
+	const netInfo = useNetInfo();
+
+	const {
+		videos,
+		fetchVideos,
+		refreshing,
+		refreshVideos,
+		page,
+		loading,
+		error,
+	} = useVideoFeedStore(
+		(state) => ({
+			videos: state.videos,
+			fetchVideos: state.fetchVideos,
+			refreshing: state.refreshing,
+			refreshVideos: state.refreshVideos,
+			page: state.page,
+			loading: state.loading,
+			error: state.error,
+		}),
+		shallow,
+	);
 
 	useEffect(() => {
 		fetchVideos(page);
@@ -72,6 +85,11 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 	return (
 		<View style={{ flex: 1 }}>
 			<HomeAppbar title={"Videos"} />
+			<NetworkBanner
+				visible={error && !netInfo.isConnected && showNetworkBanner}
+				showCloseAction
+				onCloseActionPress={() => setShowNetworkBanner(false)}
+			/>
 			{loading && videos.length < 1 ? (
 				<FeedSkeleton />
 			) : (

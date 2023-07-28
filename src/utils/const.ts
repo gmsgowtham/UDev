@@ -10,6 +10,8 @@ export const HELP_TEXT = {
 		COMMON_ERR: "Error while saving bookmark",
 	},
 	EXTERNAL_LINK: "External Link",
+	NETWORK_DISCONNECTED:
+		"Uh-oh! It seems like you're not connected to the internet at the moment. Please check your network connection and try again.",
 };
 export const LANG_ALIAS_MAP: Record<string, string> = {
 	js: "javascript",
@@ -22,5 +24,5 @@ export const DEV_TO_HOST = "https://dev.to";
 export const NPM_HOST = "https://www.npmjs.com";
 export const REPO_URL = "https://github.com/gmsgowtham/UDev";
 export const CONTACT_EMAIL = "webappsbygowtham@gmail.com";
-
 export const VIDEO_UI_HIDE_TIMEOUT = 5000; // 5 seconds
+export const NETWORK_TIMEOUT_MS = 10000;

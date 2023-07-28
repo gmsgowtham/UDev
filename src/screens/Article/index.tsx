@@ -1,6 +1,7 @@
 import ArticleCover from "../../components/ArticleCover";
 import PageLoader from "../../components/Loader/PageLoader";
 import RenderMarkdown from "../../components/Markdown";
+import NetworkBanner from "../../components/NetworkBanner";
 import {
 	isBookmarked,
 	removeBookmark,
@@ -10,6 +11,7 @@ import { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, useCallback, useState } from "react";
@@ -24,16 +26,20 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { id, title, url } = params;
 	const _isPostBookmarked = isBookmarked(id);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
+	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
+	const netInfo = useNetInfo();
 
-	const { article, loading, fetchArticle, resetArticle } = useArticleStore(
-		(state) => ({
-			article: state.article,
-			fetchArticle: state.fetchArticle,
-			resetArticle: state.reset,
-			loading: state.loading,
-		}),
-		shallow,
-	);
+	const { article, loading, fetchArticle, resetArticle, error } =
+		useArticleStore(
+			(state) => ({
+				article: state.article,
+				fetchArticle: state.fetchArticle,
+				resetArticle: state.reset,
+				loading: state.loading,
+				error: state.error,
+			}),
+			shallow,
+		);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -151,6 +157,12 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					/>
 				</Tooltip>
 			</Appbar.Header>
+
+			<NetworkBanner
+				showCloseAction
+				visible={error && !netInfo.isConnected && showNetworkBanner}
+				onCloseActionPress={() => setShowNetworkBanner(false)}
+			/>
 
 			{!loading ? (
 				typeof article?.body_markdown !== "undefined" ? (

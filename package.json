@@ -54,7 +54,7 @@
     "react-native-screens": "3.23.0",
     "react-native-svg": "13.10.0",
     "react-native-vector-icons": "10.0.0",
-    "react-native-video": "6.0.0-alpha.6",
+    "react-native-video": "6.0.0-alpha.7",
     "react-syntax-highlighter": "15.5.0",
     "turndown": "7.1.2",
     "zustand": "4.4.0"

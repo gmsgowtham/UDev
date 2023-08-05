@@ -10,14 +10,14 @@ import { DEV_TO_HOST } from "../../utils/const";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps } from "@react-navigation/native";
-import { StackScreenProps } from "@react-navigation/stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 type VideosScreenProps = CompositeScreenProps<
 	BottomTabScreenProps<TabParamList, "Videos">,
-	StackScreenProps<StackParamList>
+	NativeStackScreenProps<StackParamList>
 >;
 
 const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {

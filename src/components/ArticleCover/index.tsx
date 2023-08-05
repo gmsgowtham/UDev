@@ -1,7 +1,8 @@
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
 import { FunctionComponent, memo } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import FastImage from "react-native-fast-image";
 import { Avatar, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
@@ -26,6 +27,9 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 }) => {
 	return (
 		<View style={styles.wrapper}>
+			{cover.uri ? (
+				<FastImage source={{ uri: cover.uri }} style={styles.image} />
+			) : null}
 			<View style={styles.authorContainer}>
 				<Avatar.Image size={50} source={{ uri: author.imageUri }} />
 				<View style={styles.authorInfo}>
@@ -33,9 +37,6 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 					<Text variant="labelMedium">{dateReadable}</Text>
 				</View>
 			</View>
-			{cover.uri ? (
-				<Image source={{ uri: cover.uri }} style={styles.image} />
-			) : null}
 			<Text variant="headlineMedium">{title}</Text>
 			<TagList tags={tags} />
 		</View>

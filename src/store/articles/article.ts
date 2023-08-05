@@ -2,7 +2,8 @@ import { getArticle } from "../../api";
 import { ApiArticleItem } from "../../api/types";
 import { getImageSize } from "../../utils/image";
 import { processMarkdownContent } from "../../utils/markdown";
-import { create } from "zustand";
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
 
 export interface ArticleState {
 	article?: ApiArticleItem;
@@ -12,46 +13,49 @@ export interface ArticleState {
 	reset: () => void;
 }
 
-const useArticleStore = create<ArticleState>()((set) => ({
-	article: undefined,
-	loading: false,
-	error: false,
-	fetchArticle: async (id: number) => {
-		set({ loading: true, error: false });
-		try {
-			const response = await getArticle(id);
-			const article: ApiArticleItem = await response.data;
+const useArticleStore = createWithEqualityFn<ArticleState>()(
+	(set) => ({
+		article: undefined,
+		loading: false,
+		error: false,
+		fetchArticle: async (id: number) => {
+			set({ loading: true, error: false });
+			try {
+				const response = await getArticle(id);
+				const article: ApiArticleItem = await response.data;
 
-			const coverImageSize = await getImageSize(article.cover_image);
-			let aspectRatio = 0;
-			if (coverImageSize.height > 0) {
-				aspectRatio = coverImageSize.width / coverImageSize.height;
+				const coverImageSize = await getImageSize(article.cover_image);
+				let aspectRatio = 0;
+				if (coverImageSize.height > 0) {
+					aspectRatio = coverImageSize.width / coverImageSize.height;
+				}
+
+				const md = processMarkdownContent(article.body_markdown);
+
+				set({
+					loading: false,
+					error: false,
+					article: {
+						...article,
+						body_markdown: md,
+						cover_image_width: coverImageSize.width,
+						cover_image_height: coverImageSize.height,
+						cover_image_aspect_ratio: aspectRatio,
+					},
+				});
+			} catch (e) {
+				set({ loading: false, error: true });
 			}
-
-			const md = processMarkdownContent(article.body_markdown);
-
+		},
+		reset: () => {
 			set({
 				loading: false,
 				error: false,
-				article: {
-					...article,
-					body_markdown: md,
-					cover_image_width: coverImageSize.width,
-					cover_image_height: coverImageSize.height,
-					cover_image_aspect_ratio: aspectRatio,
-				},
+				article: undefined,
 			});
-		} catch (e) {
-			set({ loading: false, error: true });
-		}
-	},
-	reset: () => {
-		set({
-			loading: false,
-			error: false,
-			article: undefined,
-		});
-	},
-}));
+		},
+	}),
+	shallow,
+);
 
 export default useArticleStore;

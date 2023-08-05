@@ -14,7 +14,6 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { shallow } from "zustand/shallow";
 
 type VideosScreenProps = CompositeScreenProps<
 	BottomTabScreenProps<TabParamList, "Videos">,
@@ -33,18 +32,15 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 		page,
 		loading,
 		error,
-	} = useVideoFeedStore(
-		(state) => ({
-			videos: state.videos,
-			fetchVideos: state.fetchVideos,
-			refreshing: state.refreshing,
-			refreshVideos: state.refreshVideos,
-			page: state.page,
-			loading: state.loading,
-			error: state.error,
-		}),
-		shallow,
-	);
+	} = useVideoFeedStore((state) => ({
+		videos: state.videos,
+		fetchVideos: state.fetchVideos,
+		refreshing: state.refreshing,
+		refreshVideos: state.refreshVideos,
+		page: state.page,
+		loading: state.loading,
+		error: state.error,
+	}));
 
 	useEffect(() => {
 		fetchVideos(page);

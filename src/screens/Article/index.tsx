@@ -17,7 +17,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, useCallback, useState } from "react";
 import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
 import { Appbar, Tooltip } from "react-native-paper";
-import { shallow } from "zustand/shallow";
 
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 
@@ -30,16 +29,13 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const netInfo = useNetInfo();
 
 	const { article, loading, fetchArticle, resetArticle, error } =
-		useArticleStore(
-			(state) => ({
-				article: state.article,
-				fetchArticle: state.fetchArticle,
-				resetArticle: state.reset,
-				loading: state.loading,
-				error: state.error,
-			}),
-			shallow,
-		);
+		useArticleStore((state) => ({
+			article: state.article,
+			fetchArticle: state.fetchArticle,
+			resetArticle: state.reset,
+			loading: state.loading,
+			error: state.error,
+		}));
 
 	useFocusEffect(
 		useCallback(() => {

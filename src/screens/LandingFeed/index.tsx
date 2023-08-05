@@ -1,7 +1,6 @@
 import useArticleFeedStore from "../../store/articles/feed";
 import ArticleFeedScreen from "../Common/ArticleList";
 import { memo } from "react";
-import { shallow } from "zustand/shallow";
 
 const LandingScreen = () => {
 	const {
@@ -12,18 +11,15 @@ const LandingScreen = () => {
 		page,
 		loading,
 		error,
-	} = useArticleFeedStore(
-		(state) => ({
-			articles: state.featured.articles,
-			fetchArticles: state.featured.fetchFeaturedArticles,
-			refreshing: state.featured.refreshing,
-			refreshArticles: state.featured.refreshFeaturedArticles,
-			page: state.featured.page,
-			loading: state.featured.loading,
-			error: state.featured.error,
-		}),
-		shallow,
-	);
+	} = useArticleFeedStore((state) => ({
+		articles: state.featured.articles,
+		fetchArticles: state.featured.fetchFeaturedArticles,
+		refreshing: state.featured.refreshing,
+		refreshArticles: state.featured.refreshFeaturedArticles,
+		page: state.featured.page,
+		loading: state.featured.loading,
+		error: state.featured.error,
+	}));
 
 	return (
 		<ArticleFeedScreen

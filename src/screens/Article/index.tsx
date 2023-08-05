@@ -1,7 +1,7 @@
 import ArticleCover from "../../components/ArticleCover";
-import PageLoader from "../../components/Loader/PageLoader";
 import RenderMarkdown from "../../components/Markdown";
 import NetworkBanner from "../../components/NetworkBanner";
+import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
 import {
 	isBookmarked,
 	removeBookmark,
@@ -22,7 +22,7 @@ type Props = NativeStackScreenProps<StackParamList, "Article">;
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
-	const { id, title, url } = params;
+	const { id, title, url, cover, author, tags, date } = params;
 	const _isPostBookmarked = isBookmarked(id);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
@@ -103,22 +103,18 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	};
 
 	const renderListHeaderComponent = useCallback(() => {
-		if (!article) {
-			return null;
-		}
-
 		return (
 			<ArticleCover
 				title={title}
 				cover={{
-					uri: article?.cover_image,
+					uri: cover,
 				}}
 				author={{
-					name: article.user.name,
-					imageUri: article.user.profile_image_90,
+					name: author.name,
+					imageUri: author.image,
 				}}
-				dateReadable={article.readable_publish_date}
-				tags={article.tags}
+				dateReadable={date}
+				tags={tags}
 			/>
 		);
 	}, [article]);
@@ -159,17 +155,12 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
-
-			{!loading ? (
-				typeof article?.body_markdown !== "undefined" ? (
-					<RenderMarkdown
-						value={article?.body_markdown}
-						HeaderComponent={renderListHeaderComponent}
-					/>
-				) : null
-			) : (
-				<PageLoader />
-			)}
+			<RenderMarkdown
+				loadingState={loading}
+				value={article?.body_markdown}
+				headerComponent={renderListHeaderComponent}
+				loadingPlaceholder={<ArticleSkeleton />}
+			/>
 		</View>
 	);
 };

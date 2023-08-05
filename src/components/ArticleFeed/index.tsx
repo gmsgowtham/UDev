@@ -9,7 +9,7 @@ import { FunctionComponent, memo, useCallback } from "react";
 
 type ArticleFeed = {
 	data: ApiArticleFeedItem[];
-	onItemClick: (id: number, title: string, url: string) => void;
+	onItemClick: (id: number) => void;
 	listProps?: Omit<
 		FlashListProps<ApiArticleFeedItem>,
 		"renderItem" | "data" | "estimatedItemSize"
@@ -30,7 +30,6 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 					description={item.description}
 					dateReadable={item.readable_publish_date}
 					coverImageUri={item.cover_image}
-					url={item.canonical_url}
 					author={{
 						name: item.user.name,
 						imageUri: item.user.profile_image_90,

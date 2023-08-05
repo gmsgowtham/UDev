@@ -16,8 +16,7 @@ interface ArticleFeedItemProps {
 	description: string;
 	author: author;
 	dateReadable: string;
-	url: string;
-	onItemClick: (id: number, title: string, url: string) => void;
+	onItemClick: (id: number) => void;
 	tags?: string[];
 	organizationName?: string;
 	coverImageUri?: string | null;
@@ -32,10 +31,9 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	dateReadable,
 	onItemClick,
 	tags,
-	url,
 }) => {
 	const onClick = () => {
-		onItemClick(id, title, url);
+		onItemClick(id);
 	};
 
 	return (

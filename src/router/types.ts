@@ -16,6 +16,13 @@ export type StackParamList = {
 		id: number;
 		title: string;
 		url: string;
+		cover: string | null;
+		author: {
+			name: string;
+			image: string;
+		};
+		date: string;
+		tags: string[];
 	};
 	Bookmarks: undefined;
 	Video: {

@@ -40,8 +40,23 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	const navigation = useNavigation<NavigationProp<StackParamList>>();
 
-	const onItemClick = (id: number, title: string, url: string) => {
-		navigation.navigate("Article", { id, title, url });
+	const onItemClick = (id: number) => {
+		const article = articles.find((a) => a.id === id);
+		if (!article) {
+			return;
+		}
+		navigation.navigate("Article", {
+			id: article.id,
+			title: article.title,
+			url: article.canonical_url,
+			cover: article.cover_image,
+			author: {
+				name: article.user.name,
+				image: article.user.profile_image_90,
+			},
+			date: article.readable_publish_date,
+			tags: article.tag_list,
+		});
 	};
 
 	const onEndReached = () => {

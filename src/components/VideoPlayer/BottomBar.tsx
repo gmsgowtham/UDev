@@ -3,8 +3,7 @@ import Slider from "@react-native-community/slider";
 import { FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
-import { IconButton, Text, Tooltip } from "react-native-paper";
-import { MD3Theme } from "react-native-paper/lib/typescript/src/types";
+import { IconButton, MD3Theme, Text, Tooltip } from "react-native-paper";
 
 interface BottomBarProps {
 	title: string;

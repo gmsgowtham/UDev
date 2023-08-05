@@ -12,8 +12,7 @@ import {
 	useState,
 } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { ActivityIndicator, IconButton } from "react-native-paper";
-import { MD3Theme } from "react-native-paper/lib/typescript/src/types";
+import { ActivityIndicator, IconButton, MD3Theme } from "react-native-paper";
 import Video, { OnLoadData, OnProgressData } from "react-native-video";
 
 interface VideoPlayerProps {

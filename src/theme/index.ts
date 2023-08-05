@@ -6,9 +6,9 @@ import {
 import {
 	MD3DarkTheme,
 	MD3LightTheme,
+	MD3Theme,
 	adaptNavigationTheme,
 } from "react-native-paper";
-import { MD3Theme } from "react-native-paper/lib/typescript/src/types";
 
 const { LightTheme: AdpatedLightTheme, DarkTheme: AdpatedDarkTheme } =
 	adaptNavigationTheme({

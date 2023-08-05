@@ -3,19 +3,18 @@ import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { useTheme } from "react-native-paper";
 interface FeedSkeletonProps {
 	height?: number;
 }
-
-const { height: windowHeight } = Dimensions.get("window");
 
 const SKELETON_ITEM_HEIGHT = 220;
 
 const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 	height = SKELETON_ITEM_HEIGHT,
 }) => {
+	const { height: windowHeight } = useWindowDimensions();
 	const skeletonItemsToShow = useMemo(() => {
 		return Math.ceil(windowHeight / height);
 	}, [height]);

@@ -3,17 +3,15 @@ import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
-import { Dimensions } from "react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { useTheme } from "react-native-paper";
 interface ArticleSkeletonProps {
 	height?: number;
 }
 
-const { height } = Dimensions.get("window");
-
 const ArticleSkeleton: FunctionComponent<ArticleSkeletonProps> = () => {
 	const colorScheme = useUserColorScheme();
+	const { height } = useWindowDimensions();
 	const theme = useTheme();
 	const colorMode = useMemo(() => {
 		if (colorScheme === COLOR_SCHEME_VALUES.Light) return "light";

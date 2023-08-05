@@ -12,7 +12,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 
 type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
@@ -21,39 +21,56 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 	navigation,
 }) => {
 	const isFocused = useIsFocused();
+	const { width } = useWindowDimensions();
 	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
-	const onItemClick = (id: number, title: string, url: string) => {
-		navigation.navigate("Article", { id, title, url });
+
+	const onItemClick = (id: number) => {
+		const article = bookmarks.find((b) => b.id === id);
+		if (!article) return;
+
+		navigation.navigate("Article", {
+			id: article.id,
+			title: article.title,
+			url: article.url,
+			cover: article.cover,
+			author: {
+				name: article.author.name,
+				image: article.author.imageUri,
+			},
+			tags: article.tags,
+			date: article.date,
+		});
 	};
-	const { width } = Dimensions.get("window");
 
 	useEffect(() => {
 		// Re-fetch bookmarks on focus
 		// To avoid out of sync state when a bookmark is cancelled
 		if (isFocused) {
-			setBookmarks(getBookmarks());
+			setBookmarks(() => {
+				return getBookmarks();
+			});
 		}
 	}, [isFocused]);
 
-	const renderItem: ListRenderItem<PostBookmarkItem> = useCallback(
-		({ item }: { item: PostBookmarkItem }) => {
-			return (
-				<ArticleFeedItem
-					id={item.id}
-					title={item.title}
-					author={{
-						name: item.author.name,
-						imageUri: item.author.imageUri,
-					}}
-					url={item.url}
-					description=""
-					dateReadable=""
-					onItemClick={onItemClick}
-				/>
-			);
-		},
-		[],
-	);
+	const renderItem: ListRenderItem<PostBookmarkItem> = ({
+		item,
+	}: { item: PostBookmarkItem }) => {
+		return (
+			<ArticleFeedItem
+				id={item.id}
+				title={item.title}
+				author={{
+					name: item.author.name,
+					imageUri: item.author.imageUri,
+				}}
+				coverImageUri={item.cover}
+				description=""
+				dateReadable={item.date}
+				onItemClick={onItemClick}
+				tags={item.tags}
+			/>
+		);
+	};
 
 	return (
 		<View style={styles.container}>

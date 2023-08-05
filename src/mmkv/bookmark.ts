@@ -13,7 +13,10 @@ export interface PostBookmarkItem {
 		name: string;
 		imageUri: string;
 	};
+	cover: string | null;
 	type: string;
+	tags: string[];
+	date: string;
 }
 
 interface BookmarkResponse {

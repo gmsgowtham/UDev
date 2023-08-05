@@ -57,7 +57,9 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 				<Text variant="titleLarge" style={styles.title}>
 					{title}
 				</Text>
-				<Text variant="bodyMedium">{description}</Text>
+				{description.length > 0 ? (
+					<Text variant="bodyMedium">{description}</Text>
+				) : null}
 				<TagList tags={tags} />
 			</Card.Content>
 		</Card>

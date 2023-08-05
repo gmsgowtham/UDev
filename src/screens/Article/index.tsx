@@ -89,6 +89,9 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					name: article.user.name,
 					imageUri: article.user.profile_image_90,
 				},
+				cover: article.cover_image,
+				tags: article.tags,
+				date: article.readable_publish_date,
 			});
 			if (!response.success) {
 				// reset state

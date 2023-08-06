@@ -57,7 +57,7 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 				</List.Section>
 				<Divider />
 				<List.Section>
-					<List.Subheader>Misc</List.Subheader>
+					<List.Subheader>Support</List.Subheader>
 					<List.Item
 						title="Terms & Conditions"
 						left={() => <List.Icon icon="security" />}

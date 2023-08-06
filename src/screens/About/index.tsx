@@ -52,7 +52,7 @@ const AboutScreen: FunctionComponent<Props> = ({ navigation }) => {
 				</Text>
 
 				<Text variant="titleLarge" style={styles.sectionHeading}>
-					Open Source Libraries Used:
+					Libraries Used:
 				</Text>
 				{renderDeps()}
 

@@ -32,6 +32,7 @@ const App: FunctionComponent = () => {
 		RNBootSplash.hide();
 		// hack: to avoid status bar styles being mixed with splash screen
 		StatusBar.setBarStyle(statusBarStyle);
+		StatusBar.setBackgroundColor(theme.colors.elevation.level2);
 	};
 
 	return (

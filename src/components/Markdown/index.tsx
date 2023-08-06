@@ -12,7 +12,7 @@ import { useMarkdown } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 
 interface MarkdownRendererProps {
-	loadingState: boolean;
+	loadingState?: boolean;
 	value?: string;
 	headerComponent?: () => React.JSX.Element | null;
 	loadingPlaceholder?: ReactNode;
@@ -20,7 +20,7 @@ interface MarkdownRendererProps {
 
 const RenderMarkdown: FunctionComponent<MarkdownRendererProps> = ({
 	value = "",
-	loadingState,
+	loadingState = false,
 	headerComponent,
 	loadingPlaceholder,
 }) => {

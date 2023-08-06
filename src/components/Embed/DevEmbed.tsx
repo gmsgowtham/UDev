@@ -13,11 +13,7 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 	const theme = useTheme();
 	const [previewData, setPreviewData] = useState<PreviewData | undefined>();
 
-	const renderText = (url: string) => (
-		<Text variant="bodySmall" numberOfLines={2}>
-			{url}
-		</Text>
-	);
+	const renderText = (url: string) => <Text variant="bodySmall">{url}</Text>;
 
 	const renderTitle = (title: string) => (
 		<View style={styles.titleContainer}>
@@ -25,7 +21,7 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 			<Text
 				variant="titleMedium"
 				style={[styles.title, { color: theme.colors.primary }]}
-				numberOfLines={2}
+				numberOfLines={3}
 			>
 				{title}
 			</Text>
@@ -63,7 +59,7 @@ const styles = StyleSheet.create({
 	container: {
 		borderRadius: 4,
 		marginVertical: 8,
-		height: 130,
+		minHeight: 100,
 	},
 	titleContainer: {
 		flexDirection: "row",

@@ -2799,11 +2799,6 @@
     expect "^29.0.0"
     pretty-format "^29.0.0"
 
-"@types/marked@5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-5.0.1.tgz#15acd796d722b91bf00738c8c8539aaf5034f0c6"
-  integrity sha512-Y3pAUzHKh605fN6fvASsz5FDSWbZcs/65Q6xYRmnIP9ZIYz27T4IOmXfH9gWJV1dpi7f1e7z7nBGUTx/a0ptpA==
-
 "@types/metro-config@0.76.3":
   version "0.76.3"
   resolved "https://registry.yarnpkg.com/@types/metro-config/-/metro-config-0.76.3.tgz#39dad5a615eb72cc46f8f2f3520cdea8ca6f9eec"

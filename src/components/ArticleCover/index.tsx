@@ -26,32 +26,33 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 	tags = [],
 }) => {
 	return (
-		<View style={styles.wrapper}>
+		<>
 			{cover.uri ? (
 				<FastImage source={{ uri: cover.uri }} style={styles.image} />
 			) : null}
-			<View style={styles.authorContainer}>
-				<Avatar.Image size={50} source={{ uri: author.imageUri }} />
-				<View style={styles.authorInfo}>
-					<Text variant="titleMedium">{author.name}</Text>
-					<Text variant="labelMedium">{dateReadable}</Text>
+			<View style={styles.wrapper}>
+				<View style={styles.authorContainer}>
+					<Avatar.Image size={50} source={{ uri: author.imageUri }} />
+					<View style={styles.authorInfo}>
+						<Text variant="titleMedium">{author.name}</Text>
+						<Text variant="labelMedium">{dateReadable}</Text>
+					</View>
 				</View>
+				<Text variant="headlineMedium">{title}</Text>
+				<TagList tags={tags} />
 			</View>
-			<Text variant="headlineMedium">{title}</Text>
-			<TagList tags={tags} />
-		</View>
+		</>
 	);
 };
 
 const styles = StyleSheet.create({
 	wrapper: {
-		marginBottom: 16,
+		paddingHorizontal: 12,
+		marginVertical: 16,
 	},
 	image: {
 		width: "100%",
-		borderRadius: 12,
 		aspectRatio: ARTICLE_COVER_IMAGE_ASPECT_RATIO,
-		marginBottom: 16,
 	},
 	authorContainer: {
 		flex: 1,

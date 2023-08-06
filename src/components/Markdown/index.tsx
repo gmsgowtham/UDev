@@ -1,15 +1,13 @@
 import renderer from "./renderer";
-import { styles } from "./styles";
 import tokenizer from "./tokenizer";
 import {
 	FunctionComponent,
-	ReactElement,
 	ReactNode,
 	memo,
 	useCallback,
 	useMemo,
 } from "react";
-import { FlatList } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useMarkdown } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 
@@ -29,7 +27,7 @@ const RenderMarkdown: FunctionComponent<MarkdownRendererProps> = ({
 	const theme = useTheme();
 
 	const renderItem = useCallback(({ item }: { item: ReactNode }) => {
-		return item as ReactElement;
+		return <View style={styles.item}>{item}</View>;
 	}, []);
 
 	const keyExtractor = useCallback(
@@ -72,10 +70,19 @@ const RenderMarkdown: FunctionComponent<MarkdownRendererProps> = ({
 			}}
 			data={elements}
 			renderItem={renderItem}
-			contentContainerStyle={styles.mdContainer}
+			contentContainerStyle={styles.container}
 			ListHeaderComponent={headerComponent}
 		/>
 	);
 };
+
+const styles = StyleSheet.create({
+	container: {
+		paddingBottom: 24,
+	},
+	item: {
+		paddingHorizontal: 12,
+	},
+});
 
 export default memo(RenderMarkdown);

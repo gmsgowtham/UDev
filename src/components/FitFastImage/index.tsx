@@ -1,7 +1,7 @@
+import ImageSkeleton from "../Skeleton/ImageSkeleton";
 import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
-import { ActivityIndicator } from "react-native-paper";
 
 type FitFastImageProps = {
 	uri: string;
@@ -50,7 +50,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 			aria-label={label}
 			accessibilityLabel={label}
 		>
-			{isLoading ? <ActivityIndicator style={styles.indicator} /> : null}
+			{isLoading ? <ImageSkeleton height={150} /> : null}
 		</FastImage>
 	);
 };

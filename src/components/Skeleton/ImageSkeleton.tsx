@@ -3,12 +3,16 @@ import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
 import { useTheme } from "react-native-paper";
 
-const ArticleSkeleton: FunctionComponent = () => {
+type ImageSkeletonProps = {
+	height?: number;
+};
+
+const ImageSkeleton: FunctionComponent<ImageSkeletonProps> = ({
+	height = 200,
+}) => {
 	const colorScheme = useUserColorScheme();
-	const { height } = useWindowDimensions();
 	const theme = useTheme();
 	const colorMode = useMemo(() => {
 		if (colorScheme === COLOR_SCHEME_VALUES.Light) return "light";
@@ -19,15 +23,11 @@ const ArticleSkeleton: FunctionComponent = () => {
 			transition={{
 				type: "spring",
 			}}
-			style={styles.container}
 			animate={{ backgroundColor: theme.colors.background }}
 		>
-			<Skeleton colorMode={colorMode} height={32} width={"50%"} />
-			<Skeleton colorMode={colorMode} height={32} width={"100%"} />
-			<Skeleton colorMode={colorMode} height={32} width={"100%"} />
 			<Skeleton
 				colorMode={colorMode}
-				radius={16}
+				radius={0}
 				height={height}
 				width={"100%"}
 			/>
@@ -35,12 +35,4 @@ const ArticleSkeleton: FunctionComponent = () => {
 	);
 };
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		gap: 8,
-		paddingVertical: 8,
-	},
-});
-
-export default memo(ArticleSkeleton);
+export default memo(ImageSkeleton);

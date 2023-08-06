@@ -172,11 +172,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
-	listContainer: {
-		margin: 8,
-		padding: 4,
-		paddingBottom: 24,
-	},
 });
 
 export default ArticleScreen;

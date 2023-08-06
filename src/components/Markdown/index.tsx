@@ -1,6 +1,5 @@
 import renderer from "./renderer";
 import tokenizer from "./tokenizer";
-import { FlashList } from "@shopify/flash-list";
 import {
 	FunctionComponent,
 	ReactNode,
@@ -8,7 +7,7 @@ import {
 	useCallback,
 	useMemo,
 } from "react";
-import { StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useMarkdown } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 
@@ -61,18 +60,17 @@ const RenderMarkdown: FunctionComponent<MarkdownRendererProps> = ({
 	}, [loadingState]);
 
 	return (
-		<FlashList
-			showsVerticalScrollIndicator={false}
-			onEndReachedThreshold={0.75}
+		<FlatList
 			removeClippedSubviews={false}
 			keyExtractor={keyExtractor}
-			contentContainerStyle={{
-				...styles.container,
+			maxToRenderPerBatch={8}
+			initialNumToRender={8}
+			style={{
 				backgroundColor: theme.colors.background,
 			}}
 			data={elements}
 			renderItem={renderItem}
-			estimatedItemSize={100}
+			contentContainerStyle={styles.container}
 			ListHeaderComponent={headerComponent}
 		/>
 	);

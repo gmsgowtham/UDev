@@ -1,9 +1,7 @@
-import useUserColorScheme from "../../hooks/useUserColorScheme";
-import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
-import { MotiView } from "moti";
-import { Skeleton } from "moti/skeleton";
-import { FunctionComponent, memo, useMemo } from "react";
-import { useTheme } from "react-native-paper";
+import { FunctionComponent, memo } from "react";
+import { StyleSheet } from "react-native";
+import { Surface, useTheme } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 type ImageSkeletonProps = {
 	height?: number;
@@ -12,27 +10,29 @@ type ImageSkeletonProps = {
 const ImageSkeleton: FunctionComponent<ImageSkeletonProps> = ({
 	height = 200,
 }) => {
-	const colorScheme = useUserColorScheme();
 	const theme = useTheme();
-	const colorMode = useMemo(() => {
-		if (colorScheme === COLOR_SCHEME_VALUES.Light) return "light";
-		return "dark";
-	}, [colorScheme]);
+
 	return (
-		<MotiView
-			transition={{
-				type: "spring",
-			}}
-			animate={{ backgroundColor: theme.colors.background }}
-		>
-			<Skeleton
-				colorMode={colorMode}
-				radius={0}
-				height={height}
-				width={"100%"}
+		<Surface style={[styles.iconContainer, { height: height }]} mode="flat">
+			<Icon
+				name="image"
+				size={40}
+				style={styles.icon}
+				color={theme.colors.onSurface}
 			/>
-		</MotiView>
+		</Surface>
 	);
 };
+
+const styles = StyleSheet.create({
+	iconContainer: {
+		width: "100%",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	icon: {
+		opacity: 0.2,
+	},
+});
 
 export default memo(ImageSkeleton);

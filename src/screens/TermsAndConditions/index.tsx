@@ -1,4 +1,4 @@
-import RenderMarkdown from "../../components/Markdown";
+import { RenderMarkdownDefault } from "../../components/Markdown";
 import { StackParamList } from "../../router/types";
 import TERM_AND_CONDITION_MARKDOWN from "./md";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -16,7 +16,7 @@ const TermsAndConditionsScreen: FunctionComponent<Props> = ({ navigation }) => {
 				<Appbar.BackAction onPress={() => navigation.goBack()} />
 				<Appbar.Content title="Terms & Conditions" />
 			</Appbar.Header>
-			<RenderMarkdown value={TERM_AND_CONDITION_MARKDOWN} />
+			<RenderMarkdownDefault value={TERM_AND_CONDITION_MARKDOWN} />
 		</View>
 	);
 };

@@ -6,6 +6,7 @@ import FastImage from "react-native-fast-image";
 import { Avatar, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
+	id: number;
 	cover: {
 		uri?: string | null;
 	};

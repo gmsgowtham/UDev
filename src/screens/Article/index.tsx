@@ -1,5 +1,5 @@
 import ArticleCover from "../../components/ArticleCover";
-import RenderMarkdown from "../../components/Markdown";
+import { RenderMarkdownDefault } from "../../components/Markdown";
 import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
 import {
@@ -108,6 +108,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const renderListHeaderComponent = useCallback(() => {
 		return (
 			<ArticleCover
+				id={id}
 				title={title}
 				cover={{
 					uri: cover,
@@ -158,7 +159,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
-			<RenderMarkdown
+			<RenderMarkdownDefault
 				loadingState={loading}
 				value={article?.body_markdown}
 				headerComponent={renderListHeaderComponent}

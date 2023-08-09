@@ -5,7 +5,7 @@ import {
 	FlashListProps,
 	type ListRenderItem,
 } from "@shopify/flash-list";
-import { FunctionComponent, memo, useCallback } from "react";
+import { FunctionComponent, memo } from "react";
 
 type ArticleFeed = {
 	data: ApiArticleFeedItem[];

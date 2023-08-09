@@ -6809,10 +6809,10 @@ react-native-bootsplash@4.7.5:
     picocolors "^1.0.0"
     sharp "^0.32.1"
 
-react-native-code-highlighter@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.0.1.tgz#de1dc50e1fbe3a5ba01cfcc49accff75e82dd004"
-  integrity sha512-aeVRAu5QiRHxncmevUGSQRcL9n7owpvWXhEn7C1E62fq/UfFW6P+Y3me4yarZHAHVTVz0/RCx3BrSOXn4k3Ajw==
+react-native-code-highlighter@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.1.0.tgz#457652451cb19ec563415eb1fb50825c370f38a0"
+  integrity sha512-BlKF9fJlFQ7MKsAJLMzc6zH6lMBYmFG/sasAbV8vyaELCAJhGX+LqdKUQGALdtm8awtoTIjcIeJ5ZCWCLnqVpQ==
   dependencies:
     css-to-react-native "3.2.0"
     react-syntax-highlighter "15.5.0"

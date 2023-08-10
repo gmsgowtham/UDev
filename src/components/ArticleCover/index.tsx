@@ -7,9 +7,7 @@ import { Avatar, Text } from "react-native-paper";
 
 interface ArticleCoverProps {
 	id: number;
-	cover: {
-		uri?: string | null;
-	};
+	cover?: string | null;
 	title: string;
 	author: {
 		imageUri: string;
@@ -28,8 +26,8 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 }) => {
 	return (
 		<>
-			{cover.uri ? (
-				<FastImage source={{ uri: cover.uri }} style={styles.image} />
+			{cover ? (
+				<FastImage source={{ uri: cover }} style={styles.image} />
 			) : null}
 			<View style={styles.wrapper}>
 				<View style={styles.authorContainer}>

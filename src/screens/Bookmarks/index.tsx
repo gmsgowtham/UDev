@@ -5,13 +5,7 @@ import { StackParamList } from "../../router/types";
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, type ListRenderItem } from "@shopify/flash-list";
-import {
-	FunctionComponent,
-	memo,
-	useCallback,
-	useEffect,
-	useState,
-} from "react";
+import { FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 
@@ -32,7 +26,7 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 			id: article.id,
 			title: article.title,
 			url: article.url,
-			cover: article.cover,
+			cover: article.cover ?? "",
 			author: {
 				name: article.author.name,
 				image: article.author.imageUri,

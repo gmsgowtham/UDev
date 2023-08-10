@@ -1,7 +1,8 @@
 import ArticleCover from "../../components/ArticleCover";
-import { RenderMarkdownDefault } from "../../components/Markdown";
+import { RenderMarkdownAnimatedFlatList } from "../../components/Markdown";
 import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
+import { withAnimated } from "../../hoc/withAnimated";
 import {
 	isBookmarked,
 	removeBookmark,
@@ -9,24 +10,66 @@ import {
 } from "../../mmkv/bookmark";
 import { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
-import { HELP_TEXT } from "../../utils/const";
+import { ARTICLE_COVER_IMAGE_ASPECT_RATIO, HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent, useCallback, useState } from "react";
+import { FunctionComponent, useCallback, useMemo, useState } from "react";
+import { useWindowDimensions } from "react-native";
 import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
 import { Appbar, Tooltip } from "react-native-paper";
+import {
+	Extrapolation,
+	interpolate,
+	useAnimatedScrollHandler,
+	useAnimatedStyle,
+	useSharedValue,
+} from "react-native-reanimated";
 
 type Props = NativeStackScreenProps<StackParamList, "Article">;
+
+const AnimatedAppbarContent = withAnimated(Appbar.Content);
+
+const authorHeight = 65;
+const assumedTitleHeight = 54;
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { id, title, url, cover, author, tags, date } = params;
-	const _isPostBookmarked = isBookmarked(id);
+	const netInfo = useNetInfo();
+	const { width: windowWidth } = useWindowDimensions();
+	const _isPostBookmarked = useMemo(() => {
+		return isBookmarked(id);
+	}, []);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
-	const netInfo = useNetInfo();
+
+	// Animation primitives
+	const scrollY = useSharedValue(0);
+	const [interpolateRangeStart, interpolateRangeEnd] = useMemo(() => {
+		let heightWithoutTitle = authorHeight;
+		if (cover) {
+			heightWithoutTitle =
+				windowWidth / ARTICLE_COVER_IMAGE_ASPECT_RATIO + authorHeight;
+		}
+
+		return [heightWithoutTitle, heightWithoutTitle + assumedTitleHeight];
+	}, [cover, windowWidth]);
+	const scrollHandler = useAnimatedScrollHandler((event) => {
+		scrollY.value = event.contentOffset.y;
+	});
+	const appbarContentOpacity = useAnimatedStyle(() => {
+		const opacity = interpolate(
+			scrollY.value,
+			[interpolateRangeStart, interpolateRangeEnd],
+			[0, 1],
+			Extrapolation.CLAMP,
+		);
+		return {
+			opacity,
+		};
+	});
 
 	const { article, loading, fetchArticle, resetArticle, error } =
 		useArticleStore((state) => ({
@@ -110,9 +153,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 			<ArticleCover
 				id={id}
 				title={title}
-				cover={{
-					uri: cover,
-				}}
+				cover={cover}
 				author={{
 					name: author.name,
 					imageUri: author.image,
@@ -127,7 +168,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		<View style={styles.container}>
 			<Appbar.Header elevated>
 				<Appbar.BackAction onPress={onBackActionPress} />
-				<Appbar.Content title={""} />
+				<AnimatedAppbarContent title={title} style={[appbarContentOpacity]} />
 				<Tooltip title="Share">
 					<Appbar.Action
 						icon="share"
@@ -159,7 +200,8 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
-			<RenderMarkdownDefault
+			<RenderMarkdownAnimatedFlatList
+				onScroll={scrollHandler}
 				loadingState={loading}
 				value={article?.body_markdown}
 				headerComponent={renderListHeaderComponent}

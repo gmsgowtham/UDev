@@ -69,7 +69,7 @@
     "@babel/runtime": "7.22.10",
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
-    "@react-native/metro-config": "0.72.9",
+    "@react-native/metro-config": "0.72.11",
     "@tsconfig/react-native": "3.0.2",
     "@types/css-to-react-native": "3.0.0",
     "@types/html-escaper": "3.0.0",

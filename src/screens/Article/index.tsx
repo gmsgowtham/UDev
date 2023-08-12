@@ -10,16 +10,22 @@ import {
 } from "../../mmkv/bookmark";
 import { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
-import { ARTICLE_COVER_IMAGE_ASPECT_RATIO, HELP_TEXT } from "../../utils/const";
+import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, useCallback, useMemo, useState } from "react";
-import { useWindowDimensions } from "react-native";
-import { Linking, Share, StyleSheet, ToastAndroid, View } from "react-native";
-import { Appbar, Tooltip } from "react-native-paper";
 import {
+	LayoutChangeEvent,
+	Linking,
+	Share,
+	StyleSheet,
+	ToastAndroid,
+	View,
+} from "react-native";
+import { Appbar, Tooltip, useTheme } from "react-native-paper";
+import Animated, {
 	Extrapolation,
 	interpolate,
 	useAnimatedScrollHandler,
@@ -31,38 +37,27 @@ type Props = NativeStackScreenProps<StackParamList, "Article">;
 
 const AnimatedAppbarContent = withAnimated(Appbar.Content);
 
-const authorHeight = 65;
-const assumedTitleHeight = 54;
-
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { id, title, url, cover, author, tags, date } = params;
+	const theme = useTheme();
 	const netInfo = useNetInfo();
-	const { width: windowWidth } = useWindowDimensions();
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
 	}, []);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
+	const [headerHeight, setHeaderHeight] = useState(0);
 
 	// Animation primitives
 	const scrollY = useSharedValue(0);
-	const [interpolateRangeStart, interpolateRangeEnd] = useMemo(() => {
-		let heightWithoutTitle = authorHeight;
-		if (cover) {
-			heightWithoutTitle =
-				windowWidth / ARTICLE_COVER_IMAGE_ASPECT_RATIO + authorHeight;
-		}
-
-		return [heightWithoutTitle, heightWithoutTitle + assumedTitleHeight];
-	}, [cover, windowWidth]);
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		scrollY.value = event.contentOffset.y;
 	});
 	const appbarContentOpacity = useAnimatedStyle(() => {
 		const opacity = interpolate(
 			scrollY.value,
-			[interpolateRangeStart, interpolateRangeEnd],
+			[headerHeight / 1.5, headerHeight],
 			[0, 1],
 			Extrapolation.CLAMP,
 		);
@@ -71,14 +66,26 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		};
 	});
 
-	const { article, loading, fetchArticle, resetArticle, error } =
-		useArticleStore((state) => ({
+	const coverTranslate = useAnimatedStyle(() => {
+		const translateY = interpolate(
+			scrollY.value,
+			[0, headerHeight],
+			[0, -headerHeight],
+			Extrapolation.CLAMP,
+		);
+		return {
+			transform: [{ translateY }],
+		};
+	});
+
+	const { article, fetchArticle, resetArticle, error } = useArticleStore(
+		(state) => ({
 			article: state.article,
 			fetchArticle: state.fetchArticle,
 			resetArticle: state.reset,
-			loading: state.loading,
 			error: state.error,
-		}));
+		}),
+	);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -148,25 +155,44 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		}
 	};
 
-	const renderListHeaderComponent = useCallback(() => {
-		return (
-			<ArticleCover
-				id={id}
-				title={title}
-				cover={cover}
-				author={{
-					name: author.name,
-					imageUri: author.image,
-				}}
-				dateReadable={date}
-				tags={tags}
-			/>
-		);
-	}, [article]);
+	const onCoverLayout = (event: LayoutChangeEvent) => {
+		setHeaderHeight(Math.round(event.nativeEvent.layout.height));
+	};
+
+	const renderContent = useCallback(() => {
+		if (article?.body_markdown && headerHeight > 0) {
+			return (
+				<RenderMarkdownAnimatedFlatList
+					onScroll={scrollHandler}
+					value={article?.body_markdown}
+					flatListProps={{
+						scrollEventThrottle: 16,
+						contentContainerStyle: {
+							paddingTop: headerHeight,
+							paddingBottom: 16,
+						},
+						bounces: false,
+						alwaysBounceVertical: false,
+						bouncesZoom: false,
+					}}
+				/>
+			);
+		}
+
+		if (!article?.body_markdown && headerHeight > 0) {
+			return (
+				<ArticleSkeleton
+					containerStyle={{ padding: 12, paddingTop: headerHeight }}
+				/>
+			);
+		}
+
+		return null;
+	}, [article?.body_markdown, headerHeight]);
 
 	return (
 		<View style={styles.container}>
-			<Appbar.Header elevated>
+			<Appbar.Header elevated style={styles.nav}>
 				<Appbar.BackAction onPress={onBackActionPress} />
 				<AnimatedAppbarContent title={title} style={[appbarContentOpacity]} />
 				<Tooltip title="Share">
@@ -200,13 +226,28 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
-			<RenderMarkdownAnimatedFlatList
-				onScroll={scrollHandler}
-				loadingState={loading}
-				value={article?.body_markdown}
-				headerComponent={renderListHeaderComponent}
-				loadingPlaceholder={<ArticleSkeleton />}
-			/>
+
+			<Animated.View
+				style={[
+					styles.header,
+					{ backgroundColor: theme.colors.background },
+					coverTranslate,
+				]}
+				onLayout={onCoverLayout}
+			>
+				<ArticleCover
+					id={id}
+					title={title}
+					cover={cover}
+					author={{
+						name: author.name,
+						imageUri: author.image,
+					}}
+					dateReadable={date}
+					tags={tags}
+				/>
+			</Animated.View>
+			{renderContent()}
 		</View>
 	);
 };
@@ -214,6 +255,16 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+	},
+	nav: {
+		zIndex: 2,
+	},
+	header: {
+		position: "absolute",
+		left: 0,
+		right: 0,
+		top: 64,
+		zIndex: 1,
 	},
 });
 

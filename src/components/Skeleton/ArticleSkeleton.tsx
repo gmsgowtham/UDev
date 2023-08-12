@@ -3,10 +3,21 @@ import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import {
+	StyleProp,
+	StyleSheet,
+	ViewStyle,
+	useWindowDimensions,
+} from "react-native";
 import { useTheme } from "react-native-paper";
 
-const ArticleSkeleton: FunctionComponent = () => {
+interface ArticleSkeletonProps {
+	containerStyle?: StyleProp<ViewStyle>;
+}
+
+const ArticleSkeleton: FunctionComponent<ArticleSkeletonProps> = ({
+	containerStyle,
+}) => {
 	const colorScheme = useUserColorScheme();
 	const { height } = useWindowDimensions();
 	const theme = useTheme();
@@ -19,7 +30,7 @@ const ArticleSkeleton: FunctionComponent = () => {
 			transition={{
 				type: "spring",
 			}}
-			style={styles.container}
+			style={[styles.container, containerStyle]}
 			animate={{ backgroundColor: theme.colors.background }}
 		>
 			<Skeleton colorMode={colorMode} height={32} width={"50%"} />

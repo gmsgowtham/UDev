@@ -1,38 +1,25 @@
 import renderer from "./renderer";
 import tokenizer from "./tokenizer";
+import { FunctionComponent, ReactNode, memo, useCallback } from "react";
 import {
-	FunctionComponent,
-	ReactNode,
-	memo,
-	useCallback,
-	useMemo,
-} from "react";
-import {
+	FlatListProps,
 	NativeScrollEvent,
 	NativeSyntheticEvent,
 	StyleSheet,
 	View,
 } from "react-native";
 import { useMarkdown } from "react-native-marked";
-import { ActivityIndicator, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import Animated from "react-native-reanimated";
 
 interface MarkdownRendererProps {
-	loadingState?: boolean;
 	value?: string;
-	headerComponent?: () => React.JSX.Element | null;
-	loadingPlaceholder?: ReactNode;
 	onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+	flatListProps?: Omit<FlatListProps<ReactNode>, "data" | "renderItem">;
 }
 
 const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
-	({
-		onScroll,
-		value = "",
-		loadingState = false,
-		headerComponent,
-		loadingPlaceholder,
-	}) => {
+	({ onScroll, value = "", flatListProps }) => {
 		const theme = useTheme();
 
 		const renderItem = useCallback(({ item }: { item: ReactNode }) => {
@@ -58,29 +45,19 @@ const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
 			tokenizer: tokenizer,
 		});
 
-		const elements: ReactNode[] = useMemo(() => {
-			if (loadingState && loadingPlaceholder) {
-				return [loadingPlaceholder];
-			} else if (loadingState && !loadingPlaceholder) {
-				return [<ActivityIndicator />];
-			}
-
-			return rnElements;
-		}, [loadingState]);
-
 		return (
 			<Animated.FlatList
+				contentContainerStyle={styles.container}
 				removeClippedSubviews={false}
-				keyExtractor={keyExtractor}
-				maxToRenderPerBatch={8}
-				initialNumToRender={8}
 				style={{
 					backgroundColor: theme.colors.background,
 				}}
-				data={elements}
+				{...flatListProps}
+				keyExtractor={keyExtractor}
+				maxToRenderPerBatch={8}
+				initialNumToRender={8}
+				data={rnElements}
 				renderItem={renderItem}
-				contentContainerStyle={styles.container}
-				ListHeaderComponent={headerComponent}
 				onScroll={onScroll}
 			/>
 		);

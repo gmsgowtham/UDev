@@ -174,6 +174,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 						bounces: false,
 						alwaysBounceVertical: false,
 						bouncesZoom: false,
+						overScrollMode: "never",
 					}}
 				/>
 			);

@@ -1,4 +1,4 @@
-import ArticleCover from "../../components/ArticleCover";
+import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
 import { RenderMarkdownAnimatedFlatList } from "../../components/Markdown";
 import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
@@ -24,8 +24,8 @@ import {
 	ToastAndroid,
 	View,
 } from "react-native";
-import { Appbar, Tooltip, useTheme } from "react-native-paper";
-import Animated, {
+import { Appbar, Tooltip } from "react-native-paper";
+import {
 	Extrapolation,
 	interpolate,
 	useAnimatedScrollHandler,
@@ -40,7 +40,6 @@ const AnimatedAppbarContent = withAnimated(Appbar.Content);
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { id, title, url, cover, author, tags, date } = params;
-	const theme = useTheme();
 	const netInfo = useNetInfo();
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
@@ -66,7 +65,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		};
 	});
 
-	const coverTranslate = useAnimatedStyle(() => {
+	const coverContainerAnimations = useAnimatedStyle(() => {
 		const translateY = interpolate(
 			scrollY.value,
 			[0, headerHeight],
@@ -74,6 +73,28 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 			Extrapolation.CLAMP,
 		);
 		return {
+			transform: [{ translateY }],
+		};
+	});
+
+	const coverImageAnimations = useAnimatedStyle(() => {
+		if (!cover) {
+			return {};
+		}
+		const translateY = interpolate(
+			scrollY.value,
+			[0, headerHeight],
+			[0, headerHeight / 5],
+			Extrapolation.CLAMP,
+		);
+		const opacity = interpolate(
+			scrollY.value,
+			[0, headerHeight / 2.2],
+			[1, 0],
+			Extrapolation.CLAMP,
+		);
+		return {
+			opacity,
 			transform: [{ translateY }],
 		};
 	});
@@ -175,6 +196,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 						alwaysBounceVertical: false,
 						bouncesZoom: false,
 						overScrollMode: "never",
+						scrollToOverflowEnabled: true,
 					}}
 				/>
 			);
@@ -228,26 +250,22 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
 
-			<Animated.View
-				style={[
-					styles.header,
-					{ backgroundColor: theme.colors.background },
-					coverTranslate,
-				]}
-				onLayout={onCoverLayout}
-			>
-				<ArticleCover
-					id={id}
-					title={title}
-					cover={cover}
-					author={{
-						name: author.name,
-						imageUri: author.image,
-					}}
-					dateReadable={date}
-					tags={tags}
-				/>
-			</Animated.View>
+			<ArticleAnimatedCover
+				id={id}
+				title={title}
+				cover={cover}
+				author={{
+					name: author.name,
+					imageUri: author.image,
+				}}
+				dateReadable={date}
+				tags={tags}
+				onCoverLayout={onCoverLayout}
+				animations={{
+					container: coverContainerAnimations,
+					image: coverImageAnimations,
+				}}
+			/>
 			{renderContent()}
 		</View>
 	);

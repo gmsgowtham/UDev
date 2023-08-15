@@ -1,11 +1,22 @@
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
 import { FunctionComponent, memo } from "react";
-import { StyleSheet, View } from "react-native";
-import FastImage from "react-native-fast-image";
-import { Avatar, Text } from "react-native-paper";
+import {
+	ImageStyle,
+	LayoutChangeEvent,
+	StyleSheet,
+	View,
+	ViewStyle,
+} from "react-native";
+import { Avatar, Text, useTheme } from "react-native-paper";
+import Animated, { AnimatedStyleProp } from "react-native-reanimated";
 
-interface ArticleCoverProps {
+interface ArticleAnimatedCoverProps {
+	onCoverLayout: (event: LayoutChangeEvent) => void;
+	animations: {
+		container?: AnimatedStyleProp<ViewStyle>;
+		image?: AnimatedStyleProp<ImageStyle>;
+	};
 	id: number;
 	cover?: string | null;
 	title: string;
@@ -17,17 +28,30 @@ interface ArticleCoverProps {
 	tags?: string[];
 }
 
-const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
+const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 	cover,
 	title,
 	author,
 	dateReadable,
 	tags = [],
+	onCoverLayout,
+	animations,
 }) => {
+	const theme = useTheme();
 	return (
-		<>
+		<Animated.View
+			onLayout={onCoverLayout}
+			style={[
+				styles.header,
+				{ backgroundColor: theme.colors.background },
+				animations.container,
+			]}
+		>
 			{cover ? (
-				<FastImage source={{ uri: cover }} style={styles.image} />
+				<Animated.Image
+					source={{ uri: cover }}
+					style={[styles.image, animations.image]}
+				/>
 			) : null}
 			<View style={styles.wrapper}>
 				<View style={styles.authorContainer}>
@@ -40,7 +64,7 @@ const ArticleCover: FunctionComponent<ArticleCoverProps> = ({
 				<Text variant="headlineMedium">{title}</Text>
 				<TagList tags={tags} />
 			</View>
-		</>
+		</Animated.View>
 	);
 };
 
@@ -64,6 +88,13 @@ const styles = StyleSheet.create({
 		gap: 4,
 		justifyContent: "space-between",
 	},
+	header: {
+		position: "absolute",
+		left: 0,
+		right: 0,
+		top: 64,
+		zIndex: 1,
+	},
 });
 
-export default memo(ArticleCover);
+export default memo(ArticleAnimatedCover);

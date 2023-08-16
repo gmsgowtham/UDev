@@ -52,7 +52,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 			aria-label={label}
 			accessibilityLabel={label}
 		>
-			{isLoading ? <ImageSkeleton aspectRatio={aspectRatio} /> : null}
+			{isLoading ? <ImageSkeleton /> : null}
 		</FastImage>
 	);
 };

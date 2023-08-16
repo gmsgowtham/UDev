@@ -3,17 +3,11 @@ import { StyleSheet } from "react-native";
 import { Surface, useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-type ImageSkeletonProps = {
-	aspectRatio: number;
-};
-
-const ImageSkeleton: FunctionComponent<ImageSkeletonProps> = ({
-	aspectRatio,
-}) => {
+const ImageSkeleton: FunctionComponent = () => {
 	const theme = useTheme();
 
 	return (
-		<Surface style={[styles.iconContainer, { aspectRatio }]} mode="flat">
+		<Surface style={styles.iconContainer} mode="flat">
 			<Icon
 				name="image"
 				size={40}
@@ -27,6 +21,7 @@ const ImageSkeleton: FunctionComponent<ImageSkeletonProps> = ({
 const styles = StyleSheet.create({
 	iconContainer: {
 		width: "100%",
+		height: "100%",
 		alignItems: "center",
 		justifyContent: "center",
 	},

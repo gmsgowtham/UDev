@@ -8,13 +8,15 @@ type FitFastImageProps = {
 	label?: string;
 };
 
+const DEFAULT_ASPECT_RATIO = 1.5; // 3/2 aspect ratio
+
 const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 	uri,
 	label = "image",
 }) => {
 	const isFirstLoad = useRef(true);
 	const [isLoading, setIsLoading] = useState(false);
-	const [aspectRatio, setAspectRatio] = useState<number | undefined>(undefined);
+	const [aspectRatio, setAspectRatio] = useState<number>(DEFAULT_ASPECT_RATIO);
 
 	useEffect(() => {
 		fetchOriginalSizeFromRemoteImage();
@@ -50,7 +52,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 			aria-label={label}
 			accessibilityLabel={label}
 		>
-			{isLoading ? <ImageSkeleton /> : null}
+			{isLoading ? <ImageSkeleton aspectRatio={aspectRatio} /> : null}
 		</FastImage>
 	);
 };

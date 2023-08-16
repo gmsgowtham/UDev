@@ -4,13 +4,11 @@ import { Surface, useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 type ImageSkeletonProps = {
-	aspectRatio?: number;
+	aspectRatio: number;
 };
 
-const DEFAULT_ASPECT_RATIO = 1.5; // 3/2 aspect ratio
-
 const ImageSkeleton: FunctionComponent<ImageSkeletonProps> = ({
-	aspectRatio = DEFAULT_ASPECT_RATIO,
+	aspectRatio,
 }) => {
 	const theme = useTheme();
 

@@ -1,4 +1,5 @@
 import renderer from "./renderer";
+import getMarkdownTheme from "./theme";
 import tokenizer from "./tokenizer";
 import {
 	FunctionComponent,
@@ -35,17 +36,13 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 		[],
 	);
 
+	const markdownTheme = useMemo(() => {
+		return getMarkdownTheme(theme);
+	}, [theme]);
+
 	const rnElements = useMarkdown(value, {
 		renderer: renderer,
-		theme: {
-			colors: {
-				background: theme.colors.background,
-				code: theme.colors.elevation.level2,
-				link: theme.colors.primary,
-				text: theme.colors.onBackground,
-				border: theme.colors.secondary,
-			},
-		},
+		theme: markdownTheme,
 		tokenizer: tokenizer,
 	});
 

@@ -135,7 +135,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme, onReady }) => {
 	return (
 		<NavigationContainer theme={theme} onReady={onReady}>
 			<Stack.Navigator
-				screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+				screenOptions={{ headerShown: false }}
 				initialRouteName="Landing"
 			>
 				<Stack.Screen name="Landing" component={DrawerNav} />

@@ -8,6 +8,7 @@ import {
 	View,
 	ViewStyle,
 } from "react-native";
+import FastImage from "react-native-fast-image";
 import { Avatar, Text, useTheme } from "react-native-paper";
 import Animated, { AnimatedStyleProp } from "react-native-reanimated";
 
@@ -48,10 +49,9 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 			]}
 		>
 			{cover ? (
-				<Animated.Image
-					source={{ uri: cover }}
-					style={[styles.image, animations.image]}
-				/>
+				<Animated.View style={animations.image}>
+					<FastImage source={{ uri: cover }} style={styles.image} />
+				</Animated.View>
 			) : null}
 			<View style={styles.wrapper}>
 				<View style={styles.authorContainer}>

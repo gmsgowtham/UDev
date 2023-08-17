@@ -31,17 +31,65 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		 * Matches the following pattern
 		 * {% link url %}
 		 * {% embed url %}
+		 * {% codepen url %}
 		 * *{% embed* url *%}*
 		 */
-		const match = src.match(/^[*]?{% (embed|link)[*]? (.*?)[*]?%}[*]?/);
-		if (match && match.length > 2) {
+		const embedMatch = src.match(
+			/^[*]?{% (embed|link|codepen)[*]? (.*?)[*]?%}[*]?/,
+		);
+		if (embedMatch && embedMatch.length > 2) {
 			const token: CustomToken = {
 				identifier: "embed",
 				type: "custom",
-				raw: match[0],
+				raw: embedMatch[0],
 				tokens: [],
 				args: {
-					text: match[2].trim(),
+					text: embedMatch[2].trim(),
+				},
+			};
+			return token;
+		}
+
+		/**
+		 * Details element
+		 *
+		 * Matches the following pattern
+		 * {% details text %}
+		 * details element will not be renderered
+		 */
+		const detailsMatch = src.match(
+			/^[*]?{% (details|enddetails)[*]? (.*?)[*]?%}[*]?/,
+		);
+		if (detailsMatch && detailsMatch.length > 2) {
+			const token: CustomToken = {
+				raw: detailsMatch[0],
+				identifier: "details",
+				type: "custom",
+				args: {},
+				tokens: [],
+			};
+			return token;
+		}
+
+		/**
+		 * Youtube embed
+		 *
+		 * Matches the following pattern
+		 * {% youtube id %}
+		 */
+		const youtubeMatch = src.match(/^[*]?{% (youtube)[*]? (.*?)[*]?%}[*]?/);
+		if (youtubeMatch && youtubeMatch.length > 2) {
+			let url = youtubeMatch[2].trim();
+			if (!url.includes("https://www.youtube.com/watch")) {
+				url = `https://www.youtube.com/watch?v=${url}`;
+			}
+			const token: CustomToken = {
+				identifier: "embed",
+				type: "custom",
+				raw: youtubeMatch[0],
+				tokens: [],
+				args: {
+					text: url,
 				},
 			};
 			return token;

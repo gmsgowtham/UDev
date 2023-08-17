@@ -11,7 +11,7 @@ import {
 	ViewStyle,
 } from "react-native";
 import CodeHighlighter from "react-native-code-highlighter";
-import { IconButton, Text as PaperText } from "react-native-paper";
+import { IconButton, Text } from "react-native-paper";
 import {
 	stackoverflowDark as darkStyle,
 	stackoverflowLight as lightStyle,
@@ -54,9 +54,9 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 					{ backgroundColor: containerStyle?.backgroundColor },
 				]}
 			>
-				<PaperText variant="labelMedium" style={styles.title}>{`${
-					language || "code"
-				} snippet`}</PaperText>
+				<Text variant="labelMedium" style={styles.title}>
+					{`${language} snippet`}
+				</Text>
 				<IconButton
 					icon="content-copy"
 					size={16}

@@ -67,10 +67,8 @@ export const processMarkdownContent = (markdown: string): string => {
 	return mdProcessed;
 };
 
-export const getActualLangForCodeSnippet = (
-	alias?: string,
-): string | undefined => {
-	if (!alias) return undefined;
+export const getActualLangForCodeSnippet = (alias?: string): string => {
+	if (!alias) return "code";
 	return LANG_ALIAS_MAP[alias] ?? alias;
 };
 

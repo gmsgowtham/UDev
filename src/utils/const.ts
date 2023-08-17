@@ -16,6 +16,7 @@ export const HELP_TEXT = {
 export const LANG_ALIAS_MAP: Record<string, string> = {
 	js: "javascript",
 	ts: "typescript",
+	csharp: "C#",
 };
 export const MAX_BOOKMARKS = 100;
 export const ARTICLE_COVER_IMAGE_ASPECT_RATIO = 2.380952380952381; // 1000:420

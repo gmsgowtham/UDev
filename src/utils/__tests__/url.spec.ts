@@ -1,4 +1,4 @@
-import { buildURLParams } from "./../url";
+import { buildURLParams, getYoutubeEmbedURL } from "./../url";
 describe(buildURLParams, () => {
 	it("empty input", () => {
 		expect(buildURLParams({})).toBe("");
@@ -21,5 +21,18 @@ describe(buildURLParams, () => {
 				baz: false,
 			}),
 		).toBe("hello=world&baz=false");
+	});
+});
+
+describe(getYoutubeEmbedURL, () => {
+	it("Id only", () => {
+		expect(getYoutubeEmbedURL("840TmQNxjKY")).toBe(
+			"https://www.youtube.com/watch?v=840TmQNxjKY",
+		);
+	});
+	it("Full URL", () => {
+		expect(
+			getYoutubeEmbedURL("https://www.youtube.com/watch?v=840TmQNxjKY"),
+		).toBe("https://www.youtube.com/watch?v=840TmQNxjKY");
 	});
 });

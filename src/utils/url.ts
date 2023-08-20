@@ -13,3 +13,12 @@ export const buildURLParams = (
 
 	return paramsArray.join("&");
 };
+
+export const getYoutubeEmbedURL = (str: string) => {
+	try {
+		const parsed = new URL(str);
+		return parsed.toString();
+	} catch (e) {
+		return `https://www.youtube.com/watch?v=${str}`;
+	}
+};

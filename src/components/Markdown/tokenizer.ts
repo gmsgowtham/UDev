@@ -1,3 +1,4 @@
+import { getYoutubeEmbedURL } from "../../utils/url";
 import { type CustomToken, MarkedTokenizer } from "react-native-marked";
 
 class MDTokenizer extends MarkedTokenizer<CustomToken> {
@@ -79,10 +80,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		 */
 		const youtubeMatch = src.match(/^[*]?{% (youtube)[*]? (.*?)[*]?%}[*]?/);
 		if (youtubeMatch && youtubeMatch.length > 2) {
-			let url = youtubeMatch[2].trim();
-			if (!url.includes("https://www.youtube.com/watch")) {
-				url = `https://www.youtube.com/watch?v=${url}`;
-			}
+			const url = getYoutubeEmbedURL(youtubeMatch[2]);
 			const token: CustomToken = {
 				identifier: "embed",
 				type: "custom",

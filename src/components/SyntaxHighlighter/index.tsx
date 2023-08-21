@@ -68,7 +68,6 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 			<CodeHighlighter
 				hljsStyle={hlsStyles}
 				language={language}
-				containerStyle={containerStyle}
 				textStyle={textStyle}
 				scrollViewProps={{
 					contentContainerStyle: containerStyle,

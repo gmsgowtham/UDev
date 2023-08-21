@@ -7234,10 +7234,10 @@ react-native-mmkv@2.10.1:
   resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.10.1.tgz#1a4e64edbf9561fe81a5ae3cefde17e88dfc669f"
   integrity sha512-MCrYytUJ3JhSVg7LwVXCj7ExbMHe48FoQdDA1xo1q/M4c1/QyI3M9L9d2dyJUhYPnsSO0+5c2mJICm7v39XA0w==
 
-react-native-paper@5.10.1:
-  version "5.10.1"
-  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.10.1.tgz#89d5bb51a9604518d470626cd56f6fc29b2164e1"
-  integrity sha512-/VNo9T87dtPBdQQI5CcaXjHtIAmlOoIe60W/iBcwUjZTVKMI///ZxcmxRSkACUYTcwyGAbkjhHHPqN2knrXp9Q==
+react-native-paper@5.10.2:
+  version "5.10.2"
+  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.10.2.tgz#543adb87ad778e4db069014d42374bd2607a3680"
+  integrity sha512-IFYH0CM22NUigHF7RLHGcrvW1/lq4EEgDSIxgcqU/y7WQ0kbuvJLRTCYOh0M4+cSRHQsI5CLHPWWy64FK/2UvQ==
   dependencies:
     "@callstack/react-theme-provider" "^3.0.9"
     color "^3.1.2"

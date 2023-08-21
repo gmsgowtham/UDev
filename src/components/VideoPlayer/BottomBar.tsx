@@ -51,6 +51,8 @@ const BottomBar: FunctionComponent<BottomBarProps> = ({
 						thumbTintColor={theme.colors.primary}
 						maximumTrackTintColor={theme.colors.secondary}
 						onSlidingComplete={onSeek}
+						accessibilityLabel="seek video"
+						aria-label="seek video"
 					/>
 				</View>
 				<Tooltip title="Fullscreen">

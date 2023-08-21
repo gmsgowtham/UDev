@@ -134,6 +134,8 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 				<Pressable
 					onPress={toggleOverlayVisibility}
 					style={styles.absoluteFill}
+					accessibilityLabel="Backdrop"
+					aria-label="Backdrop"
 				>
 					<Overlay
 						styles={styles.playOverlay}
@@ -153,6 +155,8 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 								mode="contained-tonal"
 								pointerEvents="box-none"
 								theme={theme}
+								accessibilityLabel="Play or Pause"
+								aria-label="Play or Pause"
 							/>
 						</View>
 						<BottomBar

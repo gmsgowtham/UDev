@@ -42,7 +42,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 				<FastImage
 					source={{ uri: coverImageUri }}
 					style={styles.cover}
-					resizeMode={FastImage.resizeMode.contain}
+					resizeMode={FastImage.resizeMode.cover}
 				/>
 			) : null}
 			<Card.Title

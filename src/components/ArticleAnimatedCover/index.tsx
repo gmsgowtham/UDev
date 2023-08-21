@@ -50,7 +50,11 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 		>
 			{cover ? (
 				<Animated.View style={animations.image}>
-					<FastImage source={{ uri: cover }} style={styles.image} />
+					<FastImage
+						source={{ uri: cover }}
+						style={styles.image}
+						resizeMode={FastImage.resizeMode.cover}
+					/>
 				</Animated.View>
 			) : null}
 			<View style={styles.wrapper}>

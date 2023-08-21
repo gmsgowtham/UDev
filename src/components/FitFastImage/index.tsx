@@ -48,7 +48,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 			onError={onLoadEndOrOnError}
 			source={{ uri: uri }}
 			style={[styles.image, { aspectRatio }]}
-			resizeMode={FastImage.resizeMode.contain}
+			resizeMode={FastImage.resizeMode.cover}
 			aria-label={label}
 			accessibilityLabel={label}
 		>

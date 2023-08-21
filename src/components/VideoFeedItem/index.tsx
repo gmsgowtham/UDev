@@ -46,7 +46,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 					<FastImage
 						source={{ uri: coverImageUri }}
 						style={styles.cover}
-						resizeMode={FastImage.resizeMode.contain}
+						resizeMode={FastImage.resizeMode.cover}
 					/>
 					<Chip elevated icon="clock" style={styles.playChip}>
 						{duration}

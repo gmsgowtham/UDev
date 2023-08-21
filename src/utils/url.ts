@@ -1,3 +1,6 @@
+import { YOUTUBE_HOST } from "./const";
+import Url from "url-parse";
+
 export const buildURLParams = (
 	params: Record<string, string | number | boolean | undefined | null>,
 ): string => {
@@ -15,10 +18,9 @@ export const buildURLParams = (
 };
 
 export const getYoutubeEmbedURL = (str: string) => {
-	try {
-		const parsed = new URL(str);
+	const parsed = new Url(str, {});
+	if (parsed.host) {
 		return parsed.toString();
-	} catch (e) {
-		return `https://www.youtube.com/watch?v=${str}`;
 	}
+	return `${YOUTUBE_HOST}/watch?v=${str}`;
 };

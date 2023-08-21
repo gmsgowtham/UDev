@@ -83,7 +83,7 @@
     "@types/react-test-renderer": "18.0.0",
     "@types/turndown": "5.0.1",
     "@types/url-parse": "1.4.8",
-    "babel-jest": "29.6.2",
+    "babel-jest": "29.6.3",
     "babel-plugin-module-resolver": "5.0.0",
     "cosmiconfig": "8.2.0",
     "husky": "8.0.3",

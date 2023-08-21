@@ -70,6 +70,9 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 				language={language}
 				containerStyle={containerStyle}
 				textStyle={textStyle}
+				scrollViewProps={{
+					contentContainerStyle: containerStyle,
+				}}
 			>
 				{code}
 			</CodeHighlighter>

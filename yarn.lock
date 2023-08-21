@@ -7161,10 +7161,10 @@ react-native-bootsplash@4.7.5:
     picocolors "^1.0.0"
     sharp "^0.32.1"
 
-react-native-code-highlighter@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.2.0.tgz#87a4066d70edd9876c3cb0c8754c2fe8b0fe8674"
-  integrity sha512-JAmMzt6zy8wkhE7enNluxQ79oXClyfEHq26WeFXV7HgZ59mv8ImgEDw7QlhZd04nSez1C7/550Tw2CL2L9hdcg==
+react-native-code-highlighter@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.2.1.tgz#ff2fba10f659b8e536df635e75326626bd91e463"
+  integrity sha512-uHABG5lzaip0e8PRJm8sgyzlqWmOJsWGl9Mvx3CenLX+89zwuQ0GZJQtwycI8TWaVbeJtcljSa371NvHu02JBA==
   dependencies:
     css-to-react-native "3.2.0"
     react-syntax-highlighter "15.5.0"
@@ -7207,11 +7207,6 @@ react-native-marked@5.1.0:
     react-native-svg "13.11.0"
     react-native-table-component "1.2.2"
     svg-parser "2.0.4"
-
-react-native-media-console@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-media-console/-/react-native-media-console-2.0.6.tgz#3498f28a0997450e354fe1adbf1f8c144895088c"
-  integrity sha512-ZBLWPhRfnnP7lpRXu6QZXa1hGjImHV7zOnhZZozFEOCK8FQCLVfXulTcokDYPoBpK5qT1uOYGW8v6BO5K5MMSA==
 
 react-native-mmkv@2.10.1:
   version "2.10.1"

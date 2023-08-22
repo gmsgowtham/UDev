@@ -39,5 +39,3 @@ We reserve the right to update or modify this Privacy Policy from time to time. 
 If you have any questions or concerns regarding this Privacy Policy, please contact us at [webappsbygowtham@gmail.com](mailto:webappsbygowtham@gmail.com).
 
 **Last updated:** 20/Aug/2023
-
-*Please note that this privacy policy is a sample and should be customized to accurately reflect the practices of your app and your organization. Additionally, legal advice from a qualified professional is recommended when drafting a privacy policy.*

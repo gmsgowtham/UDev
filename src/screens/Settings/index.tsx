@@ -1,7 +1,7 @@
 import ThemeSwitcher from "../../components/Modal/ThemeSwitcher";
 import { useUserColorSchemeMMKV } from "../../mmkv/colorScheme";
 import { StackParamList } from "../../router/types";
-import { CONTACT_EMAIL, REPO_URL } from "../../utils/const";
+import { CONTACT_EMAIL, PRIVACY_POLICY_URL, REPO_URL } from "../../utils/const";
 import { toTitleCase } from "../../utils/string";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, memo, useState } from "react";
@@ -38,6 +38,10 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 		navigation.navigate("TermsAndConditions");
 	};
 
+	const onPrivacyPolicyItemPress = () => {
+		Linking.openURL(PRIVACY_POLICY_URL);
+	};
+
 	return (
 		<>
 			<Appbar.Header elevated>
@@ -62,6 +66,13 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 						title="Terms & Conditions"
 						left={() => <List.Icon icon="security" />}
 						onPress={onTermsAndConditionsItemPress}
+						style={styles.item}
+					/>
+					<List.Item
+						title="Privacy Policy"
+						left={() => <List.Icon icon="shield-lock" />}
+						right={() => <List.Icon icon="launch" />}
+						onPress={onPrivacyPolicyItemPress}
 						style={styles.item}
 					/>
 					<List.Item

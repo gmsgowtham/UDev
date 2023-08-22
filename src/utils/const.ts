@@ -24,6 +24,8 @@ export const VIDEO_COVER_IMAGE_ASPECT_RATIO = 1.7764227642; // 874:492
 export const DEV_TO_HOST = "https://dev.to";
 export const NPM_HOST = "https://www.npmjs.com";
 export const REPO_URL = "https://github.com/gmsgowtham/UDev";
+export const PRIVACY_POLICY_URL =
+	"https://github.com/gmsgowtham/UDev/blob/main/privacy-policy.md#privacy-policy-for-udev";
 export const CONTACT_EMAIL = "webappsbygowtham@gmail.com";
 export const VIDEO_UI_HIDE_TIMEOUT = 5000; // 5 seconds
 export const NETWORK_TIMEOUT_MS = 10000;

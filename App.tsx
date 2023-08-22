@@ -28,8 +28,8 @@ const App: FunctionComponent = () => {
 		StatusBar.setBarStyle(statusBarStyle);
 	}, [theme]);
 
-	const onRouterReady = () => {
-		RNBootSplash.hide();
+	const onRouterReady = async () => {
+		await RNBootSplash.hide({ fade: true });
 		// hack: to avoid status bar styles being mixed with splash screen
 		StatusBar.setBarStyle(statusBarStyle);
 		StatusBar.setBackgroundColor(theme.colors.elevation.level2);

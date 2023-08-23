@@ -8,7 +8,10 @@ import {
 	MD3LightTheme,
 	MD3Theme,
 	adaptNavigationTheme,
+	configureFonts,
 } from "react-native-paper";
+
+import fontsConfig from "./fonts";
 
 const { LightTheme: AdpatedLightTheme, DarkTheme: AdpatedDarkTheme } =
 	adaptNavigationTheme({
@@ -23,6 +26,7 @@ export const LightTheme: MD3Theme = {
 		...Iris.light,
 		...AdpatedLightTheme.colors,
 	},
+	fonts: configureFonts({ config: fontsConfig, isV3: true }),
 };
 
 export const DarkTheme: MD3Theme = {
@@ -32,4 +36,5 @@ export const DarkTheme: MD3Theme = {
 		...Iris.dark,
 		...AdpatedDarkTheme.colors,
 	},
+	fonts: configureFonts({ config: fontsConfig, isV3: true }),
 };

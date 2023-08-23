@@ -23,7 +23,6 @@ const AboutScreen: FunctionComponent<Props> = ({ navigation }) => {
 						<View style={styles.library} key={key}>
 							<Text style={styles.libraryId}>{index + 1}.</Text>
 							<View style={styles.libraryInfo}>
-								{/* <Text>{key}</Text> */}
 								<Link url={`${NPM_HOST}/package/${key}`}>{key}</Link>
 								<Text>@{version}</Text>
 							</View>

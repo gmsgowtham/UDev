@@ -7211,10 +7211,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-bootsplash@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.0.0.tgz#3c3c9da1cd230389669c54af3c7ab4ef6609c3ee"
-  integrity sha512-7UyPq+tdcN6fSlR4/rRothP7UoYpDQiLs7erIfuICOIfuNpOAu7MZJ9MmakZNVoIaopS6wpWrdgEzTmzS2/2oA==
+react-native-bootsplash@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.0.1.tgz#248779e5d7a501962044ee7ee8e61f55e016b10b"
+  integrity sha512-BnrMue3u8xJNX8Nh+mSjPPCi9j7czhRZNCCQirX74pdw9XS2C75feFZdi5QLweldqFU1vczK43Y+frY4igf7Sw==
   dependencies:
     detect-indent "^6.1.0"
     fs-extra "^11.1.1"

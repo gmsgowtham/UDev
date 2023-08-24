@@ -1,4 +1,5 @@
 import renderer from "./renderer";
+import markdownStyles from "./styles";
 import getMarkdownTheme from "./theme";
 import tokenizer from "./tokenizer";
 import {
@@ -44,6 +45,7 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 		renderer: renderer,
 		theme: markdownTheme,
 		tokenizer: tokenizer,
+		styles: markdownStyles,
 	});
 
 	const elements: ReactNode[] = useMemo(() => {

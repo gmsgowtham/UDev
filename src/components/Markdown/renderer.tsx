@@ -5,7 +5,7 @@ import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/DevEmbed";
 import { ReactNode } from "react";
-import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { Renderer, RendererInterface } from "react-native-marked";
 
 class MDRenderer extends Renderer implements RendererInterface {
@@ -26,6 +26,7 @@ class MDRenderer extends Renderer implements RendererInterface {
 				key={this.getKey()}
 				containerStyle={containerStyle}
 				code={text}
+				textStyle={styles.text}
 			/>
 		);
 	};
@@ -51,5 +52,11 @@ class MDRenderer extends Renderer implements RendererInterface {
 		return null;
 	}
 }
+
+const styles = StyleSheet.create({
+	text: {
+		fontFamily: "Inter-Regular",
+	},
+});
 
 export default new MDRenderer();

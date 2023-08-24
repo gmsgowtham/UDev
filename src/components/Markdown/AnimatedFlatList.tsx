@@ -1,4 +1,5 @@
 import renderer from "./renderer";
+import markdownStyles from "./styles";
 import getMarkdownTheme from "./theme";
 import tokenizer from "./tokenizer";
 import {
@@ -46,6 +47,7 @@ const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
 			renderer: renderer,
 			theme: markdownTheme,
 			tokenizer: tokenizer,
+			styles: markdownStyles,
 		});
 
 		return (

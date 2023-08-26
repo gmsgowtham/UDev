@@ -56,7 +56,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const appbarContentOpacity = useAnimatedStyle(() => {
 		const opacity = interpolate(
 			scrollY.value,
-			[headerHeight / 1.5, headerHeight],
+			[headerHeight * 0.66, headerHeight * 0.86],
 			[0, 1],
 			Extrapolation.CLAMP,
 		);

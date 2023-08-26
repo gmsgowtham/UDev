@@ -64,7 +64,6 @@ export const processMarkdownContent = (markdown: string): string => {
 		mdProcessed = convertHtmlInMarkdownToMarkdown(
 			prepareTurndownContent(mdProcessed),
 		);
-		console.log("has html", mdProcessed);
 	}
 
 	return mdProcessed;

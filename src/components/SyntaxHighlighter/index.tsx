@@ -13,8 +13,8 @@ import {
 import CodeHighlighter from "react-native-code-highlighter";
 import { IconButton, Text, Tooltip } from "react-native-paper";
 import {
-	gruvboxDark as darkStyle,
-	gruvboxLight as lightStyle,
+	monoBlue as lightStyle,
+	sunburst as darkStyle,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 interface HighlighterProps {

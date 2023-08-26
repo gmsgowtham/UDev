@@ -1,8 +1,9 @@
 import { LANG_ALIAS_MAP } from "./const";
 import { logError } from "./log";
-import DOMParser from "advanced-html-parser";
+import { replaceNewlines } from "./string";
 import FrontMatter from "front-matter";
 import { escape as escapeHTML, unescape as unescapeHTML } from "html-escaper";
+import { parseHTML } from "linkedom";
 import TurndownService from "turndown";
 
 let turndownService: TurndownService;
@@ -31,9 +32,9 @@ export const stripMetaData = (markdown: string): string => {
 
 export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 	try {
-		const document = DOMParser.parse(`<html>${markdown}</html>`);
-		return fixTurndownEscaping(
-			getTurndownService().turndown(document.documentElement).trim(),
+		const { document } = parseHTML(`<html><body>${markdown}</body></html>`);
+		return fixTurndownConversion(
+			getTurndownService().turndown(document.body).trim(),
 		);
 	} catch (e) {
 		logError(e as Error, "fn: convertHtmlInMarkdownToMarkdown exception");
@@ -41,8 +42,9 @@ export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 	}
 };
 
-export const fixTurndownEscaping = (markdown: string): string => {
-	return markdown.replace(/[^\S\r\n]+$/gm, ""); // Replaces " \n" with "\n"
+export const fixTurndownConversion = (markdown: string): string => {
+	// Restores the original content state after peforming `prepareTurndownContent`
+	return unescapeHTML(markdown.replace(/[^\S\r\n]+$/gm, "")); // Replaces " \n" with "\n"
 };
 
 export const processMarkdownContent = (markdown: string): string => {
@@ -62,6 +64,7 @@ export const processMarkdownContent = (markdown: string): string => {
 		mdProcessed = convertHtmlInMarkdownToMarkdown(
 			prepareTurndownContent(mdProcessed),
 		);
+		console.log("has html", mdProcessed);
 	}
 
 	return mdProcessed;
@@ -80,20 +83,25 @@ export const getAbsURLFromAnchorMarkdown = (md: string) => {
 	return md.replace(/\[.*?\]/g, "").replace(/\(|\)/g, "");
 };
 
-// Escapes HTML to avoid turndown parsing
+// Escapes HTML inside code fence and code span to avoid turndown parsing
 export const prepareTurndownContent = (md: string): string => {
 	let processed = unescapeHTML(md);
-	const codeFenceRegex = new RegExp(/`+\n[\s\S]+?```/gm);
-	const matches = md.match(codeFenceRegex);
-	if (!matches) {
-		return processed;
+	const codeFenceRegex = new RegExp(/```\n(?:(?!```)[\s\S])+```/gm);
+	const codeFenceMatches = processed.match(codeFenceRegex);
+	if (codeFenceMatches) {
+		codeFenceMatches.forEach(function (match) {
+			processed = processed.replace(match, escapeHTML(match));
+		});
 	}
 
-	matches.forEach(function (match) {
-		if (/<\/?[a-z][\s\S]*>/gim.test(match)) {
-			processed = md.replace(match.trim(), escapeHTML(match));
-		}
-	});
+	const codeSpanRegex = new RegExp(/\`([^\`].*?)\`/gm);
+	const codeSpanMatches = processed.match(codeSpanRegex);
+	if (codeSpanMatches) {
+		codeSpanMatches.forEach(function (match) {
+			processed = processed.replace(match, escapeHTML(match));
+		});
+	}
 
+	processed = replaceNewlines(processed, "<br/>");
 	return processed;
 };

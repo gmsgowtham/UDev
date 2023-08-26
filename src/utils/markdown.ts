@@ -57,8 +57,8 @@ export const processMarkdownContent = (markdown: string): string => {
 	}
 
 	// Add new line before and after embeds to ensure it gets picked up by the tokenizer
-	mdProcessed = mdProcessed.replace(/([*]?{%)/, "\n$1");
-	mdProcessed = mdProcessed.replace(/(%}[*]?)/, "$1\n");
+	mdProcessed = mdProcessed.replace(/([*]?{%)/gm, "\n$1");
+	mdProcessed = mdProcessed.replace(/(%}[*]?)/gm, "$1\n");
 
 	// Remove html comments
 	mdProcessed = mdProcessed.replace(/<!--(.*?)-->/gm, "");

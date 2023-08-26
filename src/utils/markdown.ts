@@ -97,7 +97,10 @@ export const prepareTurndownContent = (md: string): string => {
 	const codeFenceMatches = processed.match(codeFenceRegex);
 	if (codeFenceMatches) {
 		codeFenceMatches.forEach(function (match) {
-			processed = processed.replace(match, escapeHTML(match));
+			// To preserve spacing, ref: https://github.com/mixmark-io/turndown/issues/361
+			processed = processed
+				.replace(match, escapeHTML(match))
+				.replace(/ /g, "\u00a0");
 		});
 	}
 
@@ -109,8 +112,6 @@ export const prepareTurndownContent = (md: string): string => {
 		});
 	}
 
-	// To preserve spacing, ref: https://github.com/mixmark-io/turndown/issues/361
-	processed = processed.replace(/ /g, "\u00a0");
 	processed = replaceNewlines(processed, "<br/>");
 	return processed;
 };

@@ -43,8 +43,10 @@ export const convertHtmlInMarkdownToMarkdown = (markdown: string): string => {
 };
 
 export const fixTurndownConversion = (markdown: string): string => {
-	// Restores the original content state after peforming `prepareTurndownContent`
-	return unescapeHTML(markdown.replace(/[^\S\r\n]+$/gm, "")); // Replaces " \n" with "\n"
+	// Restores the original content state of content after peforming `prepareTurndownContent`
+	let processed = markdown.replace(/\u00a0/g, " "); // Replaces \u00a0 with space
+	processed = processed.replace(/[^\S\r\n]+$/gm, ""); // Replaces " \n" with "\n"
+	return unescapeHTML(processed);
 };
 
 export const processMarkdownContent = (markdown: string): string => {
@@ -85,7 +87,10 @@ export const getAbsURLFromAnchorMarkdown = (md: string) => {
 // Escapes HTML inside code fence and code span to avoid turndown parsing
 export const prepareTurndownContent = (md: string): string => {
 	let processed = unescapeHTML(md);
-	const codeFenceRegex = new RegExp(/```\n(?:(?!```)[\s\S])+```/gm);
+	const codeFenceRegex = new RegExp(
+		"```([\\s\\S])+\\n(?:(?!```)[\\s\\S])+```",
+		"gm",
+	);
 	const codeFenceMatches = processed.match(codeFenceRegex);
 	if (codeFenceMatches) {
 		codeFenceMatches.forEach(function (match) {
@@ -93,7 +98,7 @@ export const prepareTurndownContent = (md: string): string => {
 		});
 	}
 
-	const codeSpanRegex = new RegExp(/\`([^\`].*?)\`/gm);
+	const codeSpanRegex = new RegExp("`([^\\`].*?)`", "gm");
 	const codeSpanMatches = processed.match(codeSpanRegex);
 	if (codeSpanMatches) {
 		codeSpanMatches.forEach(function (match) {
@@ -101,6 +106,8 @@ export const prepareTurndownContent = (md: string): string => {
 		});
 	}
 
+	// To preserve spacing, ref: https://github.com/mixmark-io/turndown/issues/361
+	processed = processed.replace(/ /g, "\u00a0");
 	processed = replaceNewlines(processed, "<br/>");
 	return processed;
 };

@@ -4,8 +4,15 @@ import CTAButton from "../CTAButton";
 import FitFastImage from "../FitFastImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/DevEmbed";
+import { unescape as unescapeHTML } from "html-escaper";
 import { ReactNode } from "react";
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
+import {
+	ImageStyle,
+	StyleSheet,
+	Text,
+	TextStyle,
+	ViewStyle,
+} from "react-native";
 import { Renderer, RendererInterface } from "react-native-marked";
 
 class MDRenderer extends Renderer implements RendererInterface {
@@ -30,6 +37,14 @@ class MDRenderer extends Renderer implements RendererInterface {
 			/>
 		);
 	};
+
+	codespan(text: string, styles?: TextStyle | undefined): ReactNode {
+		return (
+			<Text selectable key={this.getKey()} style={styles}>
+				{unescapeHTML(text)}
+			</Text>
+		);
+	}
 
 	custom(
 		identifier: string,

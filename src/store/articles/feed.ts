@@ -1,5 +1,5 @@
-import { getArticlesList } from "../../api";
-import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
+import { getArticlesList, getLatestArticlesList } from "../../api";
+import { ApiArticleFeedItem } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";
 import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "../../utils/const";
 import {
@@ -50,11 +50,7 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 				set((state) => ({ ...state, latest: setFetchingState(state.latest) }));
 
 				try {
-					const response = await getArticlesList(
-						ArticleFeedApiStates.Fresh,
-						page,
-						DEFAULT_PAGE_SIZE,
-					);
+					const response = await getLatestArticlesList(page, DEFAULT_PAGE_SIZE);
 					const responseArticles: ApiArticleFeedItem[] = await response.data;
 					set((state) => ({
 						...state,
@@ -80,11 +76,7 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 				}));
 
 				try {
-					const response = await getArticlesList(
-						ArticleFeedApiStates.Fresh,
-						1,
-						10,
-					);
+					const response = await getLatestArticlesList(1, 10);
 
 					const articles: ApiArticleFeedItem[] = await response.data;
 					set((state) => ({

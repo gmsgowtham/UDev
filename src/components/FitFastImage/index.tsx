@@ -51,7 +51,7 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 			resizeMode={FastImage.resizeMode.contain}
 			aria-label={label}
 			accessibilityLabel={label}
-			defaultSource={require("./../../../assets/placeholder-image.png")}
+			defaultSource={require("./../../../assets/image-fallback.png")}
 		>
 			{isLoading ? <ImageSkeleton /> : null}
 		</FastImage>

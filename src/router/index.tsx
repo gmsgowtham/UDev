@@ -22,7 +22,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import type { FunctionComponent } from "react";
 import { BottomNavigation } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -81,7 +81,7 @@ const BottomTabs = () => {
 				options={{
 					tabBarLabel: "Latest",
 					tabBarIcon: ({ color, size }) => {
-						return <Icon name="new-box" size={size} color={color} />;
+						return <Icon name="fiber-new" size={size} color={color} />;
 					},
 				}}
 			/>
@@ -101,7 +101,7 @@ const BottomTabs = () => {
 				options={{
 					tabBarLabel: "Videos",
 					tabBarIcon: ({ color, size }) => {
-						return <Icon name="video-box" size={size} color={color} />;
+						return <Icon name="video-library" size={size} color={color} />;
 					},
 				}}
 			/>

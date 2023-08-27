@@ -83,7 +83,7 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 				<Appbar.BackAction onPress={() => navigation.goBack()} />
 				<Appbar.Content title={"Bookmarks"} />
 				<Tooltip title="Info">
-					<Appbar.Action icon={"information"} onPress={showDialog} />
+					<Appbar.Action icon={"info"} onPress={showDialog} />
 				</Tooltip>
 			</Appbar.Header>
 			{bookmarks.length < 1 ? (

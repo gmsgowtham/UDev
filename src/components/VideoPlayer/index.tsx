@@ -149,7 +149,7 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 						/>
 						<View style={styles.playButtonContainer}>
 							<IconButton
-								icon={isPaused ? "play" : "pause"}
+								icon={isPaused ? "play-arrow" : "pause"}
 								size={50}
 								onPress={togglePauseState}
 								mode="contained-tonal"

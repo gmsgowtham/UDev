@@ -1,7 +1,7 @@
 import { FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { Surface, useTheme } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const ImageSkeleton: FunctionComponent = () => {
 	const theme = useTheme();

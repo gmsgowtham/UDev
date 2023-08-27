@@ -9,6 +9,7 @@ import { Linking, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { getVersion } from "react-native-device-info";
 import { Appbar, Divider, List, Text } from "react-native-paper";
+import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 type Props = NativeStackScreenProps<StackParamList, "Settings">;
 
@@ -70,14 +71,20 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 					/>
 					<List.Item
 						title="Privacy Policy"
-						left={() => <List.Icon icon="shield-lock" />}
+						left={() => <List.Icon icon="privacy-tip" />}
 						right={() => <List.Icon icon="launch" />}
 						onPress={onPrivacyPolicyItemPress}
 						style={styles.item}
 					/>
 					<List.Item
 						title="Github"
-						left={() => <List.Icon icon="github" />}
+						left={() => (
+							<List.Icon
+								icon={(props) => (
+									<MaterialCommunityIcon {...props} name="github" />
+								)}
+							/>
+						)}
 						right={() => <List.Icon icon="launch" />}
 						onPress={onGithubItemPress}
 						style={styles.item}

@@ -10,6 +10,7 @@ import "react-native-gesture-handler";
 import { Provider as PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 const App: FunctionComponent = () => {
 	const colorScheme = useUserColorScheme();
@@ -36,7 +37,12 @@ const App: FunctionComponent = () => {
 	};
 
 	return (
-		<PaperProvider theme={theme}>
+		<PaperProvider
+			theme={theme}
+			settings={{
+				icon: (props) => <MaterialIcon {...props} />,
+			}}
+		>
 			<SafeAreaProvider>
 				<Router theme={theme as unknown as Theme} onReady={onRouterReady} />
 			</SafeAreaProvider>

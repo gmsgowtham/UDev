@@ -32,7 +32,7 @@ const ThemeSwitcher: FunctionComponent<Props> = ({
 					<View style={styles.modalButtonGroup}>
 						<Button
 							contentStyle={styles.buttonContent}
-							icon={"palette"}
+							icon={"brightness-6"}
 							uppercase
 							mode="text"
 							onPress={() => onThemeSelectPress(COLOR_SCHEME_VALUES.System)}
@@ -41,7 +41,7 @@ const ThemeSwitcher: FunctionComponent<Props> = ({
 						</Button>
 						<Button
 							contentStyle={styles.buttonContent}
-							icon={"white-balance-sunny"}
+							icon={"light-mode"}
 							uppercase
 							mode="text"
 							onPress={() => onThemeSelectPress(COLOR_SCHEME_VALUES.Light)}
@@ -50,7 +50,7 @@ const ThemeSwitcher: FunctionComponent<Props> = ({
 						</Button>
 						<Button
 							contentStyle={styles.buttonContent}
-							icon={"moon-waning-crescent"}
+							icon={"dark-mode"}
 							uppercase
 							mode="text"
 							onPress={() => onThemeSelectPress(COLOR_SCHEME_VALUES.Dark)}

@@ -48,7 +48,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 						style={styles.cover}
 						resizeMode={FastImage.resizeMode.cover}
 					/>
-					<Chip elevated icon="clock" style={styles.playChip}>
+					<Chip elevated icon="access-time-filled" style={styles.playChip}>
 						{duration}
 					</Chip>
 				</View>

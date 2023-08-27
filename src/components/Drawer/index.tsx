@@ -37,17 +37,13 @@ const CustomDrawer: FunctionComponent<DrawerContentComponentProps> = ({
 						label="Bookmarks"
 						onPress={onBookmarksItemPress}
 					/>
-					<Drawer.Item
-						icon="information"
-						label="About"
-						onPress={onAboutItemPress}
-					/>
+					<Drawer.Item icon="info" label="About" onPress={onAboutItemPress} />
 				</View>
 				<View>
 					<Divider />
 					<View style={styles.bottomOptionContainer}>
 						<Drawer.Item
-							icon={"cog"}
+							icon={"settings"}
 							label="Settings"
 							onPress={onSettingItemPress}
 						/>

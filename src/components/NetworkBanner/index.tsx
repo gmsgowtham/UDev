@@ -1,7 +1,7 @@
 import { HELP_TEXT } from "../../utils/const";
 import { FunctionComponent, memo, useMemo } from "react";
 import { Banner } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 interface NetworkBannerProps {
 	visible: boolean;
@@ -30,7 +30,11 @@ const NetworkBanner: FunctionComponent<NetworkBannerProps> = ({
 			visible={visible}
 			actions={actions}
 			icon={({ size, color }) => (
-				<Icon name="signal-off" size={size} color={color} />
+				<Icon
+					name="signal-wifi-statusbar-connected-no-internet-4"
+					size={size}
+					color={color}
+				/>
 			)}
 			elevation={5}
 		>

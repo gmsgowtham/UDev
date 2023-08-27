@@ -61,7 +61,7 @@ export const processMarkdownContent = (markdown: string): string => {
 	mdProcessed = mdProcessed.replace(/(%}[*]?)/gm, "$1\n");
 
 	// Remove html comments
-	mdProcessed = mdProcessed.replace(/<!--(.*?)-->/gm, "");
+	mdProcessed = mdProcessed.replace(/<!--([\s\S]*?)-->/gm, "");
 
 	// Check if markdown contains html tags, if found transform them to Markdown
 	// This function has caveat, it'll return true if a code block contains some html

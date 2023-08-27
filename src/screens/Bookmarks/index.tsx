@@ -7,7 +7,14 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, type ListRenderItem } from "@shopify/flash-list";
 import { FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
-import { Appbar, Text } from "react-native-paper";
+import {
+	Appbar,
+	Button,
+	Dialog,
+	Portal,
+	Text,
+	Tooltip,
+} from "react-native-paper";
 
 type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
 
@@ -17,6 +24,10 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 	const isFocused = useIsFocused();
 	const { width } = useWindowDimensions();
 	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
+	const [dialogVisible, setDialogVisible] = useState(false);
+
+	const showDialog = () => setDialogVisible(true);
+	const hideDialog = () => setDialogVisible(false);
 
 	const onItemClick = (id: number) => {
 		const article = bookmarks.find((b) => b.id === id);
@@ -71,6 +82,9 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 			<Appbar.Header elevated>
 				<Appbar.BackAction onPress={() => navigation.goBack()} />
 				<Appbar.Content title={"Bookmarks"} />
+				<Tooltip title="Info">
+					<Appbar.Action icon={"information"} onPress={showDialog} />
+				</Tooltip>
 			</Appbar.Header>
 			{bookmarks.length < 1 ? (
 				<View style={styles.noDataContainer}>
@@ -90,6 +104,30 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 					/>
 				</View>
 			)}
+			<Portal>
+				<Dialog
+					dismissable
+					dismissableBackButton
+					visible={dialogVisible}
+					onDismiss={hideDialog}
+				>
+					<Dialog.Title>Bookmarks Storage Info</Dialog.Title>
+					<Dialog.Content>
+						<Text variant="bodyLarge">
+							This application keeps your bookmarks saved directly on your
+							device. The data is kept in a dedicated location and isn't
+							accessible to other apps.
+							{"\n\n"}
+							When you decide to uninstall this application, the locally stored
+							data will be removed as well. Please be aware that once the app is
+							uninstalled, the stored data cannot be restored.
+						</Text>
+					</Dialog.Content>
+					<Dialog.Actions>
+						<Button onPress={hideDialog}>Ok, Understood</Button>
+					</Dialog.Actions>
+				</Dialog>
+			</Portal>
 		</View>
 	);
 };

@@ -1,11 +1,12 @@
 import { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeedItem from "../ArticleFeedItem";
+import { useScrollToTop } from "@react-navigation/native";
 import {
 	FlashList,
 	FlashListProps,
 	type ListRenderItem,
 } from "@shopify/flash-list";
-import { FunctionComponent, memo } from "react";
+import { FunctionComponent, memo, useRef } from "react";
 
 type ArticleFeed = {
 	data: ApiArticleFeedItem[];
@@ -21,6 +22,11 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 	onItemClick,
 	listProps = {},
 }) => {
+	const ref = useRef(null);
+
+	// Ref: https://reactnavigation.org/docs/use-scroll-to-top
+	useScrollToTop(ref);
+
 	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({
 		item,
 	}: { item: ApiArticleFeedItem }) => {
@@ -43,6 +49,7 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 
 	return (
 		<FlashList
+			ref={ref}
 			showsVerticalScrollIndicator={false}
 			{...listProps}
 			data={data}

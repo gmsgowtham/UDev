@@ -1,4 +1,5 @@
 import renderer from "./renderer";
+import getMarkdownStyles from "./styles";
 import markdownStyles from "./styles";
 import getMarkdownTheme from "./theme";
 import tokenizer from "./tokenizer";
@@ -10,7 +11,7 @@ import {
 	useMemo,
 } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { useMarkdown } from "react-native-marked";
+import { useMarkdown, useMarkdownHookOptions } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 
 interface MarkdownRendererProps {
@@ -37,16 +38,16 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 		[],
 	);
 
-	const markdownTheme = useMemo(() => {
-		return getMarkdownTheme(theme);
+	const options: useMarkdownHookOptions = useMemo(() => {
+		return {
+			renderer: renderer,
+			tokenizer: tokenizer,
+			theme: getMarkdownTheme(theme),
+			styles: getMarkdownStyles(theme),
+		};
 	}, [theme]);
 
-	const rnElements = useMarkdown(value, {
-		renderer: renderer,
-		theme: markdownTheme,
-		tokenizer: tokenizer,
-		styles: markdownStyles,
-	});
+	const rnElements = useMarkdown(value, options);
 
 	const elements: ReactNode[] = useMemo(() => {
 		if (loadingState && loadingPlaceholder) {

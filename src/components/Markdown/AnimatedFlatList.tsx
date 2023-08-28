@@ -1,5 +1,5 @@
 import renderer from "./renderer";
-import markdownStyles from "./styles";
+import getMarkdownStyles from "./styles";
 import getMarkdownTheme from "./theme";
 import tokenizer from "./tokenizer";
 import {
@@ -16,7 +16,7 @@ import {
 	StyleSheet,
 	View,
 } from "react-native";
-import { useMarkdown } from "react-native-marked";
+import { useMarkdown, useMarkdownHookOptions } from "react-native-marked";
 import { useTheme } from "react-native-paper";
 import Animated from "react-native-reanimated";
 
@@ -39,16 +39,16 @@ const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
 			[],
 		);
 
-		const markdownTheme = useMemo(() => {
-			return getMarkdownTheme(theme);
+		const options: useMarkdownHookOptions = useMemo(() => {
+			return {
+				renderer: renderer,
+				tokenizer: tokenizer,
+				theme: getMarkdownTheme(theme),
+				styles: getMarkdownStyles(theme),
+			};
 		}, [theme]);
 
-		const rnElements = useMarkdown(value, {
-			renderer: renderer,
-			theme: markdownTheme,
-			tokenizer: tokenizer,
-			styles: markdownStyles,
-		});
+		const rnElements = useMarkdown(value, options);
 
 		return (
 			<Animated.FlatList

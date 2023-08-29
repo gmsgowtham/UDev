@@ -1,15 +1,5 @@
-import { StyleSheet } from "react-native";
 import { MarkedStyles } from "react-native-marked/dist/typescript/theme/types";
 import { MD3Theme } from "react-native-paper";
-
-const common = StyleSheet.create({
-	body: {
-		fontSize: 16,
-		fontWeight: "400",
-		letterSpacing: 0.15,
-		lineHeight: 24,
-	},
-});
 
 const getMarkdownStyles = (theme: MD3Theme): MarkedStyles => {
 	return {

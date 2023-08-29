@@ -52,8 +52,8 @@ export interface ApiArticleFeedItem extends ApiArticleCommon {
 
 export interface FlareTag {
 	name: string;
-	bg_color_hex: String;
-	text_color_hex: String;
+	bg_color_hex: string;
+	text_color_hex: string;
 }
 
 export interface ApiArticleItem extends ApiArticleCommon {

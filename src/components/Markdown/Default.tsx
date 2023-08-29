@@ -1,6 +1,5 @@
 import renderer from "./renderer";
 import getMarkdownStyles from "./styles";
-import markdownStyles from "./styles";
 import getMarkdownTheme from "./theme";
 import tokenizer from "./tokenizer";
 import {

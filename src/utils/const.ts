@@ -30,3 +30,4 @@ export const CONTACT_EMAIL = "webappsbygowtham@gmail.com";
 export const VIDEO_UI_HIDE_TIMEOUT = 5000; // 5 seconds
 export const NETWORK_TIMEOUT_MS = 10000;
 export const YOUTUBE_HOST = "https://www.youtube.com";
+export const STACKOVERFLOW_HOST = "https://stackoverflow.com";

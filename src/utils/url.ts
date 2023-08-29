@@ -1,4 +1,4 @@
-import { YOUTUBE_HOST } from "./const";
+import { STACKOVERFLOW_HOST, YOUTUBE_HOST } from "./const";
 import Url from "url-parse";
 
 export const buildURLParams = (
@@ -23,4 +23,12 @@ export const getYoutubeEmbedURL = (str: string) => {
 		return parsed.toString();
 	}
 	return `${YOUTUBE_HOST}/watch?v=${str}`;
+};
+
+export const getStackoverflowEmbedURL = (str: string) => {
+	const parsed = new Url(str, {});
+	if (parsed.host) {
+		return parsed.toString();
+	}
+	return `${STACKOVERFLOW_HOST}/questions/${str}`;
 };

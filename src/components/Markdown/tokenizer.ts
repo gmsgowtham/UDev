@@ -1,4 +1,4 @@
-import { getYoutubeEmbedURL } from "../../utils/url";
+import { getStackoverflowEmbedURL, getYoutubeEmbedURL } from "../../utils/url";
 import { type CustomToken, MarkedTokenizer } from "react-native-marked";
 
 class MDTokenizer extends MarkedTokenizer<CustomToken> {
@@ -85,6 +85,23 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 				identifier: "embed",
 				type: "custom",
 				raw: youtubeMatch[0],
+				tokens: [],
+				args: {
+					text: url,
+				},
+			};
+			return token;
+		}
+
+		const stackoverflowMatch = src.match(
+			/^[*]?{% (stackoverflow)[*]? (.*?)[*]?%}[*]?/,
+		);
+		if (stackoverflowMatch && stackoverflowMatch.length > 2) {
+			const url = getStackoverflowEmbedURL(stackoverflowMatch[2]);
+			const token: CustomToken = {
+				identifier: "embed",
+				type: "custom",
+				raw: stackoverflowMatch[0],
 				tokens: [],
 				args: {
 					text: url,

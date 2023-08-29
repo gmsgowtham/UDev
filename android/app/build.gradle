@@ -100,8 +100,8 @@ android {
         applicationId "com.devtounofficial"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "1.0.0-beta.1"
+        versionCode 5
+        versionName "1.0.0-beta.2"
     }
 
     splits {

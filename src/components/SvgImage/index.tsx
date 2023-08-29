@@ -1,5 +1,4 @@
-import { FunctionComponent, memo, useMemo } from "react";
-import { useWindowDimensions } from "react-native";
+import { FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { Surface } from "react-native-paper";
 import SVGImage from "react-native-remote-svg";

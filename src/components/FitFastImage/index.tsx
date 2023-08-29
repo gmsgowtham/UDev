@@ -8,7 +8,7 @@ type FitFastImageProps = {
 	label?: string;
 };
 
-const DEFAULT_ASPECT_RATIO = 1.5; // 3/2 aspect ratio
+const DEFAULT_ASPECT_RATIO = 1.5; // 3:2 aspect ratio
 
 const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 	uri,

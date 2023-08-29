@@ -2,6 +2,7 @@ import { getActualLangForCodeSnippet } from "../../utils/markdown";
 import { isStringOf } from "../../utils/typeof";
 import CTAButton from "../CTAButton";
 import FitFastImage from "../FitFastImage";
+import SvgImage from "../SvgImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
 import DevEmbed from "./../Embed/DevEmbed";
 import { unescape as unescapeHTML } from "html-escaper";
@@ -16,9 +17,12 @@ import {
 import { Renderer, RendererInterface } from "react-native-marked";
 
 class MDRenderer extends Renderer implements RendererInterface {
-	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => (
-		<FitFastImage key={this.getKey()} uri={uri} label={alt} />
-	);
+	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => {
+		if (uri.includes(".svg")) {
+			return <SvgImage key={this.getKey()} uri={uri} label={alt} />;
+		}
+		return <FitFastImage key={this.getKey()} uri={uri} label={alt} />;
+	};
 
 	code = (
 		text: string,

@@ -18,16 +18,6 @@ export const getArticlesList = (
 	});
 };
 
-export const getLatestArticlesList = (
-	page = 1,
-	perPage = DEFAULT_PAGE_SIZE,
-) => {
-	const params = buildURLParams({ page, per_page: perPage });
-	return axios.get(`${API_BASE_URL}/articles/latest?${params}`, {
-		timeout: NETWORK_TIMEOUT_MS,
-	});
-};
-
 export const getVideos = (page: number, perPage: number) => {
 	const params = buildURLParams({ page, per_page: perPage });
 	return axios.get(`${API_BASE_URL}/videos?${params}`, {

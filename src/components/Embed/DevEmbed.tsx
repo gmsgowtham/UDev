@@ -3,7 +3,7 @@ import { getAbsURLFromAnchorMarkdown } from "../../utils/markdown";
 import { LinkPreview, PreviewData } from "@flyerhq/react-native-link-preview";
 import { FunctionComponent, memo, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Avatar, Surface, Text, useTheme } from "react-native-paper";
+import { Surface, Text, useTheme } from "react-native-paper";
 
 interface DevEmbedProps {
 	url: string;
@@ -17,7 +17,6 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 
 	const renderTitle = (title: string) => (
 		<View style={styles.titleContainer}>
-			<Avatar.Icon size={24} icon="launch" />
 			<Text
 				variant="titleMedium"
 				style={[styles.title, { color: theme.colors.primary }]}
@@ -43,7 +42,7 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 		<Surface style={styles.container} mode="flat" elevation={2}>
 			<LinkPreview
 				text={getAbsURLFromAnchorMarkdown(url)}
-				requestTimeout={1500}
+				requestTimeout={3000}
 				onPreviewDataFetched={handlePreviewDataFetched}
 				previewData={previewData}
 				renderText={renderText}

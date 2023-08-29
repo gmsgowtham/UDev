@@ -6,9 +6,7 @@ import { Theme } from "@react-navigation/native";
 import { FunctionComponent, useEffect, useMemo } from "react";
 import { StatusBar, StatusBarStyle } from "react-native";
 import RNBootSplash from "react-native-bootsplash";
-import "react-native-gesture-handler";
 import { Provider as PaperProvider } from "react-native-paper";
-import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 

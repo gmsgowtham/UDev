@@ -79,7 +79,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 	};
 
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={styles.container}>
 			<HomeAppbar />
 			<NetworkBanner
 				visible={error && !netInfo.isConnected && showNetworkBanner}
@@ -109,6 +109,9 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	loadingContainer: {
 		flex: 1,
 		justifyContent: "center",

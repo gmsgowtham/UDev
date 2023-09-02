@@ -205,7 +205,10 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		if (!article?.body_markdown && headerHeight > 0) {
 			return (
 				<ArticleSkeleton
-					containerStyle={{ padding: 12, paddingTop: headerHeight }}
+					containerStyle={[
+						styles.skeletonContainer,
+						{ paddingTop: headerHeight },
+					]}
 				/>
 			);
 		}
@@ -274,6 +277,9 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+	},
+	skeletonContainer: {
+		padding: 12,
 	},
 	nav: {
 		zIndex: 2,

@@ -67,7 +67,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	};
 
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={styles.container}>
 			<HomeAppbar />
 			<NetworkBanner
 				visible={error && !netInfo.isConnected && showNetworkBanner}
@@ -98,6 +98,9 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 };
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
 	listWrapper: {
 		flex: 1,
 	},

@@ -1,4 +1,5 @@
 import React, { FunctionComponent, memo } from "react";
+import { StyleSheet } from "react-native";
 import Svg, { Circle, Path, SvgProps } from "react-native-svg";
 
 const DEFAULT_WIDTH = 865.57286;
@@ -15,7 +16,7 @@ const FloatingSvg: FunctionComponent<Partial<SvgProps>> = (props) => {
 			width={width}
 			height={height}
 			viewBox="0 0 865.57286 658.54932"
-			style={{ aspectRatio: DEFAULT_ASPECT_RATIO }}
+			style={styles.container}
 		>
 			<Path
 				d="M307.917 153.234a1.42 1.42 0 01-1.415-1.32 50.211 50.211 0 00-49.941-46.527c-1.515 0-3.106.077-4.73.229a1.42 1.42 0 01-1.365-.708 59.662 59.662 0 00-109.104 12.976 1.414 1.414 0 01-1.397 1.025l-.378-.012c-.197-.006-.393-.013-.591-.013a42.078 42.078 0 00-41.004 33.223 1.42 1.42 0 01-1.39 1.128H1.42a1.42 1.42 0 010-2.842h94.043a44.945 44.945 0 0143.483-34.35 62.503 62.503 0 01113.527-13.334 52.784 52.784 0 014.087-.163 53.062 53.062 0 0152.775 49.168 1.42 1.42 0 01-1.318 1.517 1.461 1.461 0 01-.1.003zM291.013 171.45H58.015a1.42 1.42 0 110-2.84h232.998a1.42 1.42 0 110 2.84zM114.844 192.051h-78.14a1.42 1.42 0 110-2.841h78.14a1.42 1.42 0 010 2.841z"
@@ -300,5 +301,11 @@ const FloatingSvg: FunctionComponent<Partial<SvgProps>> = (props) => {
 		</Svg>
 	);
 };
+
+const styles = StyleSheet.create({
+	container: {
+		aspectRatio: DEFAULT_ASPECT_RATIO,
+	},
+});
 
 export default memo(FloatingSvg);

@@ -28,7 +28,6 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	refreshArticles,
 	page,
 	loading,
-	title,
 	error,
 }) => {
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);

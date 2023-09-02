@@ -3,11 +3,10 @@ import { FunctionComponent, memo } from "react";
 import { Appbar } from "react-native-paper";
 
 type Props = {
-	title: string;
 	mode?: "small" | "medium" | "large" | "center-aligned";
 };
 
-const HomeAppbar: FunctionComponent<Props> = ({ title, mode = "small" }) => {
+const HomeAppbar: FunctionComponent<Props> = ({ mode = "small" }) => {
 	const navigation = useNavigation();
 
 	const onMenuActionPress = () => {
@@ -17,7 +16,6 @@ const HomeAppbar: FunctionComponent<Props> = ({ title, mode = "small" }) => {
 	return (
 		<Appbar.Header elevated mode={mode}>
 			<Appbar.Action icon={"menu"} onPress={onMenuActionPress} />
-			<Appbar.Content title={title} />
 		</Appbar.Header>
 	);
 };

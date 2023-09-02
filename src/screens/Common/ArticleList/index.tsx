@@ -68,7 +68,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	return (
 		<View style={{ flex: 1 }}>
-			<HomeAppbar title={title} />
+			<HomeAppbar />
 			<NetworkBanner
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				showCloseAction

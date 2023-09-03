@@ -1,6 +1,6 @@
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
-import { FunctionComponent, memo } from "react";
+import { FunctionComponent, memo, useMemo } from "react";
 import {
 	ImageStyle,
 	LayoutChangeEvent,
@@ -27,6 +27,7 @@ interface ArticleAnimatedCoverProps {
 	};
 	dateReadable: string;
 	tags?: string[];
+	organizationName?: string;
 }
 
 const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
@@ -37,8 +38,18 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 	tags = [],
 	onCoverLayout,
 	animations,
+	organizationName,
 }) => {
 	const theme = useTheme();
+
+	const authorTitle = useMemo(() => {
+		if (organizationName) {
+			return `${author.name} for ${organizationName}`;
+		}
+
+		return author.name;
+	}, [organizationName, author.name]);
+
 	return (
 		<Animated.View
 			onLayout={onCoverLayout}
@@ -58,15 +69,17 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 				</Animated.View>
 			) : null}
 			<View style={styles.wrapper}>
+				<Text variant="headlineMedium">{title}</Text>
+				<TagList tags={tags} />
 				<View style={styles.authorContainer}>
-					<Avatar.Image size={50} source={{ uri: author.imageUri }} />
+					<Avatar.Image size={40} source={{ uri: author.imageUri }} />
 					<View style={styles.authorInfo}>
-						<Text variant="titleMedium">{author.name}</Text>
+						<Text variant="titleMedium" numberOfLines={1}>
+							{authorTitle}
+						</Text>
 						<Text variant="labelMedium">{dateReadable}</Text>
 					</View>
 				</View>
-				<Text variant="headlineMedium">{title}</Text>
-				<TagList tags={tags} />
 			</View>
 		</Animated.View>
 	);
@@ -76,6 +89,7 @@ const styles = StyleSheet.create({
 	wrapper: {
 		paddingHorizontal: 12,
 		marginVertical: 16,
+		gap: 8,
 	},
 	image: {
 		width: "100%",
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 16,
-		marginBottom: 16,
+		marginTop: 8,
 	},
 	authorInfo: {
 		gap: 4,

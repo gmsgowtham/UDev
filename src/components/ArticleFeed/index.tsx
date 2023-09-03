@@ -43,6 +43,7 @@ const ArticleFeed: FunctionComponent<ArticleFeed> = ({
 				}}
 				onItemClick={onItemClick}
 				tags={item.tag_list}
+				organizationName={item.organization?.name}
 			/>
 		);
 	};

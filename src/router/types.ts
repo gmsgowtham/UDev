@@ -23,6 +23,7 @@ export type StackParamList = {
 		};
 		date: string;
 		tags: string[];
+		organizationName?: string;
 	};
 	Bookmarks: undefined;
 	Video: {

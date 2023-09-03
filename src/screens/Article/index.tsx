@@ -46,7 +46,8 @@ const AnimatedAppbarContent = withAnimated(Appbar.Content);
 
 const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
-	const { id, title, url, cover, author, tags, date } = params;
+	const { id, title, url, cover, author, tags, date, organizationName } =
+		params;
 	const netInfo = useNetInfo();
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
@@ -280,6 +281,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 					name: author.name,
 					imageUri: author.image,
 				}}
+				organizationName={organizationName}
 				dateReadable={date}
 				tags={tags}
 				onCoverLayout={onCoverLayout}

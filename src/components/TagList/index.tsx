@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
 	tags: {
 		flexDirection: "row",
 		gap: 8,
-		marginTop: 8,
 		flexWrap: "wrap",
 	},
 	text: {

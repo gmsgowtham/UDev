@@ -1,6 +1,6 @@
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
-import { FunctionComponent, memo } from "react";
+import { FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
 import { Avatar, Card, Text } from "react-native-paper";
@@ -31,10 +31,19 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	dateReadable,
 	onItemClick,
 	tags,
+	organizationName,
 }) => {
 	const onClick = () => {
 		onItemClick(id);
 	};
+
+	const authorTitle = useMemo(() => {
+		if (organizationName) {
+			return `${author.name} for ${organizationName}`;
+		}
+
+		return author.name;
+	}, [organizationName, author.name]);
 
 	return (
 		<Card style={styles.card} onPress={onClick}>
@@ -45,23 +54,19 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 					resizeMode={FastImage.resizeMode.contain}
 				/>
 			) : null}
+			<Card.Content style={styles.content}>
+				<Text variant="titleLarge">{title}</Text>
+				<TagList tags={tags} />
+				<Text variant="bodyMedium">{description}</Text>
+			</Card.Content>
 			<Card.Title
-				title={author.name}
+				title={authorTitle}
 				subtitle={dateReadable}
 				subtitleVariant="bodySmall"
 				left={({ size }) => (
 					<Avatar.Image size={size} source={{ uri: author.imageUri }} />
 				)}
 			/>
-			<Card.Content>
-				<Text variant="titleLarge" style={styles.title}>
-					{title}
-				</Text>
-				{description.length > 0 ? (
-					<Text variant="bodyMedium">{description}</Text>
-				) : null}
-				<TagList tags={tags} />
-			</Card.Content>
 		</Card>
 	);
 };
@@ -78,9 +83,7 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		marginTop: 16,
-	},
-	title: {
-		marginBottom: 8,
+		gap: 8,
 	},
 	actionsWrapper: {
 		flexDirection: "row",

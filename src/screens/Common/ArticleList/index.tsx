@@ -55,6 +55,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 			},
 			date: article.readable_publish_date,
 			tags: article.tag_list,
+			organizationName: article.organization?.name,
 		});
 	};
 

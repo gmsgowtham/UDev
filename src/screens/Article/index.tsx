@@ -251,7 +251,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				<AnimatedAppbarContent title={title} style={[appbarContentOpacity]} />
 				<Tooltip title="Bookmark">
 					<Appbar.Action
-						icon={isPostBookmarked ? "bookmark" : "bookmark-outline"}
+						icon={isPostBookmarked ? "bookmark-added" : "bookmark-add"}
 						onPress={onBookmarkActionPress}
 						accessibilityHint="Bookmark post"
 						accessibilityLabel="Bookmark post"

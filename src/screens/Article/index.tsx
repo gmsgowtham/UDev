@@ -15,7 +15,13 @@ import { logError } from "../../utils/log";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent, useCallback, useMemo, useState } from "react";
+import {
+	Fragment,
+	FunctionComponent,
+	useCallback,
+	useMemo,
+	useState,
+} from "react";
 import {
 	LayoutChangeEvent,
 	Linking,
@@ -24,10 +30,11 @@ import {
 	ToastAndroid,
 	View,
 } from "react-native";
-import { Appbar, Tooltip } from "react-native-paper";
+import { AnimatedFAB, Appbar, Tooltip } from "react-native-paper";
 import {
 	Extrapolation,
 	interpolate,
+	runOnJS,
 	useAnimatedScrollHandler,
 	useAnimatedStyle,
 	useSharedValue,
@@ -47,12 +54,19 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const [headerHeight, setHeaderHeight] = useState(0);
+	const [isShareFabExtended, setIsShareFabExtended] = useState(true);
+
+	const setShareFabExtendedValue = (value: boolean) => {
+		setIsShareFabExtended(value);
+	};
 
 	// Animation primitives
 	const scrollY = useSharedValue(0);
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		scrollY.value = event.contentOffset.y;
+		runOnJS(setShareFabExtendedValue)(scrollY.value <= 0);
 	});
+
 	const appbarContentOpacity = useAnimatedStyle(() => {
 		const opacity = interpolate(
 			scrollY.value,
@@ -183,22 +197,35 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const renderContent = useCallback(() => {
 		if (article?.body_markdown && headerHeight > 0) {
 			return (
-				<RenderMarkdownAnimatedFlatList
-					onScroll={scrollHandler}
-					value={article?.body_markdown}
-					flatListProps={{
-						scrollEventThrottle: 16,
-						contentContainerStyle: {
-							paddingTop: headerHeight,
-							paddingBottom: 16,
-						},
-						bounces: false,
-						alwaysBounceVertical: false,
-						bouncesZoom: false,
-						overScrollMode: "never",
-						scrollToOverflowEnabled: true,
-					}}
-				/>
+				<Fragment>
+					<RenderMarkdownAnimatedFlatList
+						onScroll={scrollHandler}
+						value={article?.body_markdown}
+						flatListProps={{
+							scrollEventThrottle: 16,
+							contentContainerStyle: {
+								paddingTop: headerHeight,
+								paddingBottom: 80,
+							},
+							bounces: false,
+							alwaysBounceVertical: false,
+							bouncesZoom: false,
+							overScrollMode: "never",
+							scrollToOverflowEnabled: true,
+						}}
+					/>
+					<Tooltip title="Share">
+						<AnimatedFAB
+							extended={isShareFabExtended}
+							icon="share"
+							label="Share"
+							onPress={onShareActionPress}
+							animateFrom="right"
+							iconMode="dynamic"
+							style={{ position: "absolute", bottom: 16, right: 16 }}
+						/>
+					</Tooltip>
+				</Fragment>
 			);
 		}
 
@@ -214,21 +241,13 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		}
 
 		return null;
-	}, [article?.body_markdown, headerHeight]);
+	}, [article?.body_markdown, headerHeight, isShareFabExtended]);
 
 	return (
 		<View style={styles.container}>
 			<Appbar.Header elevated style={styles.nav}>
 				<Appbar.BackAction onPress={onBackActionPress} />
 				<AnimatedAppbarContent title={title} style={[appbarContentOpacity]} />
-				<Tooltip title="Share">
-					<Appbar.Action
-						icon="share"
-						onPress={onShareActionPress}
-						accessibilityHint="Share post"
-						accessibilityLabel="Share post"
-					/>
-				</Tooltip>
 				<Tooltip title="Bookmark">
 					<Appbar.Action
 						icon={isPostBookmarked ? "bookmark" : "bookmark-outline"}

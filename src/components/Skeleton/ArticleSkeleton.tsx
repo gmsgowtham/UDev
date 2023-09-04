@@ -1,5 +1,3 @@
-import useUserColorScheme from "../../hooks/useUserColorScheme";
-import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
@@ -10,6 +8,8 @@ import {
 	useWindowDimensions,
 } from "react-native";
 import { useTheme } from "react-native-paper";
+import useUserColorScheme from "../../hooks/useUserColorScheme";
+import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 
 interface ArticleSkeletonProps {
 	containerStyle?: StyleProp<ViewStyle>;

@@ -1,17 +1,3 @@
-import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
-import { RenderMarkdownAnimatedFlatList } from "../../components/Markdown";
-import NetworkBanner from "../../components/NetworkBanner";
-import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
-import { withAnimated } from "../../hoc/withAnimated";
-import {
-	isBookmarked,
-	removeBookmark,
-	savePostToBookmarks,
-} from "../../mmkv/bookmark";
-import { StackParamList } from "../../router/types";
-import useArticleStore from "../../store/articles/article";
-import { HELP_TEXT } from "../../utils/const";
-import { logError } from "../../utils/log";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -39,6 +25,20 @@ import {
 	useAnimatedStyle,
 	useSharedValue,
 } from "react-native-reanimated";
+import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
+import { RenderMarkdownAnimatedFlatList } from "../../components/Markdown";
+import NetworkBanner from "../../components/NetworkBanner";
+import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
+import { withAnimated } from "../../hoc/withAnimated";
+import {
+	isBookmarked,
+	removeBookmark,
+	savePostToBookmarks,
+} from "../../mmkv/bookmark";
+import { StackParamList } from "../../router/types";
+import useArticleStore from "../../store/articles/article";
+import { HELP_TEXT } from "../../utils/const";
+import { logError } from "../../utils/log";
 
 type Props = NativeStackScreenProps<StackParamList, "Article">;
 

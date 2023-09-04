@@ -1,9 +1,9 @@
-import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
-import TagList from "../TagList";
 import { FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
 import { Avatar, Card, Text } from "react-native-paper";
+import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
+import TagList from "../TagList";
 
 interface author {
 	imageUri: string;

@@ -1,7 +1,3 @@
-import useUserColorScheme from "./src/hooks/useUserColorScheme";
-import { COLOR_SCHEME_VALUES } from "./src/mmkv/colorScheme";
-import Router from "./src/router";
-import { DarkTheme, LightTheme } from "./src/theme";
 import { Theme } from "@react-navigation/native";
 import { FunctionComponent, useEffect, useMemo } from "react";
 import { StatusBar, StatusBarStyle } from "react-native";
@@ -9,6 +5,10 @@ import RNBootSplash from "react-native-bootsplash";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import useUserColorScheme from "./src/hooks/useUserColorScheme";
+import { COLOR_SCHEME_VALUES } from "./src/mmkv/colorScheme";
+import Router from "./src/router";
+import { DarkTheme, LightTheme } from "./src/theme";
 
 const App: FunctionComponent = () => {
 	const colorScheme = useUserColorScheme();

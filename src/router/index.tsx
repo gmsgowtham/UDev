@@ -1,3 +1,13 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+	CommonActions,
+	NavigationContainer,
+	Theme,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type { FunctionComponent } from "react";
+import { BottomNavigation } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import AboutScreen from "../screens/About";
 import ArticleScreen from "../screens/Article";
 import BookmarksScreen from "../screens/Bookmarks";
@@ -9,16 +19,6 @@ import TermsAndConditionsScreen from "../screens/TermsAndConditions";
 import VideoScreen from "../screens/Video";
 import VideosScreen from "../screens/Videos";
 import type { StackParamList, TabParamList } from "./types";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-	CommonActions,
-	NavigationContainer,
-	Theme,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import type { FunctionComponent } from "react";
-import { BottomNavigation } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<StackParamList>();

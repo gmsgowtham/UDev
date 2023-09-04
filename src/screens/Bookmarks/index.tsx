@@ -1,7 +1,3 @@
-import ArticleFeedItem from "../../components/ArticleFeedItem";
-import FloatingSvg from "../../components/Svg/Floating";
-import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
-import { StackParamList } from "../../router/types";
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, type ListRenderItem } from "@shopify/flash-list";
@@ -15,6 +11,10 @@ import {
 	Text,
 	Tooltip,
 } from "react-native-paper";
+import ArticleFeedItem from "../../components/ArticleFeedItem";
+import FloatingSvg from "../../components/Svg/Floating";
+import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
+import { StackParamList } from "../../router/types";
 
 type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
 

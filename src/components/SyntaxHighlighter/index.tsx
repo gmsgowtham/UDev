@@ -1,6 +1,3 @@
-import useUserColorScheme from "../../hooks/useUserColorScheme";
-import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
-import { HELP_TEXT } from "../../utils/const";
 import Clipboard from "@react-native-clipboard/clipboard";
 import React, { FunctionComponent, memo, useMemo } from "react";
 import {
@@ -16,6 +13,9 @@ import {
 	monoBlue as lightStyle,
 	sunburst as darkStyle,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import useUserColorScheme from "../../hooks/useUserColorScheme";
+import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
+import { HELP_TEXT } from "../../utils/const";
 
 interface HighlighterProps {
 	code: string;

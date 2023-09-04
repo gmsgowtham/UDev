@@ -1,7 +1,7 @@
-import ImageSkeleton from "../Skeleton/ImageSkeleton";
 import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
+import ImageSkeleton from "../Skeleton/ImageSkeleton";
 
 type FitFastImageProps = {
 	uri: string;

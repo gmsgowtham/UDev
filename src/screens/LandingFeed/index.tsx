@@ -1,6 +1,6 @@
+import { memo } from "react";
 import useArticleFeedStore from "../../store/articles/feed";
 import ArticleFeedScreen from "../Common/ArticleList";
-import { memo } from "react";
 
 const LandingScreen = () => {
 	const {

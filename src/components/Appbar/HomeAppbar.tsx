@@ -1,7 +1,7 @@
-import { StackParamList } from "../../router/types";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { FunctionComponent, memo, useState } from "react";
 import { Appbar, Avatar, Menu, Tooltip, useTheme } from "react-native-paper";
+import { StackParamList } from "../../router/types";
 
 const HomeAppbar: FunctionComponent = () => {
 	const navigation = useNavigation<NavigationProp<StackParamList>>();

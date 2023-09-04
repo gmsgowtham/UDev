@@ -1,11 +1,11 @@
-import Link from "../../components/Link";
-import { StackParamList } from "../../router/types";
-import { NPM_HOST } from "../../utils/const";
-import meta from "./../../../package.json";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { FunctionComponent } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
+import Link from "../../components/Link";
+import { StackParamList } from "../../router/types";
+import { NPM_HOST } from "../../utils/const";
+import meta from "./../../../package.json";
 
 type Props = NativeStackScreenProps<StackParamList, "About">;
 

@@ -1,6 +1,6 @@
-import { logError } from "../utils/log";
 import { type ColorSchemeName } from "react-native";
 import { MMKV, useMMKVString } from "react-native-mmkv";
+import { logError } from "../utils/log";
 
 const COLOR_SCHEME_KEY = "udev_theme";
 export enum COLOR_SCHEME_VALUES {

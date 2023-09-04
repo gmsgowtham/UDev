@@ -1,10 +1,10 @@
-import useUserColorScheme from "../../hooks/useUserColorScheme";
-import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import { useTheme } from "react-native-paper";
+import useUserColorScheme from "../../hooks/useUserColorScheme";
+import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 interface FeedSkeletonProps {
 	height?: number;
 }

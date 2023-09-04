@@ -1,4 +1,3 @@
-import { StackParamList } from "../../router/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
 	FunctionComponent,
@@ -11,6 +10,7 @@ import { View } from "react-native";
 import { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
 import { Appbar, Searchbar } from "react-native-paper";
+import { StackParamList } from "../../router/types";
 
 type Props = NativeStackScreenProps<StackParamList, "Search">;
 

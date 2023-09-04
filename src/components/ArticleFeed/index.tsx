@@ -1,5 +1,3 @@
-import { ApiArticleFeedItem } from "../../api/types";
-import ArticleFeedItem from "../ArticleFeedItem";
 import { useScrollToTop } from "@react-navigation/native";
 import {
 	FlashList,
@@ -7,6 +5,8 @@ import {
 	type ListRenderItem,
 } from "@shopify/flash-list";
 import { FunctionComponent, memo, useRef } from "react";
+import { ApiArticleFeedItem } from "../../api/types";
+import ArticleFeedItem from "../ArticleFeedItem";
 
 type ArticleFeed = {
 	data: ApiArticleFeedItem[];

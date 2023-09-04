@@ -1,9 +1,9 @@
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
 import { getArticle } from "../../api";
 import { ApiArticleItem } from "../../api/types";
 import { getImageSize } from "../../utils/image";
 import { processMarkdownContent } from "../../utils/markdown";
-import { shallow } from "zustand/shallow";
-import { createWithEqualityFn } from "zustand/traditional";
 
 export interface ArticleState {
 	article?: ApiArticleItem;

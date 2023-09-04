@@ -1,3 +1,6 @@
+import { ToastAndroid } from "react-native";
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
 import { getArticlesList } from "../../api";
 import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";
@@ -8,9 +11,6 @@ import {
 	setFetchingState,
 	setRefreshingState,
 } from "../helpers";
-import { ToastAndroid } from "react-native";
-import { shallow } from "zustand/shallow";
-import { createWithEqualityFn } from "zustand/traditional";
 
 export interface ArticleFeedStateBase extends CommonState {
 	articles: ApiArticleFeedItem[];

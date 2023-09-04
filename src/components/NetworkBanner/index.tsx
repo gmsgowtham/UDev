@@ -1,7 +1,7 @@
-import { HELP_TEXT } from "../../utils/const";
 import { FunctionComponent, memo, useMemo } from "react";
 import { Banner } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { HELP_TEXT } from "../../utils/const";
 
 interface NetworkBannerProps {
 	visible: boolean;

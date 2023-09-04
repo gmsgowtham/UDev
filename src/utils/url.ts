@@ -1,5 +1,5 @@
-import { STACKOVERFLOW_HOST, YOUTUBE_HOST } from "./const";
 import Url from "url-parse";
+import { STACKOVERFLOW_HOST, YOUTUBE_HOST } from "./const";
 
 export const buildURLParams = (
 	params: Record<string, string | number | boolean | undefined | null>,

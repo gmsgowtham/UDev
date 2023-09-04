@@ -1,3 +1,6 @@
+import { ToastAndroid } from "react-native";
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
 import { getVideos } from "../../api";
 import { ApiVideoListItem } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";
@@ -8,9 +11,6 @@ import {
 	setFetchingState,
 	setRefreshingState,
 } from "../helpers";
-import { ToastAndroid } from "react-native";
-import { shallow } from "zustand/shallow";
-import { createWithEqualityFn } from "zustand/traditional";
 
 export interface VideoFeedState extends CommonState {
 	videos: ApiVideoListItem[];

@@ -1,10 +1,10 @@
+import { useMemo } from "react";
+import { ColorSchemeName, useColorScheme } from "react-native";
 import {
 	COLOR_SCHEME_VALUES,
 	DEFAULT_COLOR_SCHEME,
 	useUserColorSchemeMMKV,
 } from "./../mmkv/colorScheme";
-import { useMemo } from "react";
-import { ColorSchemeName, useColorScheme } from "react-native";
 
 const useUserColorScheme = () => {
 	const [userColorScheme] = useUserColorSchemeMMKV();

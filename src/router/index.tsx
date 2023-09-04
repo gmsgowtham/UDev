@@ -1,14 +1,3 @@
-import CustomDrawer from "../components/Drawer";
-import AboutScreen from "../screens/About";
-import ArticleScreen from "../screens/Article";
-import BookmarksScreen from "../screens/Bookmarks";
-import LandingScreen from "../screens/LandingFeed";
-import LatestScreen from "../screens/LatestFeed";
-import SettingsScreen from "../screens/Settings";
-import TermsAndConditionsScreen from "../screens/TermsAndConditions";
-import VideoScreen from "../screens/Video";
-import VideosScreen from "../screens/Videos";
-import type { DrawerParamList, StackParamList, TabParamList } from "./types";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
 	DrawerContentComponentProps,
@@ -23,6 +12,17 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import type { FunctionComponent } from "react";
 import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import CustomDrawer from "../components/Drawer";
+import AboutScreen from "../screens/About";
+import ArticleScreen from "../screens/Article";
+import BookmarksScreen from "../screens/Bookmarks";
+import LandingScreen from "../screens/LandingFeed";
+import LatestScreen from "../screens/LatestFeed";
+import SettingsScreen from "../screens/Settings";
+import TermsAndConditionsScreen from "../screens/TermsAndConditions";
+import VideoScreen from "../screens/Video";
+import VideosScreen from "../screens/Videos";
+import type { DrawerParamList, StackParamList, TabParamList } from "./types";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<StackParamList>();

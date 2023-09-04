@@ -1,7 +1,3 @@
-import renderer from "./renderer";
-import getMarkdownStyles from "./styles";
-import getMarkdownTheme from "./theme";
-import tokenizer from "./tokenizer";
 import {
 	FunctionComponent,
 	ReactNode,
@@ -12,6 +8,10 @@ import {
 import { FlatList, StyleSheet, View } from "react-native";
 import { useMarkdown, useMarkdownHookOptions } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
+import renderer from "./renderer";
+import getMarkdownStyles from "./styles";
+import getMarkdownTheme from "./theme";
+import tokenizer from "./tokenizer";
 
 interface MarkdownRendererProps {
 	loadingState?: boolean;

@@ -1,5 +1,5 @@
-import { getStackoverflowEmbedURL, getYoutubeEmbedURL } from "../../utils/url";
 import { type CustomToken, MarkedTokenizer } from "react-native-marked";
+import { getStackoverflowEmbedURL, getYoutubeEmbedURL } from "../../utils/url";
 
 class MDTokenizer extends MarkedTokenizer<CustomToken> {
 	paragraph(this: MarkedTokenizer<CustomToken>, src: string) {

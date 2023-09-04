@@ -1,5 +1,3 @@
-import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
-import TagList from "../TagList";
 import { FunctionComponent, memo, useMemo } from "react";
 import {
 	ImageStyle,
@@ -11,6 +9,8 @@ import {
 import FastImage from "react-native-fast-image";
 import { Avatar, Text, useTheme } from "react-native-paper";
 import Animated, { AnimatedStyleProp } from "react-native-reanimated";
+import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
+import TagList from "../TagList";
 
 interface ArticleAnimatedCoverProps {
 	onCoverLayout: (event: LayoutChangeEvent) => void;

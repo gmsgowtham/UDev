@@ -1,8 +1,3 @@
-import ThemeSwitcher from "../../components/Modal/ThemeSwitcher";
-import { useUserColorSchemeMMKV } from "../../mmkv/colorScheme";
-import { StackParamList } from "../../router/types";
-import { CONTACT_EMAIL, PRIVACY_POLICY_URL, REPO_URL } from "../../utils/const";
-import { toTitleCase } from "../../utils/string";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FunctionComponent, memo, useState } from "react";
 import { Linking, View } from "react-native";
@@ -10,6 +5,11 @@ import { StyleSheet } from "react-native";
 import { getVersion } from "react-native-device-info";
 import { Appbar, Divider, List, Text } from "react-native-paper";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import ThemeSwitcher from "../../components/Modal/ThemeSwitcher";
+import { useUserColorSchemeMMKV } from "../../mmkv/colorScheme";
+import { StackParamList } from "../../router/types";
+import { CONTACT_EMAIL, PRIVACY_POLICY_URL, REPO_URL } from "../../utils/const";
+import { toTitleCase } from "../../utils/string";
 
 type Props = NativeStackScreenProps<StackParamList, "Settings">;
 

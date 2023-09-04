@@ -1,6 +1,6 @@
+import { FunctionComponent, memo } from "react";
 import useArticleFeedStore from "../../store/articles/feed";
 import ArticleFeedScreen from "../Common/ArticleList";
-import { FunctionComponent, memo } from "react";
 
 const LatestScreen: FunctionComponent = () => {
 	const {

@@ -1,3 +1,7 @@
+import { useNetInfo } from "@react-native-community/netinfo";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { FunctionComponent, memo, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
@@ -5,10 +9,6 @@ import ListFooterLoader from "../../../components/List/ListFooterLoader";
 import NetworkBanner from "../../../components/NetworkBanner";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
 import { StackParamList } from "../../../router/types";
-import { useNetInfo } from "@react-native-community/netinfo";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { FunctionComponent, memo, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
 
 interface ArticleFeedProps {
 	title: string;

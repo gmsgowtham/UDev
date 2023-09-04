@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
 	API_BASE_URL,
 	DEFAULT_PAGE_SIZE,
@@ -5,7 +6,6 @@ import {
 } from "../utils/const";
 import { buildURLParams } from "../utils/url";
 import type { ArticleFeedApiStates } from "./types";
-import axios from "axios";
 
 export const getArticlesList = (
 	state?: ArticleFeedApiStates,

@@ -1,7 +1,3 @@
-import { VIDEO_UI_HIDE_TIMEOUT } from "../../utils/const";
-import BottomBar from "./BottomBar";
-import Overlay from "./Overlay";
-import TopBar from "./TopBar";
 import { useFocusEffect } from "@react-navigation/native";
 import {
 	FunctionComponent,
@@ -14,6 +10,10 @@ import {
 import { Pressable, StyleSheet, View } from "react-native";
 import { ActivityIndicator, IconButton, MD3Theme } from "react-native-paper";
 import Video, { OnLoadData, OnProgressData } from "react-native-video";
+import { VIDEO_UI_HIDE_TIMEOUT } from "../../utils/const";
+import BottomBar from "./BottomBar";
+import Overlay from "./Overlay";
+import TopBar from "./TopBar";
 
 interface VideoPlayerProps {
 	source:

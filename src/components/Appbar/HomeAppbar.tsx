@@ -51,7 +51,7 @@ const HomeAppbar: FunctionComponent = () => {
 			<Tooltip title="Show Bookmarks">
 				<Appbar.Action
 					animated={false}
-					icon="bookmark-outline"
+					icon="bookmark"
 					onPress={onBookmarksItemPress}
 				/>
 			</Tooltip>

@@ -1,9 +1,8 @@
-import { useFocusEffect } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlashList } from "@shopify/flash-list";
 import {
 	FunctionComponent,
 	RefObject,
-	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -12,6 +11,7 @@ import { View } from "react-native";
 import { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeed from "../../components/ArticleFeed";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
@@ -21,6 +21,7 @@ import useArticleFeedStore from "../../store/articles/feed";
 type Props = NativeStackScreenProps<StackParamList, "Search">;
 
 const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
+	const listRef = useRef(null);
 	const searchRef = useRef() as RefObject<TextInput>;
 	const [searchQuery, setSearchQuery] = useState("");
 	const {
@@ -30,7 +31,6 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 		refreshSearch,
 		page,
 		loading,
-		error,
 		reset,
 	} = useArticleFeedStore((state) => ({
 		articles: state.search.articles,
@@ -62,6 +62,12 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 		}
 
 		searchArticles(searchQuery.trim(), 1);
+		if (articles.length > 0 && listRef.current) {
+			(listRef.current as FlashList<ApiArticleFeedItem>).scrollToIndex({
+				animated: true,
+				index: 0,
+			});
+		}
 	};
 
 	const refreshArticles = () => {
@@ -119,6 +125,7 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 			) : (
 				<View style={styles.listWrapper}>
 					<ArticleFeed
+						ref={listRef}
 						data={articles}
 						onItemClick={onItemClick}
 						listProps={{

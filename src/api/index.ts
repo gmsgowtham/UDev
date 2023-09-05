@@ -30,3 +30,14 @@ export const getArticle = (id: number) => {
 		timeout: NETWORK_TIMEOUT_MS,
 	});
 };
+
+export const searchArticles = (
+	q: string,
+	page = 1,
+	perPage = DEFAULT_PAGE_SIZE,
+) => {
+	const params = buildURLParams({ q, page, per_page: perPage });
+	return axios.get(`${API_BASE_URL}/articles/search?${params}`, {
+		timeout: NETWORK_TIMEOUT_MS,
+	});
+};

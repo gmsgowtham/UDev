@@ -16,9 +16,9 @@
 - [x] Settings screen (Terms & privacy, Github, Contact us, Appearance)
 - [x] Article screen scroll parallax
 
-
 ## V2
 
+- [ ] Video bookmarks
 - [ ] Comments
 - [ ] Tags feed
 - [ ] Author profile

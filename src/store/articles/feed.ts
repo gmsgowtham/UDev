@@ -1,7 +1,7 @@
 import { ToastAndroid } from "react-native";
 import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
-import { getArticlesList } from "../../api";
+import { getArticlesList, searchArticles } from "../../api";
 import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";
 import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "../../utils/const";
@@ -26,6 +26,11 @@ export interface ArticleFeedState {
 		fetchFeaturedArticles: (page?: number) => void;
 		refreshFeaturedArticles: () => void;
 	};
+	search: ArticleFeedStateBase & {
+		searchArticles: (q: string, page?: number) => void;
+		refreshSearch: (q: string) => void;
+		reset: () => void;
+	};
 }
 
 const BASE_STATE: ArticleFeedStateBase = {
@@ -42,7 +47,7 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 		latest: {
 			...BASE_STATE,
 			fetchLatestArticles: async (page = 1) => {
-				const { loading, articles } = get().latest;
+				const { loading, articles: oldArticles } = get().latest;
 				if (loading) {
 					return;
 				}
@@ -56,13 +61,17 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 						DEFAULT_PAGE_SIZE,
 					);
 					const responseArticles: ApiArticleFeedItem[] = await response.data;
+					let articles = responseArticles;
+					if (page > 1) {
+						articles = perfArrayConcat(oldArticles, responseArticles);
+					}
 					set((state) => ({
 						...state,
 						latest: {
 							...state.latest,
 							...BASE_STATE,
 							page,
-							articles: perfArrayConcat(articles, responseArticles),
+							articles,
 						},
 					}));
 				} catch (e) {
@@ -105,7 +114,7 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 		featured: {
 			...BASE_STATE,
 			fetchFeaturedArticles: async (page = 1) => {
-				const { loading, articles } = get().featured;
+				const { loading, articles: oldArticles } = get().featured;
 				if (loading) {
 					return;
 				}
@@ -122,13 +131,18 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 						DEFAULT_PAGE_SIZE,
 					);
 					const responseArticles: ApiArticleFeedItem[] = await response.data;
+					let articles = responseArticles;
+					if (page > 1) {
+						articles = perfArrayConcat(oldArticles, responseArticles);
+					}
+
 					set((state) => ({
 						...state,
 						featured: {
 							...state.featured,
 							...BASE_STATE,
 							page,
-							articles: perfArrayConcat(articles, responseArticles),
+							articles: articles,
 						},
 					}));
 				} catch (e) {
@@ -166,6 +180,87 @@ const useArticleFeedStore = createWithEqualityFn<ArticleFeedState>()(
 						featured: setErrorState(state.featured),
 					}));
 				}
+			},
+		},
+		search: {
+			...BASE_STATE,
+			searchArticles: async (q: string, page = 1) => {
+				const { loading, articles: oldArticles } = get().search;
+				if (loading) {
+					return;
+				}
+
+				set((state) => ({
+					...state,
+					search: setFetchingState(state.search),
+				}));
+
+				try {
+					const response = await searchArticles(q, page, DEFAULT_PAGE_SIZE);
+
+					const responseArticles: ApiArticleFeedItem[] = await response.data;
+
+					let articles = responseArticles;
+					if (page > 1) {
+						articles = perfArrayConcat(oldArticles, responseArticles);
+					}
+
+					set((state) => ({
+						...state,
+						search: {
+							...state.search,
+							...BASE_STATE,
+							page,
+							articles,
+						},
+					}));
+				} catch (e) {
+					set((state) => ({
+						...state,
+						search: setErrorState(state.search),
+					}));
+				}
+			},
+			refreshSearch: async (q: string) => {
+				if (get().search.refreshing) {
+					return;
+				}
+
+				set((state) => ({
+					...state,
+					search: setRefreshingState(state.search),
+				}));
+
+				try {
+					const response = await searchArticles(q, 1, 10);
+					const articles: ApiArticleFeedItem[] = await response.data;
+					set((state) => ({
+						...state,
+						search: { ...state.search, ...BASE_STATE, articles },
+					}));
+					ToastAndroid.showWithGravity(
+						HELP_TEXT.FEED_REFRESHED,
+						ToastAndroid.SHORT,
+						ToastAndroid.TOP,
+					);
+				} catch (e) {
+					set((state) => ({
+						...state,
+						search: setErrorState(state.search),
+					}));
+				}
+			},
+
+			reset: async () => {
+				set((state) => ({
+					...state,
+					search: {
+						...state.search,
+						loading: false,
+						error: false,
+						articles: [],
+					},
+				}));
 			},
 		},
 	}),

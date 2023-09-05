@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent, memo, useState } from "react";
+import { Fragment, FunctionComponent, memo, useState } from "react";
 import { Linking, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { getVersion } from "react-native-device-info";
@@ -44,7 +44,7 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 	};
 
 	return (
-		<>
+		<Fragment>
 			<Appbar.Header elevated>
 				<Appbar.BackAction onPress={() => navigation.goBack()} />
 				<Appbar.Content title="Settings" />
@@ -106,7 +106,7 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 				onThemeSelectPress={onThemeSelectPress}
 				onDismiss={hideModal}
 			/>
-		</>
+		</Fragment>
 	);
 };
 

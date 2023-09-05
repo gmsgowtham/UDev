@@ -1,6 +1,7 @@
 import { useNetInfo } from "@react-native-community/netinfo";
+import { useScrollToTop } from "@react-navigation/native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { FunctionComponent, memo, useEffect, useState } from "react";
+import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
@@ -30,6 +31,11 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	loading,
 	error,
 }) => {
+	const listRef = useRef(null);
+
+	// Ref: https://reactnavigation.org/docs/use-scroll-to-top
+	useScrollToTop(listRef);
+
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
 
@@ -79,6 +85,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 			) : (
 				<View style={styles.listWrapper}>
 					<ArticleFeed
+						ref={listRef}
 						data={articles}
 						onItemClick={onItemClick}
 						listProps={{

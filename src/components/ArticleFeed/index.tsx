@@ -1,14 +1,13 @@
-import { useScrollToTop } from "@react-navigation/native";
 import {
 	FlashList,
 	FlashListProps,
 	type ListRenderItem,
 } from "@shopify/flash-list";
-import { FunctionComponent, memo, useRef } from "react";
+import { forwardRef, memo } from "react";
 import { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeedItem from "../ArticleFeedItem";
 
-type ArticleFeed = {
+type Props = {
 	data: ApiArticleFeedItem[];
 	onItemClick: (id: number) => void;
 	listProps?: Omit<
@@ -17,47 +16,42 @@ type ArticleFeed = {
 	>;
 };
 
-const ArticleFeed: FunctionComponent<ArticleFeed> = ({
-	data,
-	onItemClick,
-	listProps = {},
-}) => {
-	const ref = useRef(null);
+const ArticleFeed = forwardRef<FlashList<ApiArticleFeedItem>, Props>(
+	(props, ref) => {
+		const { data, onItemClick, listProps = {} } = props;
 
-	// Ref: https://reactnavigation.org/docs/use-scroll-to-top
-	useScrollToTop(ref);
+		const renderItem: ListRenderItem<ApiArticleFeedItem> = ({
+			item,
+		}: { item: ApiArticleFeedItem }) => {
+			return (
+				<ArticleFeedItem
+					id={item.id}
+					title={item.title}
+					description={item.description}
+					dateReadable={item.readable_publish_date}
+					coverImageUri={item.cover_image}
+					author={{
+						name: item.user.name,
+						imageUri: item.user.profile_image_90,
+					}}
+					onItemClick={onItemClick}
+					tags={item.tag_list}
+					organizationName={item.organization?.name}
+				/>
+			);
+		};
 
-	const renderItem: ListRenderItem<ApiArticleFeedItem> = ({
-		item,
-	}: { item: ApiArticleFeedItem }) => {
 		return (
-			<ArticleFeedItem
-				id={item.id}
-				title={item.title}
-				description={item.description}
-				dateReadable={item.readable_publish_date}
-				coverImageUri={item.cover_image}
-				author={{
-					name: item.user.name,
-					imageUri: item.user.profile_image_90,
-				}}
-				onItemClick={onItemClick}
-				tags={item.tag_list}
-				organizationName={item.organization?.name}
+			<FlashList
+				ref={ref}
+				showsVerticalScrollIndicator={false}
+				{...listProps}
+				data={data}
+				renderItem={renderItem}
+				estimatedItemSize={377}
 			/>
 		);
-	};
-
-	return (
-		<FlashList
-			ref={ref}
-			showsVerticalScrollIndicator={false}
-			{...listProps}
-			data={data}
-			renderItem={renderItem}
-			estimatedItemSize={377}
-		/>
-	);
-};
+	},
+);
 
 export default memo(ArticleFeed);

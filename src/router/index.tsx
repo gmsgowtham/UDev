@@ -1,9 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-	DrawerContentComponentProps,
-	createDrawerNavigator,
-} from "@react-navigation/drawer";
-import {
 	CommonActions,
 	NavigationContainer,
 	Theme,
@@ -12,21 +8,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import type { FunctionComponent } from "react";
 import { BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import CustomDrawer from "../components/Drawer";
 import AboutScreen from "../screens/About";
 import ArticleScreen from "../screens/Article";
 import BookmarksScreen from "../screens/Bookmarks";
 import LandingScreen from "../screens/LandingFeed";
 import LatestScreen from "../screens/LatestFeed";
+import SearchScreen from "../screens/Search";
 import SettingsScreen from "../screens/Settings";
 import TermsAndConditionsScreen from "../screens/TermsAndConditions";
 import VideoScreen from "../screens/Video";
 import VideosScreen from "../screens/Videos";
-import type { DrawerParamList, StackParamList, TabParamList } from "./types";
+import type { StackParamList, TabParamList } from "./types";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator<StackParamList>();
-const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const BottomTabs = () => {
 	return (
@@ -109,23 +104,6 @@ const BottomTabs = () => {
 	);
 };
 
-const DrawerNav = () => {
-	return (
-		<Drawer.Navigator
-			initialRouteName="TabNav"
-			screenOptions={{
-				headerShown: false,
-			}}
-			drawerContent={(props: DrawerContentComponentProps) => (
-				<CustomDrawer {...props} />
-			)}
-			useLegacyImplementation={false}
-		>
-			<Drawer.Screen name="TabNav" component={BottomTabs} />
-		</Drawer.Navigator>
-	);
-};
-
 type RouterProps = {
 	theme: Theme;
 	onReady?: () => void;
@@ -138,7 +116,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme, onReady }) => {
 				screenOptions={{ headerShown: false }}
 				initialRouteName="Landing"
 			>
-				<Stack.Screen name="Landing" component={DrawerNav} />
+				<Stack.Screen name="Landing" component={BottomTabs} />
 				<Stack.Screen name="Article" component={ArticleScreen} />
 				<Stack.Screen name="Bookmarks" component={BookmarksScreen} />
 				<Stack.Screen name="Video" component={VideoScreen} />
@@ -148,6 +126,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme, onReady }) => {
 					name="TermsAndConditions"
 					component={TermsAndConditionsScreen}
 				/>
+				<Stack.Screen name="Search" component={SearchScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

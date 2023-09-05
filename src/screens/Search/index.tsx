@@ -108,7 +108,7 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 				mode="view"
 				icon="arrow-back"
 				onIconPress={onBackIconPress}
-				placeholder="Search posts"
+				placeholder="Search articles"
 				onChangeText={onSearchTextChange}
 				value={searchQuery}
 				loading={loading}

@@ -1,11 +1,16 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { FunctionComponent, memo, useState } from "react";
+import { Fragment, FunctionComponent, memo, useState } from "react";
 import { Appbar, Avatar, Menu, Tooltip, useTheme } from "react-native-paper";
 import { StackParamList } from "../../router/types";
 
-const HomeAppbar: FunctionComponent = () => {
+type props = {
+	isVideoListScreen?: boolean;
+};
+
+const HomeAppbar: FunctionComponent<props> = ({
+	isVideoListScreen = false,
+}) => {
 	const navigation = useNavigation<NavigationProp<StackParamList>>();
-	const theme = useTheme();
 
 	const [visible, setVisible] = useState(false);
 	const openMenu = () => setVisible(true);
@@ -41,18 +46,30 @@ const HomeAppbar: FunctionComponent = () => {
 				)}
 			/>
 			<Appbar.Content title="" />
-			<Tooltip title="Search posts">
+			{!isVideoListScreen ? (
+				<Fragment>
+					<Tooltip title="Search posts">
+						<Appbar.Action
+							animated={false}
+							icon="search"
+							onPress={onSearchItemPress}
+						/>
+					</Tooltip>
+					<Tooltip title="Show Bookmarks">
+						<Appbar.Action
+							animated={false}
+							icon="bookmark-outline"
+							onPress={onBookmarksItemPress}
+						/>
+					</Tooltip>
+				</Fragment>
+			) : null}
+
+			<Tooltip title="Settings">
 				<Appbar.Action
 					animated={false}
-					icon="search"
-					onPress={onSearchItemPress}
-				/>
-			</Tooltip>
-			<Tooltip title="Show Bookmarks">
-				<Appbar.Action
-					animated={false}
-					icon="bookmark-outline"
-					onPress={onBookmarksItemPress}
+					icon="settings"
+					onPress={onSettingItemPress}
 				/>
 			</Tooltip>
 
@@ -70,11 +87,6 @@ const HomeAppbar: FunctionComponent = () => {
 					leadingIcon="info"
 					onPress={onAboutItemPress}
 					title="About"
-				/>
-				<Menu.Item
-					leadingIcon="settings"
-					onPress={onSettingItemPress}
-					title="Settings"
 				/>
 			</Menu>
 		</Appbar.Header>

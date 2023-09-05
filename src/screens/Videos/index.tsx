@@ -80,7 +80,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<HomeAppbar />
+			<HomeAppbar isVideoListScreen />
 			<NetworkBanner
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				showCloseAction

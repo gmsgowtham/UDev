@@ -48,7 +48,7 @@ You agree to indemnify and hold us harmless from any claims, liabilities, damage
 We reserve the right to terminate or suspend your access to the App at any time, without prior notice or liability, for any reason whatsoever.
 
 ### 11. Governing Law
-These Terms shall be governed by and construed in accordance with the laws of [Jurisdiction]. Any disputes arising out of or relating to these Terms or the use of the App shall be subject to the exclusive jurisdiction of the courts in [Jurisdiction].
+These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising out of or relating to these Terms or the use of the App shall be subject to the exclusive jurisdiction of the courts in Bangalore.
 
 ### 12. Severability
 If any provision of these Terms is found to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect.
@@ -57,7 +57,7 @@ If any provision of these Terms is found to be invalid, illegal, or unenforceabl
 These Terms constitute the entire agreement between you and us regarding the use of the App and supersede any prior agreements or understandings, whether oral or written.
 
 ### 14. Contact Information
-If you have any questions or concerns regarding these Terms, please contact us at [contact information].
+If you have any questions or concerns regarding these Terms, please contact us at webappsbygowtham@gmail.com.
 
 By using the App, you signify your acceptance of these Terms. If you do not agree to these Terms, please refrain from using the App.
 `;

@@ -19,7 +19,7 @@
     "postinstall": "husky install && patch-package"
   },
   "dependencies": {
-    "@biomejs/biome": "1.0.0",
+    "@biomejs/biome": "1.1.0",
     "@flyerhq/react-native-link-preview": "1.6.0",
     "@react-native-clipboard/clipboard": "1.11.2",
     "@react-native-community/netinfo": "9.4.1",

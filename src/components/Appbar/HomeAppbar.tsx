@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Fragment, FunctionComponent, memo, useState } from "react";
-import { Appbar, Avatar, Menu, Tooltip, useTheme } from "react-native-paper";
+import { Appbar, Avatar, Menu, Tooltip } from "react-native-paper";
 import { StackParamList } from "../../router/types";
 
 type props = {
@@ -45,7 +45,7 @@ const HomeAppbar: FunctionComponent<props> = ({
 					/>
 				)}
 			/>
-			<Appbar.Content title="" />
+			<Appbar.Content title="UDev" />
 			{!isVideoListScreen ? (
 				<Fragment>
 					<Tooltip title="Search posts">

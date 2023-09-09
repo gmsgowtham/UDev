@@ -1,5 +1,5 @@
 import Url from "url-parse";
-import { STACKOVERFLOW_HOST, YOUTUBE_HOST } from "./const";
+import { STACKOVERFLOW_HOST, TWITTER_URL, YOUTUBE_HOST } from "./const";
 
 export const buildURLParams = (
 	params: Record<string, string | number | boolean | undefined | null>,
@@ -31,4 +31,12 @@ export const getStackoverflowEmbedURL = (str: string) => {
 		return parsed.toString();
 	}
 	return `${STACKOVERFLOW_HOST}/questions/${str}`;
+};
+
+export const getTweetEmbedURL = (id: string) => {
+	const parsed = new Url(id, {});
+	if (parsed.host) {
+		return parsed.toString();
+	}
+	return `${TWITTER_URL}/i/web/status/${id}`;
 };

@@ -1,5 +1,9 @@
 import { type CustomToken, MarkedTokenizer } from "react-native-marked";
-import { getStackoverflowEmbedURL, getYoutubeEmbedURL } from "../../utils/url";
+import {
+	getStackoverflowEmbedURL,
+	getTweetEmbedURL,
+	getYoutubeEmbedURL,
+} from "../../utils/url";
 
 class MDTokenizer extends MarkedTokenizer<CustomToken> {
 	paragraph(this: MarkedTokenizer<CustomToken>, src: string) {
@@ -102,6 +106,21 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 				identifier: "embed",
 				type: "custom",
 				raw: stackoverflowMatch[0],
+				tokens: [],
+				args: {
+					text: url,
+				},
+			};
+			return token;
+		}
+
+		const twitterMatch = src.match(/^[*]?{% (tweet)[*]? (.*?)[*]?%}[*]?/);
+		if (twitterMatch && twitterMatch.length > 2) {
+			const url = getTweetEmbedURL(twitterMatch[2]);
+			const token: CustomToken = {
+				identifier: "embed",
+				type: "custom",
+				raw: twitterMatch[0],
 				tokens: [],
 				args: {
 					text: url,

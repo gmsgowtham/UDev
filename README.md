@@ -1,6 +1,12 @@
 # UDev - Unofficial Android Client for Dev.to
 
-![UDev Logo](./assets/logo.svg)
+<div align="center">
+  <img src="./assets/logo.svg"/>
+</div>
+
+<div align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.devtounofficial"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=60px /></a>
+</div>
 
 **UDev** is an unofficial Android client for the popular developer community platform, [Dev.to](https://dev.to/). This app is currently in beta and is built using React Native. It aims to provide Dev.to enthusiasts with a mobile-friendly way to access their favorite content and engage with the community.
 

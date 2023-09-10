@@ -8,7 +8,13 @@ import {
 	ViewStyle,
 } from "react-native";
 import CodeHighlighter from "react-native-code-highlighter";
-import { IconButton, Text, Tooltip } from "react-native-paper";
+import {
+	Divider,
+	IconButton,
+	Surface,
+	Text,
+	Tooltip,
+} from "react-native-paper";
 import {
 	monoBlue as lightStyle,
 	sunburst as darkStyle,
@@ -47,13 +53,14 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 	}, [colorScheme]);
 
 	return (
-		<>
-			<View
-				style={[
-					styles.header,
-					{ backgroundColor: containerStyle?.backgroundColor },
-				]}
-			>
+		<Surface
+			mode="flat"
+			style={[
+				styles.container,
+				{ backgroundColor: containerStyle?.backgroundColor },
+			]}
+		>
+			<View style={styles.header}>
 				<Text variant="labelMedium" style={styles.title}>
 					{`${language} snippet`}
 				</Text>
@@ -67,6 +74,7 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 					/>
 				</Tooltip>
 			</View>
+			<Divider />
 			<CodeHighlighter
 				hljsStyle={hlsStyles}
 				language={language}
@@ -77,7 +85,7 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 			>
 				{code}
 			</CodeHighlighter>
-		</>
+		</Surface>
 	);
 };
 
@@ -88,7 +96,11 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		borderBottomWidth: StyleSheet.hairlineWidth,
+	},
+	container: {
+		padding: 8,
+		borderRadius: 16,
+		overflow: "hidden",
 	},
 	title: {
 		textTransform: "uppercase",

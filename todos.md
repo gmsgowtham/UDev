@@ -18,6 +18,7 @@
 
 ## V2
 
+- [ ] Local search history
 - [ ] Video bookmarks
 - [ ] Comments
 - [ ] Tags feed

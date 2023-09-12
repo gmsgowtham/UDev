@@ -80,7 +80,7 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 				language={language}
 				textStyle={textStyle}
 				scrollViewProps={{
-					contentContainerStyle: containerStyle,
+					contentContainerStyle: [containerStyle, { paddingHorizontal: 0 }],
 				}}
 			>
 				{code}
@@ -91,14 +91,14 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 
 const styles = StyleSheet.create({
 	header: {
-		paddingLeft: 16,
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
 	},
 	container: {
-		padding: 8,
+		paddingVertical: 8,
+		paddingHorizontal: 16,
 		borderRadius: 16,
 		overflow: "hidden",
 	},

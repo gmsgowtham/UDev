@@ -56,7 +56,7 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		borderRadius: 4,
+		borderRadius: 16,
 		marginVertical: 8,
 		minHeight: 100,
 	},

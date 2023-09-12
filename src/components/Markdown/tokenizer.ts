@@ -13,7 +13,8 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		 * Matches the following pattern
 		 * {% cta url %} description {% endcta %}
 		 */
-		const ctaMatch = src.match(/^{% cta(.*?)%}(.*?){% endcta %}/);
+
+		const ctaMatch = src.match(/^{% cta(.*?)%}([\s\S]*?){% endcta %}/);
 		if (ctaMatch && ctaMatch.length > 2) {
 			const cta = ctaMatch[1].trim();
 			const text = ctaMatch[2].trim();

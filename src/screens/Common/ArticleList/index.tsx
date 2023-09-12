@@ -53,7 +53,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 		navigation.navigate("Article", {
 			id: article.id,
 			title: article.title,
-			url: article.canonical_url,
+			url: article.url,
 			cover: article.cover_image ?? "",
 			author: {
 				name: article.user.name,

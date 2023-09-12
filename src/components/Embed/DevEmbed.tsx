@@ -19,7 +19,7 @@ const DevEmbed: FunctionComponent<DevEmbedProps> = ({ url }) => {
 		<View style={styles.titleContainer}>
 			<Text
 				variant="titleMedium"
-				style={[styles.title, { color: theme.colors.primary }]}
+				style={{ color: theme.colors.primary }}
 				numberOfLines={3}
 			>
 				{title}
@@ -65,9 +65,6 @@ const styles = StyleSheet.create({
 		gap: 8,
 		flexWrap: "wrap",
 		alignItems: "center",
-	},
-	title: {
-		marginBottom: 8,
 	},
 });
 

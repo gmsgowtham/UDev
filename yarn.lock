@@ -2815,10 +2815,10 @@
   dependencies:
     nanoid "^3.1.23"
 
-"@shopify/flash-list@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.6.0.tgz#ce37340f0d30d41e4c30ea50625632c26c733462"
-  integrity sha512-RmiaWj5dd2yj1ED3kvnLjByU7n1EWQJSGHl5GmiP4oFnCzKaM9JbYhFeVqrJXlzd+NejeBT2NF5WFE1G4VlB4g==
+"@shopify/flash-list@1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-1.6.1.tgz#7a46d8ec4e125b8b7bf686777d932c7c950e00c7"
+  integrity sha512-SlBlpP7+zol6D1SKaf402aS30Qgwdjwb8/Qn2CupYwXnTcu2l8TiXB766vcsIvKTqUO7ELfQnCwCq8NXx55FsQ==
   dependencies:
     recyclerlistview "4.2.0"
     tslib "2.4.0"

@@ -54,23 +54,23 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 
 		const {
 			title,
-			cloudinary_video_url: cover,
 			user,
-			video_source_url: source,
 			path,
+			cloudinary_video_url: cover,
+			video_source_url: source,
 			video_duration_in_minutes: duration,
 		} = video;
 
 		navigation.navigate("Video", {
 			id,
 			title,
-			url: `${DEV_TO_HOST}${path}`,
 			source,
 			cover,
+			duration,
+			url: `${DEV_TO_HOST}${path}`,
 			author: {
 				name: user.name,
 			},
-			duration,
 		});
 	};
 

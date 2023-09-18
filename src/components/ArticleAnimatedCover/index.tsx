@@ -69,9 +69,7 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 				</Animated.View>
 			) : null}
 			<View style={styles.wrapper}>
-				<Text variant="headlineMedium" numberOfLines={1}>
-					{title}
-				</Text>
+				<Text variant="headlineMedium">{title}</Text>
 				<TagList tags={tags} />
 				<View style={styles.authorContainer}>
 					<Avatar.Image size={40} source={{ uri: author.imageUri }} />

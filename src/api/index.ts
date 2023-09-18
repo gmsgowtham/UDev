@@ -41,3 +41,9 @@ export const searchArticles = (
 		timeout: NETWORK_TIMEOUT_MS,
 	});
 };
+
+export const fetchContentFromURL = (url: string) => {
+	return axios.get<string>(url, {
+		timeout: NETWORK_TIMEOUT_MS,
+	});
+};

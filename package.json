@@ -19,7 +19,6 @@
     "postinstall": "husky install && patch-package"
   },
   "dependencies": {
-    "@flyerhq/react-native-link-preview": "1.6.0",
     "@react-native-clipboard/clipboard": "1.11.2",
     "@react-native-community/netinfo": "9.4.1",
     "@react-native-community/slider": "4.4.3",

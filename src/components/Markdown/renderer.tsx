@@ -10,11 +10,12 @@ import {
 import { Renderer, RendererInterface } from "react-native-marked";
 import { getActualLangForCodeSnippet } from "../../utils/markdown";
 import { isStringOf } from "../../utils/typeof";
+import { getURLFromText } from "../../utils/url";
 import CTAButton from "../CTAButton";
 import FitFastImage from "../FitFastImage";
+import LinkPreview from "../LinkPreview";
 import SvgImage from "../SvgImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
-import DevEmbed from "./../Embed/DevEmbed";
 
 class MDRenderer extends Renderer implements RendererInterface {
 	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => {
@@ -66,7 +67,10 @@ class MDRenderer extends Renderer implements RendererInterface {
 			);
 		}
 		if (identifier === "embed" && isStringOf(args.text)) {
-			return <DevEmbed key={this.getKey()} url={args.text as string} />;
+			const url = getURLFromText(args.text as string);
+			if (url) {
+				return <LinkPreview key={this.getKey()} url={url} />;
+			}
 		}
 		return null;
 	}

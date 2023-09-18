@@ -5,7 +5,7 @@ import { logError } from "../utils/log";
 
 const BOOKMARKS_KEY = "udev_bookmarks";
 
-export interface PostBookmarkItem {
+export type ArticleBookmarkItem = {
 	id: number;
 	title: string;
 	url: string;
@@ -14,10 +14,25 @@ export interface PostBookmarkItem {
 		imageUri: string;
 	};
 	cover: string | null;
-	type: string;
+	type: "article";
 	tags: string[];
 	date: string;
-}
+};
+
+export type VideoBookmarkItem = {
+	id: number;
+	title: string;
+	url: string;
+	source: string;
+	author: {
+		name: string;
+	};
+	cover: string;
+	type: "video";
+	duration: string;
+};
+
+export type PostBookmarkItem = ArticleBookmarkItem | VideoBookmarkItem;
 
 interface BookmarkResponse {
 	success: boolean;

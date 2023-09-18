@@ -26,8 +26,10 @@ interface VideoPlayerProps {
 	title: string;
 	cover: string;
 	theme: MD3Theme;
+	isBookmarked: boolean;
 	onBackActionPress: () => void;
 	onShareActionPress: () => void;
+	onBookmarkActionPress: () => void;
 	onOpenInBrowserActionPress: () => void;
 }
 
@@ -36,8 +38,10 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 	title,
 	cover,
 	theme,
+	isBookmarked,
 	onBackActionPress,
 	onShareActionPress,
+	onBookmarkActionPress,
 	onOpenInBrowserActionPress,
 }) => {
 	const [videoData, setVideoData] = useState<OnLoadData | undefined>();
@@ -143,9 +147,11 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 					>
 						<TopBar
 							theme={theme}
+							isBookmarked={isBookmarked}
 							onBackActionPress={onBackActionPress}
 							onShareActionPress={onShareActionPress}
 							onOpenInBrowserActionPress={onOpenInBrowserActionPress}
+							onBookmarkActionPress={onBookmarkActionPress}
 						/>
 						<View style={styles.playButtonContainer}>
 							<IconButton

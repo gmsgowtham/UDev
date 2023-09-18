@@ -46,14 +46,32 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 		fetchVideos(page);
 	}, []);
 
-	const onItemClick = (
-		id: number,
-		title: string,
-		url: string,
-		source: string,
-		cover: string,
-	) => {
-		navigation.navigate("Video", { id, title, url, source, cover });
+	const onItemClick = (id: number) => {
+		const video = videos.find((v) => v.id === id);
+		if (!video) {
+			return;
+		}
+
+		const {
+			title,
+			user,
+			path,
+			cloudinary_video_url: cover,
+			video_source_url: source,
+			video_duration_in_minutes: duration,
+		} = video;
+
+		navigation.navigate("Video", {
+			id,
+			title,
+			source,
+			cover,
+			duration,
+			url: `${DEV_TO_HOST}${path}`,
+			author: {
+				name: user.name,
+			},
+		});
 	};
 
 	const onEndReached = () => {
@@ -71,8 +89,6 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 				author={{
 					name: item.user.name,
 				}}
-				url={`${DEV_TO_HOST}${item.path}`}
-				source={item.video_source_url}
 				onItemClick={onItemClick}
 			/>
 		);

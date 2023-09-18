@@ -14,15 +14,7 @@ interface VideoFeedItemProps {
 	author: author;
 	duration: string;
 	coverImageUri: string;
-	url: string;
-	source: string;
-	onItemClick: (
-		id: number,
-		title: string,
-		url: string,
-		source: string,
-		cover: string,
-	) => void;
+	onItemClick: (id: number) => void;
 }
 
 const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
@@ -31,12 +23,10 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	author,
 	coverImageUri,
 	duration,
-	url,
-	source,
 	onItemClick,
 }) => {
 	const onClick = () => {
-		onItemClick(id, title, url, source, coverImageUri);
+		onItemClick(id);
 	};
 
 	return (
@@ -48,7 +38,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 						style={styles.cover}
 						resizeMode={FastImage.resizeMode.cover}
 					/>
-					<Chip elevated icon="access-time-filled" style={styles.playChip}>
+					<Chip elevated icon="videocam" style={styles.playChip}>
 						{duration}
 					</Chip>
 				</View>

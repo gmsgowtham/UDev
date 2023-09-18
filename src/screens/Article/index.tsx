@@ -31,6 +31,7 @@ import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
 import { withAnimated } from "../../hoc/withAnimated";
 import {
+	ArticleBookmarkItem,
 	isBookmarked,
 	removeBookmark,
 	savePostToBookmarks,
@@ -170,7 +171,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				id,
 				title,
 				url,
-				type: article.type_of,
+				type: "article",
 				author: {
 					name: article.user.name,
 					imageUri: article.user.profile_image_90,
@@ -178,7 +179,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				cover: article.cover_image,
 				tags: article.tags,
 				date: article.readable_publish_date,
-			});
+			} as ArticleBookmarkItem);
 			if (!response.success) {
 				// reset state
 				setIsPostBookmarked(false);

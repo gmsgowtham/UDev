@@ -57,7 +57,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 			<Card.Content style={styles.content}>
 				<Text variant="titleLarge">{title}</Text>
 				<TagList tags={tags} />
-				<Text variant="bodyMedium">{description}</Text>
+				{description ? <Text variant="bodyMedium">{description}</Text> : null}
 			</Card.Content>
 			<Card.Title
 				title={authorTitle}

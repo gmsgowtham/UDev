@@ -5,16 +5,20 @@ import { Appbar, MD3Theme, Tooltip } from "react-native-paper";
 
 interface TopBarProps {
 	theme: MD3Theme;
+	isBookmarked: boolean;
 	onBackActionPress: () => void;
 	onShareActionPress: () => void;
 	onOpenInBrowserActionPress: () => void;
+	onBookmarkActionPress: () => void;
 }
 
 const TopBar: FunctionComponent<TopBarProps> = ({
 	theme,
+	isBookmarked,
 	onBackActionPress,
 	onShareActionPress,
 	onOpenInBrowserActionPress,
+	onBookmarkActionPress,
 }) => (
 	<View>
 		<Appbar.Header theme={theme} style={styles.appbar}>
@@ -26,6 +30,15 @@ const TopBar: FunctionComponent<TopBarProps> = ({
 					onPress={onShareActionPress}
 					accessibilityHint="Share video"
 					accessibilityLabel="Share video"
+					theme={theme}
+				/>
+			</Tooltip>
+			<Tooltip title="Bookmark">
+				<Appbar.Action
+					icon={isBookmarked ? "bookmark-added" : "bookmark-add"}
+					onPress={onBookmarkActionPress}
+					accessibilityHint="Bookmark"
+					accessibilityLabel="Bookmark"
 					theme={theme}
 				/>
 			</Tooltip>

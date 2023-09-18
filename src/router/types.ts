@@ -28,6 +28,10 @@ export type StackParamList = {
 		url: string;
 		source: string;
 		cover: string;
+		author: {
+			name: string;
+		};
+		duration: string;
 	};
 	About: undefined;
 	Settings: undefined;

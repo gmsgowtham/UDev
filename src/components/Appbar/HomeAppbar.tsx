@@ -55,15 +55,16 @@ const HomeAppbar: FunctionComponent<props> = ({
 							onPress={onSearchItemPress}
 						/>
 					</Tooltip>
-					<Tooltip title="Show Bookmarks">
-						<Appbar.Action
-							animated={false}
-							icon="bookmark-outline"
-							onPress={onBookmarksItemPress}
-						/>
-					</Tooltip>
 				</Fragment>
 			) : null}
+
+			<Tooltip title="Show Bookmarks">
+				<Appbar.Action
+					animated={false}
+					icon="bookmark-outline"
+					onPress={onBookmarksItemPress}
+				/>
+			</Tooltip>
 
 			<Tooltip title="Settings">
 				<Appbar.Action

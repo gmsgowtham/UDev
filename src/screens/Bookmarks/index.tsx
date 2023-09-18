@@ -13,6 +13,7 @@ import {
 } from "react-native-paper";
 import ArticleFeedItem from "../../components/ArticleFeedItem";
 import FloatingSvg from "../../components/Svg/Floating";
+import VideoFeedItem from "../../components/VideoFeedItem";
 import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
 import { StackParamList } from "../../router/types";
 
@@ -30,21 +31,39 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 	const hideDialog = () => setDialogVisible(false);
 
 	const onItemClick = (id: number) => {
-		const article = bookmarks.find((b) => b.id === id);
-		if (!article) return;
+		const post = bookmarks.find((b) => b.id === id);
+		if (!post) return;
 
-		navigation.navigate("Article", {
-			id: article.id,
-			title: article.title,
-			url: article.url,
-			cover: article.cover ?? "",
-			author: {
-				name: article.author.name,
-				image: article.author.imageUri,
-			},
-			tags: article.tags,
-			date: article.date,
-		});
+		switch (post.type) {
+			case "article":
+				navigation.navigate("Article", {
+					id: post.id,
+					title: post.title,
+					url: post.url,
+					cover: post.cover ?? "",
+					author: {
+						name: post.author.name,
+						image: post.author.imageUri,
+					},
+					tags: post.tags,
+					date: post.date,
+				});
+				break;
+			case "video":
+				navigation.navigate("Video", {
+					id: post.id,
+					title: post.title,
+					url: post.url,
+					source: post.source,
+					cover: post.cover,
+					author: {
+						name: post.author.name,
+					},
+					duration: post.duration,
+				});
+
+				break;
+		}
 	};
 
 	useEffect(() => {
@@ -60,21 +79,39 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 	const renderItem: ListRenderItem<PostBookmarkItem> = ({
 		item,
 	}: { item: PostBookmarkItem }) => {
-		return (
-			<ArticleFeedItem
-				id={item.id}
-				title={item.title}
-				author={{
-					name: item.author.name,
-					imageUri: item.author.imageUri,
-				}}
-				coverImageUri={item.cover}
-				description=""
-				dateReadable={item.date}
-				onItemClick={onItemClick}
-				tags={item.tags}
-			/>
-		);
+		switch (item.type) {
+			case "article": {
+				return (
+					<ArticleFeedItem
+						id={item.id}
+						title={item.title}
+						author={{
+							name: item.author.name,
+							imageUri: item.author.imageUri,
+						}}
+						coverImageUri={item.cover}
+						description=""
+						dateReadable={item.date}
+						onItemClick={onItemClick}
+						tags={item.tags}
+					/>
+				);
+			}
+			case "video": {
+				return (
+					<VideoFeedItem
+						id={item.id}
+						title={item.title}
+						duration={item.duration}
+						coverImageUri={item.cover}
+						author={{
+							name: item.author.name,
+						}}
+						onItemClick={onItemClick}
+					/>
+				);
+			}
+		}
 	};
 
 	return (

@@ -1,7 +1,5 @@
 # TODOs
 
-## V1
-
 - [x] Empty screen for bookmarks [4d35b9e](https://github.com/gmsgowtham/UDev/commit/4d35b9ed53bb8acd01aaaa4e830bf165fbaeeeb5)
 - [x] Splash screen [#76](https://github.com/gmsgowtham/UDev/pull/76)
 - [x] Full screen video page, custom icons for video player controls [87398de](https://github.com/gmsgowtham/UDev/commit/87398de7a72fc739480bbc6b65e802746bc130c2), [3a971a3](https://github.com/gmsgowtham/UDev/commit/3a971a37414b3f4254e5d16045eafe4ae3187e54),  [b858130](https://github.com/gmsgowtham/UDev/commit/b858130e2f1456d23f6cb4fcecd8a9f3655ee75b)
@@ -15,11 +13,8 @@
 - [x] Network issue banner (handle API errors gracefully)
 - [x] Settings screen (Terms & privacy, Github, Contact us, Appearance)
 - [x] Article screen scroll parallax
-
-## V2
-
+- [x] Video bookmarks [#248](https://github.com/gmsgowtham/UDev/pull/248)
 - [ ] Local search history
-- [ ] Video bookmarks
 - [ ] Comments
 - [ ] Tags feed
 - [ ] Author profile

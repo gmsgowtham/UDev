@@ -36,6 +36,9 @@ const TopBar: FunctionComponent<TopBarProps> = ({
 			<Tooltip title="Bookmark">
 				<Appbar.Action
 					icon={isBookmarked ? "bookmark-added" : "bookmark-add"}
+					iconColor={
+						isBookmarked ? theme.colors.primary : theme.colors.onSurface
+					}
 					onPress={onBookmarkActionPress}
 					accessibilityHint="Bookmark"
 					accessibilityLabel="Bookmark"
@@ -54,7 +57,6 @@ const TopBar: FunctionComponent<TopBarProps> = ({
 		</Appbar.Header>
 	</View>
 );
-
 const styles = StyleSheet.create({
 	appbar: {
 		backgroundColor: "transparent",

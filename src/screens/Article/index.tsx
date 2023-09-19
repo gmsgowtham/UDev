@@ -16,7 +16,7 @@ import {
 	ToastAndroid,
 	View,
 } from "react-native";
-import { AnimatedFAB, Appbar, Tooltip } from "react-native-paper";
+import { AnimatedFAB, Appbar, Tooltip, useTheme } from "react-native-paper";
 import {
 	Extrapolation,
 	interpolate,
@@ -49,6 +49,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const { params } = route;
 	const { id, title, url, cover, author, tags, date, organizationName } =
 		params;
+	const theme = useTheme();
 	const netInfo = useNetInfo();
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
@@ -253,6 +254,9 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				<Tooltip title="Bookmark">
 					<Appbar.Action
 						icon={isPostBookmarked ? "bookmark-added" : "bookmark-add"}
+						iconColor={
+							isPostBookmarked ? theme.colors.primary : theme.colors.onSurface
+						}
 						onPress={onBookmarkActionPress}
 						accessibilityHint="Bookmark post"
 						accessibilityLabel="Bookmark post"

@@ -37,4 +37,5 @@ export type StackParamList = {
 	Settings: undefined;
 	TermsAndConditions: undefined;
 	Search: undefined;
+	Comments: undefined;
 };

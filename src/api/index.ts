@@ -44,6 +44,10 @@ export const searchArticles = (
 
 export const fetchContentFromURL = (url: string) => {
 	return axios.get<string>(url, {
+		headers: {
+			"User-Agent":
+				"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+		},
 		timeout: NETWORK_TIMEOUT_MS,
 	});
 };

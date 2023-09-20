@@ -1,5 +1,5 @@
 import { FunctionComponent, memo, useEffect, useState } from "react";
-import { Linking, Pressable, StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import { Surface, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { fetchContentFromURL } from "../../api";
 import { logError } from "../../utils/log";
@@ -22,6 +22,8 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 				const matches = titleRegex.exec(html);
 				if (matches && matches.length > 0) {
 					setTitle(matches[1]);
+				} else {
+					setTitle("External URL");
 				}
 			} catch (e) {
 				setTitle("External URL");

@@ -3035,10 +3035,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.7.tgz#74d323a93f1391a63477b27b9aec56669c98b2ab"
   integrity sha512-bUBrPjEry2QUTsnuEjzjbS7voGWCc30W0qzgMf90GPeDGFRakvrz47ju+oqDAKCXLUCe39u57/ORMl/O/04/9g==
 
-"@types/node@20.6.2":
-  version "20.6.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.2.tgz#a065925409f59657022e9063275cd0b9bd7e1b12"
-  integrity sha512-Y+/1vGBHV/cYk6OI1Na/LHzwnlNCAfU3ZNGrc1LdRe/LAIbdDPTTv/HU3M7yXN448aTVDq3eKRm2cg7iKLb8gw==
+"@types/node@20.6.3":
+  version "20.6.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.3.tgz#5b763b321cd3b80f6b8dde7a37e1a77ff9358dd9"
+  integrity sha512-HksnYH4Ljr4VQgEy2lTStbCKv/P590tmPe5HqOnv9Gprffgv5WXAY+Y5Gqniu0GGqeTCUdBnzC3QSrzPkBkAMA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -7425,20 +7425,20 @@ react-native-code-highlighter@1.2.1:
     react-syntax-highlighter "15.5.0"
     trim-newlines "5.0.0"
 
-react-native-device-info@10.9.0:
-  version "10.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.9.0.tgz#5b378eea884a130db1d3ac637610f3a5ae7e8217"
-  integrity sha512-HqujZoNSkPGYZVs8ZsAwPkdY5UQt2jW0eg/wtW/kKbcAOp0KjUesgG7e1UISY4Z7Bx6LjZeKs0cqDzQI8AlOmw==
+react-native-device-info@10.11.0:
+  version "10.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.11.0.tgz#2c9f378f1c3c5eb9aafa803d015b84325991a9aa"
+  integrity sha512-qRzhuYOm5ZXQi5dhfJFjDq157oipxcEW/fo0QyMm5+TI6V6/+P/tju+Hif6z0rpLCf7MV7iDVRv2Kqha4D/yvQ==
 
 react-native-fast-image@8.6.3:
   version "8.6.3"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz#6edc3f9190092a909d636d93eecbcc54a8822255"
   integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
 
-react-native-gesture-handler@2.13.0:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.13.0.tgz#326f52c0e2172200225ee0c7f7534b8ffe122ec4"
-  integrity sha512-SkUAEEkSjfML24nDepgrcLzPhMyUrPOESpFLMAYmiMBsy+QJBfEs12KF5B4mMVUKBdlXQ/BQ2VA3CP29hh16lA==
+react-native-gesture-handler@2.13.1:
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.13.1.tgz#bad89caacd62c4560b9953b02f85f37ee42d5d4c"
+  integrity sha512-hW454X7sjuiBN+lobqw63pmT3boAmTl5OP6zQLq83iEe4T6PcHZ9lxzgCrebtgmutY8cJfq9rM2dOUVh9WBcww==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -7468,19 +7468,19 @@ react-native-mmkv@2.10.2:
   resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.10.2.tgz#73f06bb710388f67bade031e7b8e42a6d2358e40"
   integrity sha512-hNrZzwvIFyogJkqf//rVSw7EwceYqkx/jl3hb5tzct6qqwEmS1L9ybvnDjzDkaMyDeouQIqAnsdnb6AuDSrgQQ==
 
-react-native-paper@5.10.5:
-  version "5.10.5"
-  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.10.5.tgz#beb12d558e1882fd95f9b4699093c39394b2d6bd"
-  integrity sha512-vQiLS1V2M3HSqGpDPGmRs1LTZOToJrHytik71F7f6+1D1kz64+gTudmX2HfewQtt6u0QXUfMt+oRf3XXdIYF4Q==
+react-native-paper@5.10.6:
+  version "5.10.6"
+  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.10.6.tgz#922f25bd258140f3b7600c9b67674593e90ea19e"
+  integrity sha512-n5r2S53/pGpHRyQV/n75W8ibU+VyamMGSqKWGSti9ZmChcgEWC0s4o/TnpUvmAKNZCQwcYwKSLrmMq5wR5nUNA==
   dependencies:
     "@callstack/react-theme-provider" "^3.0.9"
     color "^3.1.2"
     use-latest-callback "^0.1.5"
 
-react-native-reanimated@3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.5.2.tgz#c7b4e70ee3210e26e6326d3e43f9299590898c5d"
-  integrity sha512-Uv9imJ6ZC7F/tTSpjjfo/0AZlw19Lag63+MUqF6p483LOoRkYtYP3JmtVV402mQWfhL1LPMeyAu/1spRjPKCCQ==
+react-native-reanimated@3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.5.4.tgz#a6c2b0c43b6dad246f5d276213974afedb8e3fc7"
+  integrity sha512-8we9LLDO1o4Oj9/DICeEJ2K1tjfqkJagqQUglxeUAkol/HcEJ6PGxIrpBcNryLqCDYEcu6FZWld/FzizBIw6bg==
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.16.7"
     "@babel/preset-typescript" "^7.16.7"
@@ -7524,6 +7524,14 @@ react-native-svg@13.13.0:
   version "13.13.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.13.0.tgz#23dedb4594dcc44128d63fa5b13c49534187fef5"
   integrity sha512-L8y8uEiMG0Tr++Nb2+24wlMuv18+bmq/CMoFFtTUlEqVvGCoK2ea8WamPl/9bV8gjL+Rngg5NqEBvKS23sbYoA==
+  dependencies:
+    css-select "^5.1.0"
+    css-tree "^1.1.3"
+
+react-native-svg@13.14.0:
+  version "13.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.14.0.tgz#879930cfe10e877e51ebb77dfcc2cd65fc6b0d21"
+  integrity sha512-27ZnxUkHgWICimhuj6MuqBkISN53lVvgWJB7pIypjXysAyM+nqgQBPh4vXg+7MbqLBoYvR4PiBgKfwwGAqVxHg==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"

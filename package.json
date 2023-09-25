@@ -19,7 +19,7 @@
     "postinstall": "husky install && patch-package"
   },
   "dependencies": {
-    "@react-native-clipboard/clipboard": "1.11.2",
+    "@react-native-clipboard/clipboard": "1.12.1",
     "@react-native-community/netinfo": "9.4.1",
     "@react-native-community/slider": "4.4.3",
     "@react-native-firebase/app": "18.5.0",

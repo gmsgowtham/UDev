@@ -24,7 +24,7 @@
     "@react-native-community/slider": "4.4.3",
     "@react-native-firebase/app": "18.5.0",
     "@react-native-firebase/crashlytics": "18.5.0",
-    "@react-navigation/bottom-tabs": "6.5.8",
+    "@react-navigation/bottom-tabs": "6.5.9",
     "@react-navigation/native": "6.1.8",
     "@react-navigation/native-stack": "6.9.14",
     "@shopify/flash-list": "1.6.1",

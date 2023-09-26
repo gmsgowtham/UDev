@@ -21,7 +21,7 @@ const useArticleStore = createWithEqualityFn<ArticleState>()(
 		fetchArticle: async (id: number) => {
 			set({ loading: true, error: false });
 			try {
-				const response = await getArticle(1581071);
+				const response = await getArticle(id);
 				const article: ApiArticleItem = await response.data;
 
 				const coverImageSize = await getImageSize(article.cover_image);

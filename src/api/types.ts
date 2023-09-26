@@ -73,7 +73,7 @@ export enum ArticleFeedApiStates {
 }
 
 export interface ApiVideoListItem {
-	type_of: VideoTypes;
+	type_of: string;
 	id: number;
 	path: string;
 	cloudinary_video_url: string;
@@ -84,4 +84,11 @@ export interface ApiVideoListItem {
 	user: User;
 }
 
-export enum VideoTypes {}
+export interface ApiCommentItem {
+	type_of: string;
+	id_code: string;
+	created_at: string;
+	body_html: string;
+	user: User;
+	children: ApiCommentItem[];
+}

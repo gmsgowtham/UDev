@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import AboutScreen from "../screens/About";
 import ArticleScreen from "../screens/Article";
 import BookmarksScreen from "../screens/Bookmarks";
+import CommentsScreen from "../screens/Comments";
 import LandingScreen from "../screens/LandingFeed";
 import LatestScreen from "../screens/LatestFeed";
 import SearchScreen from "../screens/Search";
@@ -127,6 +128,7 @@ const Router: FunctionComponent<RouterProps> = ({ theme, onReady }) => {
 					component={TermsAndConditionsScreen}
 				/>
 				<Stack.Screen name="Search" component={SearchScreen} />
+				<Stack.Screen name="Comments" component={CommentsScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

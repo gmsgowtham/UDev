@@ -251,6 +251,12 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 			<Appbar.Header elevated style={styles.nav}>
 				<Appbar.BackAction onPress={onBackActionPress} />
 				<AnimatedAppbarContent title={title} style={[appbarContentOpacity]} />
+				<Appbar.Action
+					icon="comment"
+					onPress={() => navigation.navigate("Comments")}
+					accessibilityHint="Open in browser"
+					accessibilityLabel="Open in browser"
+				/>
 				<Tooltip title="Bookmark">
 					<Appbar.Action
 						icon={isPostBookmarked ? "bookmark-added" : "bookmark-add"}

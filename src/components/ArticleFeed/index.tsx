@@ -4,6 +4,7 @@ import {
 	type ListRenderItem,
 } from "@shopify/flash-list";
 import { forwardRef, memo } from "react";
+import { StyleSheet, View } from "react-native";
 import { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeedItem from "../ArticleFeedItem";
 
@@ -49,9 +50,17 @@ const ArticleFeed = forwardRef<FlashList<ApiArticleFeedItem>, Props>(
 				data={data}
 				renderItem={renderItem}
 				estimatedItemSize={377}
+				ItemSeparatorComponent={() => <View style={styles.separator} />}
 			/>
 		);
 	},
 );
+
+const styles = StyleSheet.create({
+	separator: {
+		height: 12,
+		backgroundColor: "transparent",
+	},
+});
 
 export default memo(ArticleFeed);

@@ -30,7 +30,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	};
 
 	return (
-		<Card style={styles.card} onPress={onClick}>
+		<Card onPress={onClick}>
 			{coverImageUri ? (
 				<View style={styles.coverWrapper}>
 					<FastImage
@@ -54,10 +54,6 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 };
 
 const styles = StyleSheet.create({
-	card: {
-		marginVertical: 4,
-		flex: 1,
-	},
 	coverWrapper: {
 		position: "relative",
 		flex: 1,

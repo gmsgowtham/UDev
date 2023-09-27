@@ -60,7 +60,8 @@ export const processMarkdownContent = (markdown: string): string => {
 	// Add new line before and after embeds to ensure it gets picked up by the tokenizer
 	mdProcessed = mdProcessed.replace(/([*]?{%)/gm, "\n\n$1");
 	mdProcessed = mdProcessed.replace(/(%}[*]?)/gm, "$1\n\n");
-
+	// Embed edge cases
+	mdProcessed = mdProcessed.replace("{%embed", "{% embed");
 	// Remove html comments
 	mdProcessed = mdProcessed.replace(/<!--([\s\S]*?)-->/gm, "");
 

@@ -10,7 +10,7 @@ interface Props {
 
 const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 	const theme = useTheme();
-	const [title, setTitle] = useState("Loading External URL...");
+	const [title, setTitle] = useState("External URL");
 
 	useEffect(() => {
 		const fetchContent = async () => {
@@ -22,11 +22,8 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 				const matches = titleRegex.exec(html);
 				if (matches && matches.length > 0) {
 					setTitle(matches[1]);
-				} else {
-					setTitle("External URL");
 				}
 			} catch (e) {
-				setTitle("External URL");
 				logError(e as Error, "Error while fetching url for preview");
 				console.error(e);
 			}
@@ -41,7 +38,7 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 
 	return (
 		<Surface style={styles.wrapper} mode="flat">
-			<TouchableRipple onPress={onPress}>
+			<TouchableRipple style={styles.touchable} onPress={onPress}>
 				<View style={styles.container}>
 					<Text variant="labelSmall" numberOfLines={1}>
 						{url}
@@ -64,6 +61,9 @@ const styles = StyleSheet.create({
 		borderRadius: 16,
 		minHeight: 100,
 		marginVertical: 8,
+	},
+	touchable: {
+		flex: 1,
 	},
 	container: {
 		padding: 16,

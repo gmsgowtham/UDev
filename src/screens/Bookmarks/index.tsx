@@ -138,6 +138,7 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 						data={bookmarks}
 						renderItem={renderItem}
 						estimatedItemSize={200}
+						ItemSeparatorComponent={() => <View style={styles.separator} />}
 					/>
 				</View>
 			)}
@@ -177,14 +178,17 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	listContainer: {
-		paddingVertical: 4,
-		paddingHorizontal: 8,
+		padding: 12,
 	},
 	noDataContainer: {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
 		gap: 24,
+	},
+	separator: {
+		height: 12,
+		backgroundColor: "transparent",
 	},
 });
 

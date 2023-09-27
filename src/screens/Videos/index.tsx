@@ -117,6 +117,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 						onEndReachedThreshold={0.75}
 						ListFooterComponent={() => <ListFooterLoader loading={loading} />}
 						contentContainerStyle={styles.listContainer}
+						ItemSeparatorComponent={() => <View style={styles.separator} />}
 					/>
 				</View>
 			)}
@@ -137,8 +138,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	listContainer: {
-		paddingVertical: 4,
-		paddingHorizontal: 8,
+		padding: 12,
+	},
+	separator: {
+		height: 12,
+		backgroundColor: "transparent",
 	},
 });
 

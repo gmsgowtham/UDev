@@ -46,7 +46,7 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 	}, [organizationName, author.name]);
 
 	return (
-		<Card style={styles.card} onPress={onClick}>
+		<Card onPress={onClick}>
 			{coverImageUri ? (
 				<FastImage
 					source={{ uri: coverImageUri }}
@@ -72,9 +72,6 @@ const ArticleFeedItem: FunctionComponent<ArticleFeedItemProps> = ({
 };
 
 const styles = StyleSheet.create({
-	card: {
-		marginVertical: 4,
-	},
 	cover: {
 		width: "100%",
 		aspectRatio: ARTICLE_COVER_IMAGE_ASPECT_RATIO,

@@ -49,9 +49,8 @@ const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		gap: 8,
-		paddingVertical: 8,
-		paddingHorizontal: 8,
+		gap: 12,
+		padding: 12,
 	},
 });
 

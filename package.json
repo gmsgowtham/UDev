@@ -11,7 +11,7 @@
     "format:apply": "biome format ./ --write",
     "start": "react-native start",
     "test": "jest",
-    "android:release": "yarn android:bundle && yarn android:assemble",
+    "android:release": "yarn android:clean && yarn android:bundle && yarn android:assemble",
     "android:clean": "cd android && ./gradlew clean && ./gradlew --stop && cd ..",
     "android:bundle": "cd android && ./gradlew bundleRelease && ./gradlew --stop && cd ..",
     "android:assemble": "cd android && ./gradlew assembleRelease && ./gradlew --stop && cd ..",

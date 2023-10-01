@@ -16,6 +16,7 @@ import FitFastImage from "../FitFastImage";
 import LinkPreview from "../LinkPreview";
 import SvgImage from "../SvgImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
+import { EmbedTypes } from "./tokenizer";
 
 class MDRenderer extends Renderer implements RendererInterface {
 	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => {
@@ -57,7 +58,11 @@ class MDRenderer extends Renderer implements RendererInterface {
 		_children: ReactNode[],
 		args: Record<string, unknown> = {},
 	): ReactNode {
-		if (identifier === "cta" && isStringOf(args.text) && isStringOf(args.cta)) {
+		if (
+			identifier === EmbedTypes.CTA &&
+			isStringOf(args.text) &&
+			isStringOf(args.cta)
+		) {
 			return (
 				<CTAButton
 					key={this.getKey()}
@@ -66,10 +71,20 @@ class MDRenderer extends Renderer implements RendererInterface {
 				/>
 			);
 		}
-		if (identifier === "embed" && isStringOf(args.text)) {
+
+		const urlEmbedsTypes = [
+			EmbedTypes.Link,
+			EmbedTypes.Youtube,
+			EmbedTypes.Stackoverflow,
+			EmbedTypes.Tweet,
+		];
+		if (
+			urlEmbedsTypes.includes(identifier as unknown as EmbedTypes) &&
+			isStringOf(args.text)
+		) {
 			const url = getURLFromText(args.text as string);
 			if (url) {
-				return <LinkPreview key={this.getKey()} url={url} />;
+				return <LinkPreview key={this.getKey()} url={url} type={identifier} />;
 			}
 		}
 		return null;

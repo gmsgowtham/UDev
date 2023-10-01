@@ -6,6 +6,7 @@ import { logError } from "../../utils/log";
 
 interface Props {
 	url: string;
+	type?: string;
 }
 
 const LinkPreview: FunctionComponent<Props> = ({ url }) => {
@@ -59,7 +60,7 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 const styles = StyleSheet.create({
 	wrapper: {
 		borderRadius: 16,
-		minHeight: 100,
+		minHeight: 60,
 		marginVertical: 8,
 	},
 	touchable: {

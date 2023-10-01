@@ -5,6 +5,15 @@ import {
 	getYoutubeEmbedURL,
 } from "../../utils/url";
 
+export enum EmbedTypes {
+	Link = "link",
+	Youtube = "youtube",
+	Tweet = "tweet",
+	Stackoverflow = "stackoverflow",
+	CTA = "cta",
+	Details = "details",
+}
+
 class MDTokenizer extends MarkedTokenizer<CustomToken> {
 	paragraph(this: MarkedTokenizer<CustomToken>, src: string) {
 		/**
@@ -20,7 +29,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 			const text = ctaMatch[2].trim();
 			const token: CustomToken = {
 				raw: ctaMatch[0],
-				identifier: "cta",
+				identifier: EmbedTypes.CTA,
 				type: "custom",
 				args: {
 					cta,
@@ -45,7 +54,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		);
 		if (embedMatch && embedMatch.length > 2) {
 			const token: CustomToken = {
-				identifier: "embed",
+				identifier: EmbedTypes.Link,
 				type: "custom",
 				raw: embedMatch[0],
 				tokens: [],
@@ -69,7 +78,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		if (detailsMatch && detailsMatch.length > 2) {
 			const token: CustomToken = {
 				raw: detailsMatch[0],
-				identifier: "details",
+				identifier: EmbedTypes.Details,
 				type: "custom",
 				args: {},
 				tokens: [],
@@ -87,7 +96,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		if (youtubeMatch && youtubeMatch.length > 2) {
 			const url = getYoutubeEmbedURL(youtubeMatch[2]);
 			const token: CustomToken = {
-				identifier: "embed",
+				identifier: EmbedTypes.Youtube,
 				type: "custom",
 				raw: youtubeMatch[0],
 				tokens: [],
@@ -104,7 +113,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		if (stackoverflowMatch && stackoverflowMatch.length > 2) {
 			const url = getStackoverflowEmbedURL(stackoverflowMatch[2]);
 			const token: CustomToken = {
-				identifier: "embed",
+				identifier: EmbedTypes.Stackoverflow,
 				type: "custom",
 				raw: stackoverflowMatch[0],
 				tokens: [],
@@ -119,7 +128,7 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		if (twitterMatch && twitterMatch.length > 2) {
 			const url = getTweetEmbedURL(twitterMatch[2]);
 			const token: CustomToken = {
-				identifier: "embed",
+				identifier: EmbedTypes.Tweet,
 				type: "custom",
 				raw: twitterMatch[0],
 				tokens: [],

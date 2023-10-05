@@ -7013,10 +7013,10 @@ node-fetch@^2.2.0, node-fetch@^2.6.0:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-html-parser@^6.1.6:
-  version "6.1.6"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.6.tgz#8369a11d629a92ab2db2344bb650261135ac8e13"
-  integrity sha512-C/MGDQ2NjdjzUq41bW9kW00MPZecAe/oo89vZEFLDfWoQVDk/DdML1yuxVVKLDMFIFax2VTq6Vpfzyn7z5yYgQ==
+node-html-parser@^6.1.10:
+  version "6.1.10"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.10.tgz#5db11eac3ccbea6fc1b04a22c8a0e3a0774cfae6"
+  integrity sha512-6/uWdWxjQWQ7tMcFK2wWlrflsQUzh1HsEzlIf2j5+TtzfhT2yUvg3DwZYAmjEHeR3uX74ko7exjHW69J0tOzIg==
   dependencies:
     css-select "^5.1.0"
     he "1.2.0"
@@ -7575,17 +7575,17 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-bootsplash@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.0.3.tgz#8b163d4bfd72c6fd6ff1f238fd83ea20d190b8ef"
-  integrity sha512-UyID54/nFjjuVBTCMSRQERYFRve8KGtUzO64kwG1ORuTfeH6D37DuObqaZc4Ysyq9lAJI3WaoC2XoTICDHZ+CQ==
+react-native-bootsplash@5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.0.4.tgz#2c674edc0c4b74e980f503e956f53608ad3638ce"
+  integrity sha512-e2z/V2a1IajeVfro86Ylco1+T6oBJytga6/HKKcrLPcwt6FcwMep1XUN28KCOst2BD9ggNmrj/tr71tER1k5Mg==
   dependencies:
     detect-indent "^6.1.0"
     fs-extra "^11.1.1"
-    node-html-parser "^6.1.6"
+    node-html-parser "^6.1.10"
     picocolors "^1.0.0"
     prettier "^2.8.8"
-    sharp "^0.32.5"
+    sharp "^0.32.6"
     ts-dedent "^2.2.0"
     xml-formatter "^3.5.0"
 
@@ -8126,10 +8126,10 @@ shallow-clone@^3.0.0:
   dependencies:
     kind-of "^6.0.2"
 
-sharp@^0.32.5:
-  version "0.32.5"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.32.5.tgz#9ddc78ead6446094f51e50355a2d4ec6e7220cd4"
-  integrity sha512-0dap3iysgDkNaPOaOL4X/0akdu0ma62GcdC2NBQ+93eqpePdDdr2/LM0sFdDSMmN7yS+odyZtPsb7tx/cYBKnQ==
+sharp@^0.32.6:
+  version "0.32.6"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.32.6.tgz#6ad30c0b7cd910df65d5f355f774aa4fce45732a"
+  integrity sha512-KyLTWwgcR9Oe4d9HwCwNM2l7+J0dUQwn/yf7S0EnTtb0eVS4RxO0eUSvxPtzT4F3SY+C4K6fqdv/DO27sJ/v/w==
   dependencies:
     color "^4.2.3"
     detect-libc "^2.0.2"

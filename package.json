@@ -52,7 +52,7 @@
     "react-native-svg": "13.14.0",
     "react-native-vector-icons": "10.0.0",
     "react-native-video": "6.0.0-alpha.8",
-    "react-native-webview": "13.6.0",
+    "react-native-webview": "13.6.2",
     "react-syntax-highlighter": "15.5.0",
     "turndown": "7.1.2",
     "url-parse": "1.5.10",

@@ -5869,10 +5869,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-linkedom@0.15.4:
-  version "0.15.4"
-  resolved "https://registry.yarnpkg.com/linkedom/-/linkedom-0.15.4.tgz#55599ae784bbe3f0a9e9b2eb3ab3eed377e0464c"
-  integrity sha512-hXMJnSGRG1wMM2qknxiBPetE5WjzvuDPS24/KMhwrL2OaJZK4s6u1yEwZjSrILEcUiJPKXF1NM4vempEdbJ5kQ==
+linkedom@0.15.6:
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/linkedom/-/linkedom-0.15.6.tgz#474765941c92d6037fa38a2d053100ef587858cc"
+  integrity sha512-2Vt8fdP5BNWeIiV8B3ZxfY2Z8zB0u2nVP4JPS+cgeqUlNbY26IFdDot4FYM+pZ6dA2fTVrP6bi8Z4VNTlyurvA==
   dependencies:
     css-select "^5.1.0"
     cssom "^0.5.0"

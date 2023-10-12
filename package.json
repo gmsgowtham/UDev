@@ -70,7 +70,7 @@
     "@biomejs/biome": "1.2.2",
     "@commitlint/cli": "17.7.2",
     "@commitlint/config-conventional": "17.7.0",
-    "@react-native/metro-config": "0.73.1",
+    "@react-native/metro-config": "0.74.0",
     "@tsconfig/react-native": "3.0.2",
     "@types/css-to-react-native": "3.0.0",
     "@types/html-escaper": "3.0.0",

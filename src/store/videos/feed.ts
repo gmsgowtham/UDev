@@ -1,6 +1,6 @@
 import { ToastAndroid } from "react-native";
-import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/vanilla/shallow";
 import { getVideos } from "../../api";
 import { ApiVideoListItem } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";

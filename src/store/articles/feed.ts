@@ -1,6 +1,6 @@
 import { ToastAndroid } from "react-native";
-import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/vanilla/shallow";
 import { getArticlesList, searchArticles } from "../../api";
 import { ApiArticleFeedItem, ArticleFeedApiStates } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";

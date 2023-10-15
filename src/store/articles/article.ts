@@ -1,5 +1,5 @@
-import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/vanilla/shallow";
 import { getArticle } from "../../api";
 import { ApiArticleItem } from "../../api/types";
 import { getImageSize } from "../../utils/image";

@@ -72,7 +72,7 @@
     "@commitlint/config-conventional": "17.8.0",
     "@react-native/metro-config": "0.74.0",
     "@tsconfig/react-native": "3.0.2",
-    "@types/css-to-react-native": "3.0.0",
+    "@types/css-to-react-native": "3.0.1",
     "@types/html-escaper": "3.0.0",
     "@types/jest": "29.5.5",
     "@types/metro-config": "0.76.3",

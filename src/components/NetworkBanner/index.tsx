@@ -1,6 +1,5 @@
 import { FunctionComponent, memo, useMemo } from "react";
-import { Banner } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { Banner, Icon } from "react-native-paper";
 import { HELP_TEXT } from "../../utils/const";
 
 interface NetworkBannerProps {
@@ -31,7 +30,7 @@ const NetworkBanner: FunctionComponent<NetworkBannerProps> = ({
 			actions={actions}
 			icon={({ size, color }) => (
 				<Icon
-					name="signal-wifi-statusbar-connected-no-internet-4"
+					source="signal-wifi-statusbar-connected-no-internet-4"
 					size={size}
 					color={color}
 				/>

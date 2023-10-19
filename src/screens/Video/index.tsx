@@ -21,7 +21,7 @@ const VideoScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
-	}, []);
+	}, [id]);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 
 	const onBackActionPress = () => {

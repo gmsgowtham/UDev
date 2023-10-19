@@ -31,7 +31,7 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 		};
 
 		fetchContent();
-	}, []);
+	}, [url]);
 
 	const onPress = () => {
 		Linking.openURL(url);

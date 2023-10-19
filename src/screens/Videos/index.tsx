@@ -44,7 +44,7 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 
 	useEffect(() => {
 		fetchVideos(page);
-	}, []);
+	}, [page, fetchVideos]);
 
 	const onItemClick = (id: number) => {
 		const video = videos.find((v) => v.id === id);

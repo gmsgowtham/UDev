@@ -99,19 +99,19 @@ export const prepareTurndownContent = (md: string): string => {
 
 	const codeFenceMatches = processed.match(codeFenceRegex);
 	if (codeFenceMatches) {
-		codeFenceMatches.forEach(function (match) {
+		for (const match of codeFenceMatches) {
 			// To preserve spacing, ref: https://github.com/mixmark-io/turndown/issues/361
 			const valueToReplace = escapeHTML(match.replace(/ /gm, "&nbsp;"));
 			processed = processed.replace(match, valueToReplace);
-		});
+		}
 	}
 
 	const codeSpanRegex = new RegExp("`([^\\`].*?)`", "gm");
 	const codeSpanMatches = processed.match(codeSpanRegex);
 	if (codeSpanMatches) {
-		codeSpanMatches.forEach(function (match) {
+		for (const match of codeSpanMatches) {
 			processed = processed.replace(match, escapeHTML(match));
-		});
+		}
 	}
 
 	processed = replaceNewlines(processed, "<br/>");

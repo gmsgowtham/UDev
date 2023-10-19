@@ -56,7 +56,7 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 		}
 
 		return rnElements;
-	}, [loadingState]);
+	}, [loadingState, loadingPlaceholder, rnElements]);
 
 	return (
 		<FlatList

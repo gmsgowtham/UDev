@@ -17,7 +17,7 @@ const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 	const { height: windowHeight } = useWindowDimensions();
 	const skeletonItemsToShow = useMemo(() => {
 		return Math.ceil(windowHeight / height);
-	}, [height]);
+	}, [height, windowHeight]);
 
 	const colorScheme = useUserColorScheme();
 	const theme = useTheme();

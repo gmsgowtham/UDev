@@ -41,7 +41,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	useEffect(() => {
 		fetchArticles(page);
-	}, []);
+	}, [page, fetchArticles]);
 
 	const navigation = useNavigation<NavigationProp<StackParamList>>();
 

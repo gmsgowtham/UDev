@@ -53,7 +53,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	const netInfo = useNetInfo();
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
-	}, []);
+	}, [id]);
 	const [isPostBookmarked, setIsPostBookmarked] = useState(_isPostBookmarked);
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const [headerHeight, setHeaderHeight] = useState(0);
@@ -133,7 +133,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				// Resets article state
 				resetArticle();
 			};
-		}, []),
+		}, [id, resetArticle, fetchArticle]),
 	);
 
 	const onBackActionPress = () => {
@@ -244,7 +244,13 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 		}
 
 		return null;
-	}, [article?.body_markdown, headerHeight, isShareFabExtended]);
+	}, [
+		article?.body_markdown,
+		headerHeight,
+		isShareFabExtended,
+		onShareActionPress,
+		scrollHandler,
+	]);
 
 	return (
 		<View style={styles.container}>

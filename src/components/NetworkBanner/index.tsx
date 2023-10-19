@@ -23,7 +23,7 @@ const NetworkBanner: FunctionComponent<NetworkBannerProps> = ({
 			];
 		}
 		return [];
-	}, [showCloseAction]);
+	}, [showCloseAction, onCloseActionPress]);
 	return (
 		<Banner
 			visible={visible}

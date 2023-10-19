@@ -25,7 +25,7 @@ const App: FunctionComponent = () => {
 	useEffect(() => {
 		StatusBar.setBackgroundColor(theme.colors.elevation.level2);
 		StatusBar.setBarStyle(statusBarStyle);
-	}, [theme]);
+	}, [theme, statusBarStyle]);
 
 	const onRouterReady = async () => {
 		await RNBootSplash.hide({ fade: true });

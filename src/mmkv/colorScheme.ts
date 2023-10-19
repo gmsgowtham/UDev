@@ -15,7 +15,7 @@ let colorSchemeStorage: MMKV;
 const getColorSchemeStorage = () => {
 	if (!colorSchemeStorage) {
 		colorSchemeStorage = new MMKV({
-			id: "udev_theme",
+			id: COLOR_SCHEME_KEY,
 			encryptionKey: "THEME",
 		});
 

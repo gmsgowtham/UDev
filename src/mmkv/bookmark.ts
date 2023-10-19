@@ -43,7 +43,7 @@ let bookmarkStorage: MMKV;
 const getBookmarkStorage = () => {
 	if (!bookmarkStorage) {
 		bookmarkStorage = new MMKV({
-			id: "udev_bookmarks",
+			id: BOOKMARKS_KEY,
 			encryptionKey: "POST_BOOKMARKS",
 		});
 	}

@@ -10,11 +10,15 @@ import {
 import { View } from "react-native";
 import { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { List, Searchbar } from "react-native-paper";
 import { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeed from "../../components/ArticleFeed";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
+import {
+	addItemToRecentSearchHistory,
+	getRecentSearchHistory,
+} from "../../mmkv/searchHistory";
 import { StackParamList } from "../../router/types";
 import useArticleFeedStore from "../../store/articles/feed";
 
@@ -22,6 +26,7 @@ type Props = NativeStackScreenProps<StackParamList, "Search">;
 
 const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 	const listRef = useRef(null);
+	const searchHistoryItems = getRecentSearchHistory();
 	const searchRef = useRef() as RefObject<TextInput>;
 	const [searchQuery, setSearchQuery] = useState("");
 	const {
@@ -61,7 +66,9 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 			return;
 		}
 
-		searchArticles(searchQuery.trim(), 1);
+		const q = searchQuery.trim();
+		searchArticles(q, 1);
+		addItemToRecentSearchHistory(q);
 		if (articles.length > 0 && listRef.current) {
 			(listRef.current as FlashList<ApiArticleFeedItem>).scrollToIndex({
 				animated: true,
@@ -105,6 +112,12 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 		searchRef.current?.focus();
 	};
 
+	const onSearchHistoryItemPress = (item: string) => {
+		setSearchQuery(item);
+		searchArticles(item, 1);
+		addItemToRecentSearchHistory(item);
+	};
+
 	return (
 		<View style={styles.container}>
 			<Searchbar
@@ -120,6 +133,21 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 				loading={loading}
 				onClearIconPress={focusSearchInput}
 			/>
+			{!loading && articles.length < 1 && searchHistoryItems.length > 0 ? (
+				<List.Section>
+					<List.Subheader>History</List.Subheader>
+					<View style={{ paddingHorizontal: 12 }}>
+						{searchHistoryItems.map((history, index) => (
+							<List.Item
+								key={`search-history-item-${index}`}
+								title={history}
+								left={() => <List.Icon icon="history" />}
+								onPress={() => onSearchHistoryItemPress(history)}
+							/>
+						))}
+					</View>
+				</List.Section>
+			) : null}
 			{loading && articles.length < 1 ? (
 				<FeedSkeleton />
 			) : (

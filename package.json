@@ -27,7 +27,7 @@
     "@react-navigation/bottom-tabs": "6.5.10",
     "@react-navigation/native": "6.1.9",
     "@react-navigation/native-stack": "6.9.15",
-    "@shopify/flash-list": "1.6.1",
+    "@shopify/flash-list": "1.6.2",
     "axios": "1.5.1",
     "front-matter": "4.0.2",
     "html-escaper": "3.0.3",

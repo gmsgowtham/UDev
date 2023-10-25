@@ -7639,10 +7639,10 @@ react-native-remote-svg@2.0.11:
   resolved "https://registry.yarnpkg.com/react-native-remote-svg/-/react-native-remote-svg-2.0.11.tgz#48138e8e6e55a07960a6b2a7c569b3a151b6f628"
   integrity sha512-MHOieuffbJWH3xSnMIvCjQ9bBsJRgI7cXZ1R6Qg/eSPfl91ySKDeIMktB6BT7ewcR2sF251l+uZB7F4qBqKtQg==
 
-react-native-safe-area-context@4.7.3:
-  version "4.7.3"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.7.3.tgz#149542a05fa68b2892568e8b338bc1e4e005cd0d"
-  integrity sha512-Z+oldEQ/tHRU5X++ePdIGosPT9Fa93Mtky/Ptdh7qei4HqBUOcMnIj0KKCJGPRYyvN7j/63Ix0YqqYyVUEof5g==
+react-native-safe-area-context@4.7.4:
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.7.4.tgz#3dd8438971e70043d76f2428ede75b8a9639265e"
+  integrity sha512-3LR3DCq9pdzlbq6vsHGWBFehXAKDh2Ljug6jWhLWs1QFuJHM6AS2+mH2JfKlB2LqiSFZOBcZfHQFz0sGaA3uqg==
 
 react-native-screens@3.27.0:
   version "3.27.0"

@@ -7533,10 +7533,10 @@ react-native-linear-gradient@2.8.3:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
   integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
 
-react-native-marked@6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-6.0.2.tgz#77c7ed345796b5e1e309cd50dbea76a1b8ca524c"
-  integrity sha512-Y+eqEiPmX68OPsej8Fs4LyRk9FCi5l8q+jrP/abyRdszfCmGde4uawO9NyyBFZtdKe+iL3Ucl43nAuNBzdvYxQ==
+react-native-marked@6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-marked/-/react-native-marked-6.0.3.tgz#140646a60d98279cc219e48412d333e9160f2340"
+  integrity sha512-uGA6fxdo/0KEkdFffQeBX6g4J3dWxjuBsu+Y77URQ0YjOhpDw4W4dAD51SG9vFCUqmM2M2mNk5ZK3fJENnCMQw==
   dependencies:
     "@jsamr/counter-style" "2.0.2"
     "@jsamr/react-native-li" "2.3.1"

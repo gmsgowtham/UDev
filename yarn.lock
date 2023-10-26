@@ -2634,12 +2634,12 @@
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
-"@react-native-firebase/crashlytics@18.5.0":
-  version "18.5.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-18.5.0.tgz#b5c1e15d260d5243c5ffb2963114bb7e42fe2b7f"
-  integrity sha512-i/jt/kNyhLws10/DeYgSQbGIekNPCAdtdg36NmFSw7URZf+1JUczKePbHqq3TvMFZJi5OjnDj06Fj9oenQKjWA==
+"@react-native-firebase/crashlytics@18.6.0":
+  version "18.6.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-18.6.0.tgz#3a37d03178de6f2a1019f8054376f015f940503a"
+  integrity sha512-VGBvY8hNbyk30Fd1rTsQlUvSO425AnOootB+B0HCmuS2Mhn02RDA/ylPbkjGAavX+bM8TB6bOZ7hbpCAFgpa0Q==
   dependencies:
-    stacktrace-js "^2.0.0"
+    stacktrace-js "^2.0.2"
 
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
@@ -8297,7 +8297,7 @@ stacktrace-gps@^3.0.4:
     source-map "0.5.6"
     stackframe "^1.3.4"
 
-stacktrace-js@^2.0.0:
+stacktrace-js@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/stacktrace-js/-/stacktrace-js-2.0.2.tgz#4ca93ea9f494752d55709a081d400fdaebee897b"
   integrity sha512-Je5vBeY4S1r/RnLydLl0TBTi3F2qdfWmYsGvtfZgEI+SCprPppaIhQf5nGcal4gI4cGpCV/duLcAzT1np6sQqg==

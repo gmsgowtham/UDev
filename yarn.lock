@@ -7498,10 +7498,10 @@ react-native-bootsplash@5.0.4:
     ts-dedent "^2.2.0"
     xml-formatter "^3.5.0"
 
-react-native-code-highlighter@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.2.1.tgz#ff2fba10f659b8e536df635e75326626bd91e463"
-  integrity sha512-uHABG5lzaip0e8PRJm8sgyzlqWmOJsWGl9Mvx3CenLX+89zwuQ0GZJQtwycI8TWaVbeJtcljSa371NvHu02JBA==
+react-native-code-highlighter@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-code-highlighter/-/react-native-code-highlighter-1.2.2.tgz#f1fb0cd04218e55ad00a361d13be7df2fb5d19a4"
+  integrity sha512-HRoGgTXYGHu5vVfeMU4LrQ26GtcM+7Z14fW9VllOOZpJPyTCgbfqqQx1Z8V2JdJ45RYE7aEgeEBA60f4btytVg==
   dependencies:
     css-to-react-native "3.2.0"
     react-syntax-highlighter "15.5.0"

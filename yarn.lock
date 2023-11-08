@@ -2594,10 +2594,10 @@
     prompts "^2.4.0"
     semver "^7.5.2"
 
-"@react-native-community/netinfo@10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-10.0.0.tgz#c4a7f92abc993dc91211d240fde8e2ae474c5d97"
-  integrity sha512-cJZ7q85EY93xML1IYW7yi1+YGuYmha4EtMyJLoiZL0Bqwz7Jaie/zUiTlAJVzvHaGpaAIWQyF2cXEIf60JWoPw==
+"@react-native-community/netinfo@11.1.0":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-11.1.0.tgz#b3b2ab741a5d935e445685ade8a53d48775e082b"
+  integrity sha512-pIbCuqgrY7SkngAcjUs9fMzNh1h4soQMVw1IeGp1HN5//wox3fUVOuvyIubTscUbdLFKiltJAiuQek7Nhx1bqA==
 
 "@react-native-community/slider@4.4.3":
   version "4.4.3"

@@ -6807,10 +6807,10 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-moti@0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/moti/-/moti-0.27.0.tgz#1590589e566044fcb2ffa775a7b333b319151248"
-  integrity sha512-sVEFFVvo4XKGn3POUUTRONIuQCH1iA0THnjZdb4SSxn/x365ptoqZg1DflTq3egTox3WJT+7u27HErrzGmU/7g==
+moti@0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/moti/-/moti-0.27.2.tgz#617217500a45f3eca93a26a8adb4d7a47cf82843"
+  integrity sha512-QYH9Id14Zdjx9L75iMPyvxUN+GvHZ4lk6QhUyA63kWgXyqPT2yMnEIbk7hIeQ0WQDW2eLAXEi2/6FJkS7TEwsw==
   dependencies:
     framer-motion "^6.5.1"
 

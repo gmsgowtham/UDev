@@ -9,20 +9,19 @@ import {
 } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ActivityIndicator, IconButton, MD3Theme } from "react-native-paper";
-import Video, { OnLoadData, OnProgressData } from "react-native-video";
+import Video, {
+	OnLoadData,
+	OnProgressData,
+	type ReactVideoSource,
+	type VideoRef,
+} from "react-native-video";
 import { VIDEO_UI_HIDE_TIMEOUT } from "../../utils/const";
 import BottomBar from "./BottomBar";
 import Overlay from "./Overlay";
 import TopBar from "./TopBar";
 
 interface VideoPlayerProps {
-	source:
-		| {
-				uri?: string | undefined;
-				headers?: { [key: string]: string } | undefined;
-				type?: string | undefined;
-		  }
-		| number;
+	source: ReactVideoSource;
 	title: string;
 	cover: string;
 	theme: MD3Theme;
@@ -50,7 +49,7 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 	const [isPaused, setIsPaused] = useState(false);
 	const [isFullscreen, setIsFullScreen] = useState(false);
 	const [shouldHideActions, setShouldHideActions] = useState(false);
-	const playerRef = useRef<Video | null>(null);
+	const playerRef = useRef<VideoRef | null>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
 	useFocusEffect(

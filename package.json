@@ -71,7 +71,7 @@
     "@commitlint/cli": "18.4.1",
     "@commitlint/config-conventional": "18.4.0",
     "@react-native/metro-config": "0.74.0",
-    "@tsconfig/react-native": "3.0.2",
+    "@tsconfig/react-native": "3.0.3",
     "@types/css-to-react-native": "3.0.2",
     "@types/html-escaper": "3.0.2",
     "@types/jest": "29.5.8",

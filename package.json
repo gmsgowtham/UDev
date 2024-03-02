@@ -75,7 +75,7 @@
     "@react-native/typescript-config": "^0.74.0",
     "@types/css-to-react-native": "3.0.2",
     "@types/html-escaper": "3.0.2",
-    "@types/jest": "29.5.8",
+    "@types/jest": "29.5.12",
     "@types/metro-config": "0.76.3",
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",

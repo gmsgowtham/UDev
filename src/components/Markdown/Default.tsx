@@ -51,7 +51,8 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 	const elements: ReactNode[] = useMemo(() => {
 		if (loadingState && loadingPlaceholder) {
 			return [loadingPlaceholder];
-		} else if (loadingState && !loadingPlaceholder) {
+		}
+		if (loadingState && !loadingPlaceholder) {
 			return [<ActivityIndicator />];
 		}
 

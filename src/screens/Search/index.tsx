@@ -137,9 +137,9 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 				<List.Section>
 					<List.Subheader>History</List.Subheader>
 					<View style={{ paddingHorizontal: 12 }}>
-						{searchHistoryItems.map((history, index) => (
+						{searchHistoryItems.map((history) => (
 							<List.Item
-								key={`search-history-item-${index}`}
+								key={`search-history-item-${history}`}
 								title={history}
 								left={() => <List.Icon icon="history" />}
 								onPress={() => onSearchHistoryItemPress(history)}

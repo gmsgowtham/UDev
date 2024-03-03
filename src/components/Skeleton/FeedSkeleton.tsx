@@ -35,6 +35,7 @@ const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 		>
 			{[...Array(skeletonItemsToShow)].map((_, i) => (
 				<Skeleton
+					// biome-ignore lint/suspicious/noArrayIndexKey: this is an controlled array
 					key={`skeleton_item_${i}`}
 					colorMode={colorMode}
 					radius={16}

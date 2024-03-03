@@ -92,10 +92,7 @@ export const getAbsURLFromAnchorMarkdown = (md: string) => {
 // Escapes HTML inside code fence and code span to avoid turndown parsing
 export const prepareTurndownContent = (md: string): string => {
 	let processed = unescapeHTML(md);
-	const codeFenceRegex = new RegExp(
-		"^(([ \\t]*`{3,4})([^\\n]*)([\\s\\S]+?)(^[ \\t]*\\2))",
-		"gm",
-	);
+	const codeFenceRegex = /^(([ \t]*`{3,4})([^\n]*)([\s\S]+?)(^[ \t]*\2))/gm;
 
 	const codeFenceMatches = processed.match(codeFenceRegex);
 	if (codeFenceMatches) {
@@ -106,7 +103,7 @@ export const prepareTurndownContent = (md: string): string => {
 		}
 	}
 
-	const codeSpanRegex = new RegExp("`([^\\`].*?)`", "gm");
+	const codeSpanRegex = /`([^\`].*?)`/gm;
 	const codeSpanMatches = processed.match(codeSpanRegex);
 	if (codeSpanMatches) {
 		for (const match of codeSpanMatches) {

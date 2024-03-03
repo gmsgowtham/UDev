@@ -7680,10 +7680,10 @@ react-native-code-highlighter@1.2.2:
     react-syntax-highlighter "15.5.0"
     trim-newlines "5.0.0"
 
-react-native-device-info@10.11.0:
-  version "10.11.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.11.0.tgz#2c9f378f1c3c5eb9aafa803d015b84325991a9aa"
-  integrity sha512-qRzhuYOm5ZXQi5dhfJFjDq157oipxcEW/fo0QyMm5+TI6V6/+P/tju+Hif6z0rpLCf7MV7iDVRv2Kqha4D/yvQ==
+react-native-device-info@10.13.1:
+  version "10.13.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.13.1.tgz#f87f44ba7b67933248be10ca302a4f2f6dbbdd4f"
+  integrity sha512-j/7Z+Yl9Cesjp8vKaVzbuJQKJSVs4ojXATt5WjwipZ0Ss0mBJjqtbc4x5dfZLmQ4y55VVa7c0v8KHca1iqY/TQ==
 
 react-native-fast-image@8.6.3:
   version "8.6.3"

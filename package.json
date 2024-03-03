@@ -21,7 +21,7 @@
   "dependencies": {
     "@react-native-clipboard/clipboard": "1.12.1",
     "@react-native-community/netinfo": "11.1.0",
-    "@react-native-community/slider": "4.4.3",
+    "@react-native-community/slider": "4.5.0",
     "@react-native-firebase/app": "18.6.1",
     "@react-native-firebase/crashlytics": "18.6.1",
     "@react-navigation/bottom-tabs": "6.5.16",

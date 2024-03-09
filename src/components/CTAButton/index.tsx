@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from "react";
+import { type FunctionComponent, memo } from "react";
 import { Linking, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 

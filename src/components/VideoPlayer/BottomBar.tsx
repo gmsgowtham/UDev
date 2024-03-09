@@ -1,8 +1,8 @@
 import Slider from "@react-native-community/slider";
-import { FunctionComponent, memo, useMemo } from "react";
+import { type FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
-import { IconButton, MD3Theme, Text, Tooltip } from "react-native-paper";
+import { IconButton, type MD3Theme, Text, Tooltip } from "react-native-paper";
 import { secondsToHMS } from "../../utils/time";
 
 interface BottomBarProps {

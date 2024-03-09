@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from "react";
+import { type FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { Icon, Surface, useTheme } from "react-native-paper";
 

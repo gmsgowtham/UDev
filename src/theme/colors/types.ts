@@ -1,4 +1,4 @@
-import { MD3Colors } from "react-native-paper/lib/typescript/types";
+import type { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 export interface ColorsConfig {
 	light: MD3Colors;

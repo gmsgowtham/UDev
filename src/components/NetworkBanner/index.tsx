@@ -1,4 +1,4 @@
-import { FunctionComponent, memo, useMemo } from "react";
+import { type FunctionComponent, memo, useMemo } from "react";
 import { Banner, Icon } from "react-native-paper";
 import { HELP_TEXT } from "../../utils/const";
 

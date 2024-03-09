@@ -1,4 +1,4 @@
-import { type ColorSchemeName } from "react-native";
+import type { ColorSchemeName } from "react-native";
 import { MMKV, useMMKVString } from "react-native-mmkv";
 import { logError } from "../utils/log";
 

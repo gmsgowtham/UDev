@@ -1,6 +1,6 @@
-import { Theme } from "@react-navigation/native";
-import { FunctionComponent, useEffect, useMemo } from "react";
-import { StatusBar, StatusBarStyle } from "react-native";
+import type { Theme } from "@react-navigation/native";
+import { type FunctionComponent, useEffect, useMemo } from "react";
+import { StatusBar, type StatusBarStyle } from "react-native";
 import RNBootSplash from "react-native-bootsplash";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";

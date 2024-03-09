@@ -1,7 +1,7 @@
-import { FunctionComponent, memo } from "react";
+import { type FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
-import { Appbar, MD3Theme, Tooltip } from "react-native-paper";
+import { Appbar, type MD3Theme, Tooltip } from "react-native-paper";
 
 interface TopBarProps {
 	theme: MD3Theme;

@@ -1,7 +1,7 @@
 import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/vanilla/shallow";
 import { getArticle } from "../../api";
-import { ApiArticleItem } from "../../api/types";
+import type { ApiArticleItem } from "../../api/types";
 import { getImageSize } from "../../utils/image";
 import { processMarkdownContent } from "../../utils/markdown";
 

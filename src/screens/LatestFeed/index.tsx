@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from "react";
+import { type FunctionComponent, memo } from "react";
 import useArticleFeedStore from "../../store/articles/feed";
 import ArticleFeedScreen from "../Common/ArticleList";
 

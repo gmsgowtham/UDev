@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ColorSchemeName, useColorScheme } from "react-native";
+import { type ColorSchemeName, useColorScheme } from "react-native";
 import {
 	COLOR_SCHEME_VALUES,
 	DEFAULT_COLOR_SCHEME,

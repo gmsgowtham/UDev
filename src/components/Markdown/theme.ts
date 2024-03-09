@@ -1,5 +1,5 @@
-import { UserTheme } from "react-native-marked/dist/typescript/theme/types";
-import { MD3Theme } from "react-native-paper";
+import type { UserTheme } from "react-native-marked/dist/typescript/theme/types";
+import type { MD3Theme } from "react-native-paper";
 
 const getMarkdownTheme = (theme: MD3Theme): UserTheme => {
 	return {

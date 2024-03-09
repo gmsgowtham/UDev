@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from "react";
+import { type FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { Surface } from "react-native-paper";
 import SVGImage from "react-native-remote-svg";

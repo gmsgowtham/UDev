@@ -1,14 +1,14 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent, useMemo, useState } from "react";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { type FunctionComponent, useMemo, useState } from "react";
 import { Linking, Share, ToastAndroid } from "react-native";
 import VideoPlayer from "../../components/VideoPlayer";
 import {
-	VideoBookmarkItem,
+	type VideoBookmarkItem,
 	isBookmarked,
 	removeBookmark,
 	savePostToBookmarks,
 } from "../../mmkv/bookmark";
-import { StackParamList } from "../../router/types";
+import type { StackParamList } from "../../router/types";
 import { DarkTheme } from "../../theme";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";

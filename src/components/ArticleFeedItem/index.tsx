@@ -1,4 +1,4 @@
-import { FunctionComponent, memo, useMemo } from "react";
+import { type FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import FastImage from "react-native-fast-image";
 import { Avatar, Card, Text } from "react-native-paper";

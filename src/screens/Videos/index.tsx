@@ -1,17 +1,17 @@
 import { useNetInfo } from "@react-native-community/netinfo";
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { CompositeScreenProps } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { FunctionComponent, memo, useEffect, useState } from "react";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import type { CompositeScreenProps } from "@react-navigation/native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlashList, type ListRenderItem } from "@shopify/flash-list";
+import { type FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { ApiVideoListItem } from "../../api/types";
+import type { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import NetworkBanner from "../../components/NetworkBanner";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
-import { StackParamList, TabParamList } from "../../router/types";
+import type { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
 import { DEV_TO_HOST } from "../../utils/const";
 

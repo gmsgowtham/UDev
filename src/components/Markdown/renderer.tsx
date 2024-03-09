@@ -1,13 +1,13 @@
 import { unescape as unescapeHTML } from "html-escaper";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import {
-	ImageStyle,
+	type ImageStyle,
 	StyleSheet,
 	Text,
-	TextStyle,
-	ViewStyle,
+	type TextStyle,
+	type ViewStyle,
 } from "react-native";
-import { Renderer, RendererInterface } from "react-native-marked";
+import { Renderer, type RendererInterface } from "react-native-marked";
 import { getActualLangForCodeSnippet } from "../../utils/markdown";
 import { isStringOf } from "../../utils/typeof";
 import { getURLFromText } from "../../utils/url";

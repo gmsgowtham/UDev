@@ -1,7 +1,7 @@
-import React, { FunctionComponent, memo } from "react";
-import { Linking, StyleProp, TextStyle } from "react-native";
+import React, { type FunctionComponent, memo } from "react";
+import { Linking, type StyleProp, type TextStyle } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { VariantProp } from "react-native-paper/lib/typescript/components/Typography/types";
+import type { VariantProp } from "react-native-paper/lib/typescript/components/Typography/types";
 
 interface Props {
 	url: string;

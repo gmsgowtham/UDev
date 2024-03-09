@@ -1,6 +1,6 @@
 import { MotiView } from "moti";
-import { FunctionComponent, PropsWithChildren, memo } from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { type FunctionComponent, type PropsWithChildren, memo } from "react";
+import { type StyleProp, StyleSheet, type ViewStyle } from "react-native";
 
 interface OverlayProps {
 	shouldHide: boolean;

@@ -1,7 +1,7 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Fragment, FunctionComponent, memo, useState } from "react";
+import { type NavigationProp, useNavigation } from "@react-navigation/native";
+import { Fragment, type FunctionComponent, memo, useState } from "react";
 import { Appbar, Avatar, Menu, Tooltip } from "react-native-paper";
-import { StackParamList } from "../../router/types";
+import type { StackParamList } from "../../router/types";
 
 type props = {
 	isVideoListScreen?: boolean;

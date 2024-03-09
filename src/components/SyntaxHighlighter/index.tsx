@@ -1,11 +1,11 @@
 import Clipboard from "@react-native-clipboard/clipboard";
-import React, { FunctionComponent, memo, useMemo } from "react";
+import React, { type FunctionComponent, memo, useMemo } from "react";
 import {
 	StyleSheet,
-	TextStyle,
+	type TextStyle,
 	ToastAndroid,
 	View,
-	ViewStyle,
+	type ViewStyle,
 } from "react-native";
 import CodeHighlighter from "react-native-code-highlighter";
 import {
@@ -16,8 +16,8 @@ import {
 	Tooltip,
 } from "react-native-paper";
 import {
-	monoBlue as lightStyle,
 	sunburst as darkStyle,
+	monoBlue as lightStyle,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import useUserColorScheme from "../../hooks/useUserColorScheme";
 import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";

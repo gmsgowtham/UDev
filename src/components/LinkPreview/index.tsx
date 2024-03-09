@@ -1,4 +1,4 @@
-import { FunctionComponent, memo, useEffect, useState } from "react";
+import { type FunctionComponent, memo, useEffect, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { Surface, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { fetchContentFromURL } from "../../api";

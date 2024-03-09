@@ -1,5 +1,5 @@
 import React from "react";
-import Animated, { AnimateProps } from "react-native-reanimated";
+import Animated, { type AnimateProps } from "react-native-reanimated";
 
 // React Naive Reanimated `createAnimatedComponent` does not accept functional components
 // This is to support passing functional compoenent to `createAnimatedComponent`

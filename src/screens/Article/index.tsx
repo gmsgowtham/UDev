@@ -1,15 +1,15 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useFocusEffect } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
 	Fragment,
-	FunctionComponent,
+	type FunctionComponent,
 	useCallback,
 	useMemo,
 	useState,
 } from "react";
 import {
-	LayoutChangeEvent,
+	type LayoutChangeEvent,
 	Linking,
 	Share,
 	StyleSheet,
@@ -31,12 +31,12 @@ import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
 import { withAnimated } from "../../hoc/withAnimated";
 import {
-	ArticleBookmarkItem,
+	type ArticleBookmarkItem,
 	isBookmarked,
 	removeBookmark,
 	savePostToBookmarks,
 } from "../../mmkv/bookmark";
-import { StackParamList } from "../../router/types";
+import type { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";

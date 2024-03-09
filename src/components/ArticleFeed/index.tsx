@@ -1,11 +1,11 @@
 import {
 	FlashList,
-	FlashListProps,
+	type FlashListProps,
 	type ListRenderItem,
 } from "@shopify/flash-list";
 import { forwardRef, memo } from "react";
 import { StyleSheet, View } from "react-native";
-import { ApiArticleFeedItem } from "../../api/types";
+import type { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeedItem from "../ArticleFeedItem";
 
 type Props = {

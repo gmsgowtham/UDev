@@ -1,7 +1,7 @@
 import {
 	MD3DarkTheme,
 	MD3LightTheme,
-	MD3Theme,
+	type MD3Theme,
 	configureFonts,
 } from "react-native-paper";
 import Colors from "./colors/iris";

@@ -1,6 +1,6 @@
-import React, { FunctionComponent, memo } from "react";
+import React, { type FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
-import Svg, { Circle, Path, SvgProps } from "react-native-svg";
+import Svg, { Circle, Path, type SvgProps } from "react-native-svg";
 
 const DEFAULT_WIDTH = 865.57286;
 const DEFAULT_HEIGHT = 658.54932;
@@ -8,7 +8,7 @@ const DEFAULT_ASPECT_RATIO = DEFAULT_WIDTH / DEFAULT_HEIGHT;
 
 const FloatingSvg: FunctionComponent<Partial<SvgProps>> = (props) => {
 	const { width = DEFAULT_WIDTH } = props;
-	const height = parseFloat(String(width)) / DEFAULT_ASPECT_RATIO;
+	const height = Number.parseFloat(String(width)) / DEFAULT_ASPECT_RATIO;
 
 	return (
 		<Svg

@@ -1,14 +1,14 @@
-import { FunctionComponent, memo, useMemo } from "react";
+import { type FunctionComponent, memo, useMemo } from "react";
 import {
-	ImageStyle,
-	LayoutChangeEvent,
+	type ImageStyle,
+	type LayoutChangeEvent,
 	StyleSheet,
 	View,
-	ViewStyle,
+	type ViewStyle,
 } from "react-native";
 import FastImage from "react-native-fast-image";
 import { Avatar, Text, useTheme } from "react-native-paper";
-import Animated, { AnimatedStyleProp } from "react-native-reanimated";
+import Animated, { type AnimatedStyleProp } from "react-native-reanimated";
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
 

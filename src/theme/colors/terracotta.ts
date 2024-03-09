@@ -1,4 +1,4 @@
-import { ColorsConfig } from "./types";
+import type { ColorsConfig } from "./types";
 
 const Terracotta: ColorsConfig = {
 	light: {

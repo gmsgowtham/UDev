@@ -2,11 +2,11 @@ import { ToastAndroid } from "react-native";
 import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/vanilla/shallow";
 import { getVideos } from "../../api";
-import { ApiVideoListItem } from "../../api/types";
+import type { ApiVideoListItem } from "../../api/types";
 import { perfArrayConcat } from "../../utils/array";
 import { DEFAULT_PAGE_SIZE, HELP_TEXT } from "../../utils/const";
 import {
-	CommonState,
+	type CommonState,
 	setErrorState,
 	setFetchingState,
 	setRefreshingState,

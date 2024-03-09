@@ -1,6 +1,6 @@
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
-import { FunctionComponent, memo, useMemo } from "react";
+import { type FunctionComponent, memo, useMemo } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import { useTheme } from "react-native-paper";
 import useUserColorScheme from "../../hooks/useUserColorScheme";

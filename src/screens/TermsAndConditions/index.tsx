@@ -1,10 +1,10 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent } from "react";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { FunctionComponent } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Appbar } from "react-native-paper";
 import { RenderMarkdownDefault } from "../../components/Markdown";
-import { StackParamList } from "../../router/types";
+import type { StackParamList } from "../../router/types";
 import TERM_AND_CONDITION_MARKDOWN from "./md";
 
 type Props = NativeStackScreenProps<StackParamList, "TermsAndConditions">;

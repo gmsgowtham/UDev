@@ -1,15 +1,21 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useScrollToTop } from "@react-navigation/native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
+import { type NavigationProp, useNavigation } from "@react-navigation/native";
+import {
+	type FunctionComponent,
+	memo,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { StyleSheet, View } from "react-native";
-import { ApiArticleFeedItem } from "../../../api/types";
+import type { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
 import NetworkBanner from "../../../components/NetworkBanner";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
-import { StackParamList } from "../../../router/types";
+import type { StackParamList } from "../../../router/types";
 
 interface ArticleFeedProps {
 	title: string;

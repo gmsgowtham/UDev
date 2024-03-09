@@ -1,6 +1,6 @@
 declare module "react-native-remote-svg" {
 	import React from "react";
-	import { ImageProps } from "react-native";
+	import type { ImageProps } from "react-native";
 
 	type RNSVGImageProps = ImageProps;
 

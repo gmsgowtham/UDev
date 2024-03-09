@@ -1,18 +1,18 @@
 import {
-	FunctionComponent,
-	ReactNode,
+	type FunctionComponent,
+	type ReactNode,
 	memo,
 	useCallback,
 	useMemo,
 } from "react";
 import {
-	FlatListProps,
-	NativeScrollEvent,
-	NativeSyntheticEvent,
+	type FlatListProps,
+	type NativeScrollEvent,
+	type NativeSyntheticEvent,
 	StyleSheet,
 	View,
 } from "react-native";
-import { useMarkdown, useMarkdownHookOptions } from "react-native-marked";
+import { useMarkdown, type useMarkdownHookOptions } from "react-native-marked";
 import { useTheme } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import renderer from "./renderer";

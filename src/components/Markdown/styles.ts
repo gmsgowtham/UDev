@@ -1,5 +1,5 @@
-import { MarkedStyles } from "react-native-marked/dist/typescript/theme/types";
-import { MD3Theme } from "react-native-paper";
+import type { MarkedStyles } from "react-native-marked/dist/typescript/theme/types";
+import type { MD3Theme } from "react-native-paper";
 
 const getMarkdownStyles = (theme: MD3Theme): MarkedStyles => {
 	return {

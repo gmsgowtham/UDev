@@ -1,17 +1,17 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FlashList } from "@shopify/flash-list";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { FlashList } from "@shopify/flash-list";
 import {
-	FunctionComponent,
-	RefObject,
+	type FunctionComponent,
+	type RefObject,
 	useEffect,
 	useRef,
 	useState,
 } from "react";
 import { View } from "react-native";
-import { TextInput } from "react-native";
+import type { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
 import { List, Searchbar } from "react-native-paper";
-import { ApiArticleFeedItem } from "../../api/types";
+import type { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeed from "../../components/ArticleFeed";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
@@ -19,7 +19,7 @@ import {
 	addItemToRecentSearchHistory,
 	getRecentSearchHistory,
 } from "../../mmkv/searchHistory";
-import { StackParamList } from "../../router/types";
+import type { StackParamList } from "../../router/types";
 import useArticleFeedStore from "../../store/articles/feed";
 
 type Props = NativeStackScreenProps<StackParamList, "Search">;

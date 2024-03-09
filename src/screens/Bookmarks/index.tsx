@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, type ListRenderItem } from "@shopify/flash-list";
-import { FunctionComponent, memo, useEffect, useState } from "react";
+import { type FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import {
 	Appbar,
@@ -14,8 +14,8 @@ import {
 import ArticleFeedItem from "../../components/ArticleFeedItem";
 import FloatingSvg from "../../components/Svg/Floating";
 import VideoFeedItem from "../../components/VideoFeedItem";
-import { PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
-import { StackParamList } from "../../router/types";
+import { type PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
+import type { StackParamList } from "../../router/types";
 
 type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
 

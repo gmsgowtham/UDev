@@ -1,12 +1,12 @@
 import {
-	FunctionComponent,
-	ReactNode,
+	type FunctionComponent,
+	type ReactNode,
 	memo,
 	useCallback,
 	useMemo,
 } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { useMarkdown, useMarkdownHookOptions } from "react-native-marked";
+import { useMarkdown, type useMarkdownHookOptions } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 import renderer from "./renderer";
 import getMarkdownStyles from "./styles";

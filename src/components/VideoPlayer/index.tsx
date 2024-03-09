@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import {
-	FunctionComponent,
+	type FunctionComponent,
 	memo,
 	useCallback,
 	useEffect,
@@ -8,10 +8,14 @@ import {
 	useState,
 } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { ActivityIndicator, IconButton, MD3Theme } from "react-native-paper";
+import {
+	ActivityIndicator,
+	IconButton,
+	type MD3Theme,
+} from "react-native-paper";
 import Video, {
-	OnLoadData,
-	OnProgressData,
+	type OnLoadData,
+	type OnProgressData,
 	type ReactVideoSource,
 	type VideoRef,
 } from "react-native-video";

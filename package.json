@@ -31,7 +31,7 @@
 		"axios": "1.6.7",
 		"front-matter": "4.0.2",
 		"html-escaper": "3.0.3",
-		"linkedom": "0.16.8",
+		"linkedom": "0.16.9",
 		"moti": "0.28.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",

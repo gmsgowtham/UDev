@@ -67,7 +67,7 @@
 		"@babel/plugin-transform-template-literals": "7.23.3",
 		"@babel/preset-env": "7.24.0",
 		"@babel/runtime": "7.24.0",
-		"@biomejs/biome": "1.6.0",
+		"@biomejs/biome": "1.6.1",
 		"@commitlint/cli": "19.1.0",
 		"@commitlint/config-conventional": "19.1.0",
 		"@react-native/babel-preset": "0.73.21",

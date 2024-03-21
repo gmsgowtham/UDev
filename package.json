@@ -94,7 +94,7 @@
 		"patch-package": "8.0.0",
 		"postinstall-postinstall": "2.1.0",
 		"react-test-renderer": "18.2.0",
-		"typescript": "5.4.2"
+		"typescript": "5.4.3"
 	},
 	"engines": {
 		"node": ">=18"

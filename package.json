@@ -23,7 +23,7 @@
 		"@react-native-community/netinfo": "11.3.1",
 		"@react-native-community/slider": "4.5.0",
 		"@react-native-firebase/app": "19.1.1",
-		"@react-native-firebase/crashlytics": "19.1.1",
+		"@react-native-firebase/crashlytics": "19.2.2",
 		"@react-navigation/bottom-tabs": "6.5.20",
 		"@react-navigation/native": "6.1.17",
 		"@react-navigation/native-stack": "6.9.26",

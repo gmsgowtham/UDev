@@ -3078,9 +3078,9 @@
   integrity sha512-bRBcb2T+I88aG74LMVHaKms2p/T8aQd8+BZ7LuuzXlRfog1bMWWn/C5i0HVuvW4RPtXQYgIlGiXVDy9Ir1So/w==
 
 "@react-native/typescript-config@^0.74.0":
-  version "0.74.76"
-  resolved "https://registry.yarnpkg.com/@react-native/typescript-config/-/typescript-config-0.74.76.tgz#e1f22fdd50926b2fcae7916c81538d23733db795"
-  integrity sha512-FmfKeOyt6jLQ9Ovq7Z1K5wCiRfndk7duvBsoe8oIXfbpdMVuK2d//d8sv7g6n/T8dTx84l/KQlIePZwo55xu4A==
+  version "0.74.87"
+  resolved "https://registry.yarnpkg.com/@react-native/typescript-config/-/typescript-config-0.74.87.tgz#909b467a468cd08ae60f2175b057fb5e630cc5f1"
+  integrity sha512-nBxot0relWwDlOmjHam0QYmArMFpcDLdJqe4aN1aeWv9KkrE4v36KT7H9h9imGkugZkMs8PJPGPo6eojD09/kA==
 
 "@react-native/virtualized-lists@0.73.4":
   version "0.73.4"

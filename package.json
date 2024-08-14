@@ -71,7 +71,7 @@
 		"@commitlint/cli": "19.2.1",
 		"@commitlint/config-conventional": "19.1.0",
 		"@react-native/babel-preset": "0.74.76",
-		"@react-native/metro-config": "0.74.76",
+		"@react-native/metro-config": "0.75.0",
 		"@react-native/typescript-config": "^0.74.0",
 		"@types/css-to-react-native": "3.0.2",
 		"@types/html-escaper": "3.0.2",

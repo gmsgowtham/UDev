@@ -3254,10 +3254,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/html-escaper@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@types/html-escaper/-/html-escaper-3.0.2.tgz#34d061611e993c67e3f054eae1912e97f6ea0169"
-  integrity sha512-A8vk09eyYzk8J/lFO4OUMKCmRN0rRzfZf4n3Olwapgox/PtTiU8zPYlL1UEkJ/WeHvV6v9Xnj3o/705PKz9r4Q==
+"@types/html-escaper@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@types/html-escaper/-/html-escaper-3.0.4.tgz#95f6a5264c09ca26f548d267d88512b12052d1d1"
+  integrity sha512-UKSaMPMXXKnq1jDj74seVikfdq5pWvoXcIgOUbwYzHuAEGiv8/juom1i/MsWBF8boFSI0uHQCSZauzr5OYnnJA==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"

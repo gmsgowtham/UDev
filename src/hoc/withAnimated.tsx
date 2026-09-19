@@ -1,12 +1,12 @@
 import React from "react";
-import Animated, { type AnimateProps } from "react-native-reanimated";
+import Animated, { type AnimatedProps } from "react-native-reanimated";
 
 // React Naive Reanimated `createAnimatedComponent` does not accept functional components
 // This is to support passing functional compoenent to `createAnimatedComponent`
 // Refer: https://github.com/callstack/react-native-paper/issues/2364
 export function withAnimated<T extends object>(
 	WrappedComponent: React.ComponentType<T>,
-): React.ComponentClass<AnimateProps<T>, unknown> {
+): React.ComponentType<AnimatedProps<T>> {
 	const displayName =
 		WrappedComponent.displayName || WrappedComponent.name || "Component";
 

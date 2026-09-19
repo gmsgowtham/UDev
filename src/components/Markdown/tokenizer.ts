@@ -1,4 +1,4 @@
-import { type CustomToken, MarkedTokenizer } from "react-native-marked";
+import { MarkedTokenizer, type Tokens } from "react-native-marked";
 import {
 	getStackoverflowEmbedURL,
 	getTweetEmbedURL,
@@ -14,8 +14,8 @@ export enum EmbedTypes {
 	Details = "details",
 }
 
-class MDTokenizer extends MarkedTokenizer<CustomToken> {
-	paragraph(this: MarkedTokenizer<CustomToken>, src: string) {
+class MDTokenizer extends MarkedTokenizer {
+	paragraph(src: string) {
 		/**
 		 * CTA buttons
 		 *
@@ -27,17 +27,18 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		if (ctaMatch && ctaMatch.length > 2) {
 			const cta = ctaMatch[1].trim();
 			const text = ctaMatch[2].trim();
-			const token: CustomToken = {
+			// NOTE: emitted as an image token with the embed kind in `title`
+			// (react-native-marked v7 has no custom-token support; the
+			// renderer intercepts these in `image()`).
+			const token: Tokens.Image = {
+				type: "image",
 				raw: ctaMatch[0],
-				identifier: EmbedTypes.CTA,
-				type: "custom",
-				args: {
-					cta,
-					text,
-				},
+				href: cta,
+				text,
 				tokens: [],
+				title: EmbedTypes.CTA,
 			};
-			return token;
+			return token as unknown as Tokens.Paragraph;
 		}
 
 		/**
@@ -53,16 +54,15 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 			/^[*]?{% (embed|link|codepen)[*]? (.*?)[*]?%}[*]?/,
 		);
 		if (embedMatch && embedMatch.length > 2) {
-			const token: CustomToken = {
-				identifier: EmbedTypes.Link,
-				type: "custom",
+			const token: Tokens.Image = {
+				type: "image",
 				raw: embedMatch[0],
+				href: embedMatch[2].trim(),
+				text: "",
 				tokens: [],
-				args: {
-					text: embedMatch[2].trim(),
-				},
+				title: EmbedTypes.Link,
 			};
-			return token;
+			return token as unknown as Tokens.Paragraph;
 		}
 
 		/**
@@ -76,14 +76,13 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 			/^[*]?{% (details|enddetails)[*]? (.*?)[*]?%}[*]?/,
 		);
 		if (detailsMatch && detailsMatch.length > 2) {
-			const token: CustomToken = {
+			// NOTE: details blocks render as nothing (a space token hits the
+			// parser default case, which returns null).
+			const token: Tokens.Space = {
+				type: "space",
 				raw: detailsMatch[0],
-				identifier: EmbedTypes.Details,
-				type: "custom",
-				args: {},
-				tokens: [],
 			};
-			return token;
+			return token as unknown as Tokens.Paragraph;
 		}
 
 		/**
@@ -95,16 +94,15 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		const youtubeMatch = src.match(/^[*]?{% (youtube)[*]? (.*?)[*]?%}[*]?/);
 		if (youtubeMatch && youtubeMatch.length > 2) {
 			const url = getYoutubeEmbedURL(youtubeMatch[2]);
-			const token: CustomToken = {
-				identifier: EmbedTypes.Youtube,
-				type: "custom",
+			const token: Tokens.Image = {
+				type: "image",
 				raw: youtubeMatch[0],
+				href: url,
+				text: "",
 				tokens: [],
-				args: {
-					text: url,
-				},
+				title: EmbedTypes.Youtube,
 			};
-			return token;
+			return token as unknown as Tokens.Paragraph;
 		}
 
 		const stackoverflowMatch = src.match(
@@ -112,31 +110,29 @@ class MDTokenizer extends MarkedTokenizer<CustomToken> {
 		);
 		if (stackoverflowMatch && stackoverflowMatch.length > 2) {
 			const url = getStackoverflowEmbedURL(stackoverflowMatch[2]);
-			const token: CustomToken = {
-				identifier: EmbedTypes.Stackoverflow,
-				type: "custom",
+			const token: Tokens.Image = {
+				type: "image",
 				raw: stackoverflowMatch[0],
+				href: url,
+				text: "",
 				tokens: [],
-				args: {
-					text: url,
-				},
+				title: EmbedTypes.Stackoverflow,
 			};
-			return token;
+			return token as unknown as Tokens.Paragraph;
 		}
 
 		const twitterMatch = src.match(/^[*]?{% (tweet)[*]? (.*?)[*]?%}[*]?/);
 		if (twitterMatch && twitterMatch.length > 2) {
 			const url = getTweetEmbedURL(twitterMatch[2]);
-			const token: CustomToken = {
-				identifier: EmbedTypes.Tweet,
-				type: "custom",
+			const token: Tokens.Image = {
+				type: "image",
 				raw: twitterMatch[0],
+				href: url,
+				text: "",
 				tokens: [],
-				args: {
-					text: url,
-				},
+				title: EmbedTypes.Tweet,
 			};
-			return token;
+			return token as unknown as Tokens.Paragraph;
 		}
 
 		return super.paragraph(src);

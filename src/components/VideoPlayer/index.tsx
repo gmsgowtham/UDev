@@ -1,4 +1,6 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useEvent } from "expo";
+import { useFocusEffect } from "expo-router";
+import { VideoView, useVideoPlayer } from "expo-video";
 import {
 	type FunctionComponent,
 	memo,
@@ -13,19 +15,13 @@ import {
 	IconButton,
 	type MD3Theme,
 } from "react-native-paper";
-import Video, {
-	type OnLoadData,
-	type OnProgressData,
-	type ReactVideoSource,
-	type VideoRef,
-} from "react-native-video";
 import { VIDEO_UI_HIDE_TIMEOUT } from "../../utils/const";
 import BottomBar from "./BottomBar";
 import Overlay from "./Overlay";
 import TopBar from "./TopBar";
 
 interface VideoPlayerProps {
-	source: ReactVideoSource;
+	source: { uri: string };
 	title: string;
 	cover: string;
 	theme: MD3Theme;
@@ -39,7 +35,6 @@ interface VideoPlayerProps {
 const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 	source,
 	title,
-	cover,
 	theme,
 	isBookmarked,
 	onBackActionPress,
@@ -47,49 +42,62 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 	onBookmarkActionPress,
 	onOpenInBrowserActionPress,
 }) => {
-	const [videoData, setVideoData] = useState<OnLoadData | undefined>();
-	const [currentTime, setCurrentTime] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState(true);
-	const [isPaused, setIsPaused] = useState(false);
 	const [isFullscreen, setIsFullScreen] = useState(false);
 	const [shouldHideActions, setShouldHideActions] = useState(false);
-	const playerRef = useRef<VideoRef | null>(null);
-	const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+		undefined,
+	);
+
+	const player = useVideoPlayer({ uri: source.uri }, (p) => {
+		p.loop = false;
+		p.play();
+	});
+
+	const { isPlaying } = useEvent(player, "playingChange") ?? {
+		isPlaying: player.playing,
+	};
+	const { currentTime = 0 } = useEvent(player, "timeUpdate") ?? {};
+	const { status } = useEvent(player, "statusChange") ?? {
+		status: player.status,
+	};
+
+	const isPaused = !isPlaying;
+	const duration = player.duration > 0 ? player.duration : undefined;
 
 	useFocusEffect(
 		useCallback(() => {
 			return () => {
-				if (timeoutRef.current) clearInterval(timeoutRef.current);
+				if (timeoutRef.current) clearTimeout(timeoutRef.current);
 			};
 		}, []),
 	);
 
 	useEffect(() => {
+		if (status === "error") {
+			setIsLoading(false);
+		}
+	}, [status]);
+
+	useEffect(() => {
 		if (isPaused) stopUIHideTimeout();
 		else startUIHideTimeout();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isPaused]);
 
 	useEffect(() => {
 		if (shouldHideActions) stopUIHideTimeout();
 		else startUIHideTimeout();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [shouldHideActions]);
 
-	const onLoad = (data: OnLoadData) => {
-		setVideoData(data);
+	const onFirstFrameRender = () => {
 		setIsLoading(false);
 		startUIHideTimeout();
 	};
 
-	const onBuffer = () => {
-		setIsLoading(true);
-	};
-
-	const onProgress = (data: OnProgressData) => {
-		setCurrentTime(data.currentTime);
-		setIsLoading(false);
-	};
-
 	const startUIHideTimeout = () => {
+		if (timeoutRef.current) clearTimeout(timeoutRef.current);
 		timeoutRef.current = setTimeout(() => {
 			setShouldHideActions(true);
 		}, VIDEO_UI_HIDE_TIMEOUT);
@@ -100,7 +108,11 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 	};
 
 	const togglePauseState = () => {
-		setIsPaused((isPaused) => !isPaused);
+		if (player.playing) {
+			player.pause();
+		} else {
+			player.play();
+		}
 	};
 
 	const toggleOverlayVisibility = () => {
@@ -114,24 +126,18 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 	};
 
 	const onSeek = (value: number) => {
-		playerRef.current?.seek(value);
+		player.currentTime = value;
 	};
 
 	return (
-		<View style={styles.container}>
-			<Video
-				ref={(ref) => {
-					playerRef.current = ref;
-				}}
-				source={source}
+		<View style={[styles.container, isFullscreen && styles.fullscreen]}>
+			<VideoView
+				player={player}
 				style={styles.video}
-				poster={cover}
-				paused={isPaused}
-				fullscreen={isFullscreen}
-				progressUpdateInterval={750}
-				onLoad={onLoad}
-				onProgress={onProgress}
-				onBuffer={onBuffer}
+				contentFit="contain"
+				nativeControls={false}
+				fullscreenOptions={{ enable: true }}
+				onFirstFrameRender={onFirstFrameRender}
 			/>
 			{isLoading ? (
 				<Overlay styles={styles.loadingOverlay} shouldHide={false}>
@@ -172,7 +178,7 @@ const VideoPlayer: FunctionComponent<VideoPlayerProps> = ({
 							title={title}
 							theme={theme}
 							currentTime={currentTime}
-							duration={videoData?.duration}
+							duration={duration}
 							isFullscreen={isFullscreen}
 							onFullScreenPress={onFullScreenPress}
 							onSeek={onSeek}
@@ -189,6 +195,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#000",
 		position: "relative",
+	},
+	fullscreen: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		zIndex: 10,
 	},
 	listContainer: {
 		margin: 8,

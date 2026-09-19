@@ -1,4 +1,4 @@
-import { MMKV } from "react-native-mmkv";
+import { type MMKV, createMMKV } from "react-native-mmkv";
 import { perfArrayConcat } from "../utils/array";
 import { logError } from "../utils/log";
 
@@ -8,7 +8,7 @@ let searchHistoryStorage: MMKV;
 
 const getSearchHistoryStorage = (): MMKV => {
 	if (!searchHistoryStorage) {
-		searchHistoryStorage = new MMKV({
+		searchHistoryStorage = createMMKV({
 			id: STORAGE_KEY,
 			encryptionKey: "SEARCH_HISTORY",
 		});

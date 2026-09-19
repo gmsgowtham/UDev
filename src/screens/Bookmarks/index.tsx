@@ -1,7 +1,6 @@
-import { useIsFocused } from "@react-navigation/native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, type ListRenderItem } from "@shopify/flash-list";
-import { type FunctionComponent, memo, useEffect, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { type FunctionComponent, memo, useCallback, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import {
 	Appbar,
@@ -15,14 +14,10 @@ import ArticleFeedItem from "../../components/ArticleFeedItem";
 import FloatingSvg from "../../components/Svg/Floating";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { type PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
-import type { StackParamList } from "../../router/types";
+import { articleRoute, videoRoute } from "../../utils/router";
 
-type BookmarksScreenProps = NativeStackScreenProps<StackParamList, "Bookmarks">;
-
-const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
-	navigation,
-}) => {
-	const isFocused = useIsFocused();
+const BookmarksScreen: FunctionComponent = () => {
+	const router = useRouter();
 	const { width } = useWindowDimensions();
 	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
 	const [dialogVisible, setDialogVisible] = useState(false);
@@ -36,45 +31,43 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 
 		switch (post.type) {
 			case "article":
-				navigation.navigate("Article", {
-					id: post.id,
-					title: post.title,
-					url: post.url,
-					cover: post.cover ?? "",
-					author: {
-						name: post.author.name,
-						image: post.author.imageUri,
-					},
-					tags: post.tags,
-					date: post.date,
-				});
+				router.push(
+					articleRoute({
+						id: post.id,
+						title: post.title,
+						url: post.url,
+						cover: post.cover ?? "",
+						authorName: post.author.name,
+						authorImage: post.author.imageUri,
+						date: post.date,
+						tags: post.tags,
+					}),
+				);
 				break;
 			case "video":
-				navigation.navigate("Video", {
-					id: post.id,
-					title: post.title,
-					url: post.url,
-					source: post.source,
-					cover: post.cover,
-					author: {
-						name: post.author.name,
-					},
-					duration: post.duration,
-				});
+				router.push(
+					videoRoute({
+						id: post.id,
+						title: post.title,
+						url: post.url,
+						source: post.source,
+						cover: post.cover,
+						authorName: post.author.name,
+						duration: post.duration,
+					}),
+				);
 
 				break;
 		}
 	};
 
-	useEffect(() => {
-		// Re-fetch bookmarks on focus
-		// To avoid out of sync state when a bookmark is cancelled
-		if (isFocused) {
+	useFocusEffect(
+		useCallback(() => {
 			setBookmarks(() => {
 				return getBookmarks();
 			});
-		}
-	}, [isFocused]);
+		}, []),
+	);
 
 	const renderItem: ListRenderItem<PostBookmarkItem> = ({
 		item,
@@ -117,7 +110,7 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 	return (
 		<View style={styles.container}>
 			<Appbar.Header elevated>
-				<Appbar.BackAction onPress={() => navigation.goBack()} />
+				<Appbar.BackAction onPress={() => router.back()} />
 				<Appbar.Content title={"Bookmarks"} />
 				<Tooltip title="Info">
 					<Appbar.Action icon={"info"} onPress={showDialog} />
@@ -137,7 +130,6 @@ const BookmarksScreen: FunctionComponent<BookmarksScreenProps> = ({
 						contentContainerStyle={styles.listContainer}
 						data={bookmarks}
 						renderItem={renderItem}
-						estimatedItemSize={200}
 						ItemSeparatorComponent={() => <View style={styles.separator} />}
 					/>
 				</View>

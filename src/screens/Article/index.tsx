@@ -1,6 +1,5 @@
 import { useNetInfo } from "@react-native-community/netinfo";
-import { useFocusEffect } from "@react-navigation/native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import {
 	Fragment,
 	type FunctionComponent,
@@ -36,19 +35,25 @@ import {
 	removeBookmark,
 	savePostToBookmarks,
 } from "../../mmkv/bookmark";
-import type { StackParamList } from "../../router/types";
 import useArticleStore from "../../store/articles/article";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
-
-type Props = NativeStackScreenProps<StackParamList, "Article">;
+import { firstParam, parseIdParam, parseTagsParam } from "../../utils/router";
 
 const AnimatedAppbarContent = withAnimated(Appbar.Content);
 
-const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
-	const { params } = route;
-	const { id, title, url, cover, author, tags, date, organizationName } =
-		params;
+const ArticleScreen: FunctionComponent = () => {
+	const params = useLocalSearchParams();
+	const router = useRouter();
+	const id = parseIdParam(params.id);
+	const title = firstParam(params.title);
+	const url = firstParam(params.url);
+	const cover = firstParam(params.cover);
+	const authorName = firstParam(params.authorName);
+	const authorImage = firstParam(params.authorImage);
+	const date = firstParam(params.date);
+	const organizationName = firstParam(params.organizationName) || undefined;
+	const tags = parseTagsParam(params.tags);
 	const theme = useTheme();
 	const netInfo = useNetInfo();
 	const _isPostBookmarked = useMemo(() => {
@@ -137,7 +142,7 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 	);
 
 	const onBackActionPress = () => {
-		navigation.goBack();
+		router.back();
 	};
 
 	const onShareActionPress = async () => {
@@ -289,8 +294,8 @@ const ArticleScreen: FunctionComponent<Props> = ({ route, navigation }) => {
 				title={title}
 				cover={cover}
 				author={{
-					name: author.name,
-					imageUri: author.image,
+					name: authorName,
+					imageUri: authorImage,
 				}}
 				organizationName={organizationName}
 				dateReadable={date}

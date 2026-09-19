@@ -1,12 +1,6 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { FlashList } from "@shopify/flash-list";
-import {
-	type FunctionComponent,
-	type RefObject,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import type { FlashListRef } from "@shopify/flash-list";
+import { useRouter } from "expo-router";
+import { type FunctionComponent, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import type { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
@@ -19,15 +13,14 @@ import {
 	addItemToRecentSearchHistory,
 	getRecentSearchHistory,
 } from "../../mmkv/searchHistory";
-import type { StackParamList } from "../../router/types";
 import useArticleFeedStore from "../../store/articles/feed";
+import { articleRoute } from "../../utils/router";
 
-type Props = NativeStackScreenProps<StackParamList, "Search">;
-
-const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
-	const listRef = useRef(null);
+const SearchScreen: FunctionComponent = () => {
+	const router = useRouter();
+	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
 	const searchHistoryItems = getRecentSearchHistory();
-	const searchRef = useRef() as RefObject<TextInput>;
+	const searchRef = useRef<TextInput>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 	const {
 		articles,
@@ -58,7 +51,7 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 
 	const onBackIconPress = () => {
 		reset();
-		navigation.goBack();
+		router.back();
 	};
 
 	const onSubmit = () => {
@@ -70,7 +63,7 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 		searchArticles(q, 1);
 		addItemToRecentSearchHistory(q);
 		if (articles.length > 0 && listRef.current) {
-			(listRef.current as FlashList<ApiArticleFeedItem>).scrollToIndex({
+			void listRef.current.scrollToIndex({
 				animated: true,
 				index: 0,
 			});
@@ -86,19 +79,19 @@ const SearchScreen: FunctionComponent<Props> = ({ navigation }) => {
 		if (!article) {
 			return;
 		}
-		navigation.navigate("Article", {
-			id: article.id,
-			title: article.title,
-			url: article.canonical_url,
-			cover: article.cover_image ?? "",
-			author: {
-				name: article.user.name,
-				image: article.user.profile_image_90,
-			},
-			date: article.readable_publish_date,
-			tags: article.tag_list,
-			organizationName: article.organization?.name,
-		});
+		router.push(
+			articleRoute({
+				id: article.id,
+				title: article.title,
+				url: article.canonical_url,
+				cover: article.cover_image ?? "",
+				authorName: article.user.name,
+				authorImage: article.user.profile_image_90,
+				date: article.readable_publish_date,
+				tags: article.tag_list,
+				organizationName: article.organization?.name,
+			}),
+		);
 	};
 
 	const onEndReached = () => {

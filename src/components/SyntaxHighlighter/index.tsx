@@ -1,4 +1,4 @@
-import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from "expo-clipboard";
 import React, { type FunctionComponent, memo, useMemo } from "react";
 import {
 	StyleSheet,
@@ -38,8 +38,8 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 }) => {
 	const colorScheme = useUserColorScheme();
 
-	const onCopyCodePress = () => {
-		Clipboard.setString(code);
+	const onCopyCodePress = async () => {
+		await Clipboard.setStringAsync(code);
 		ToastAndroid.showWithGravity(
 			HELP_TEXT.CODE_COPY,
 			ToastAndroid.SHORT,

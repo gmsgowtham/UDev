@@ -1,6 +1,6 @@
 import { useNetInfo } from "@react-native-community/netinfo";
-import { useScrollToTop } from "@react-navigation/native";
-import { type NavigationProp, useNavigation } from "@react-navigation/native";
+import type { FlashListRef } from "@shopify/flash-list";
+import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
 	memo,
@@ -15,7 +15,7 @@ import ArticleFeed from "../../../components/ArticleFeed";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
 import NetworkBanner from "../../../components/NetworkBanner";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
-import type { StackParamList } from "../../../router/types";
+import { articleRoute } from "../../../utils/router";
 
 interface ArticleFeedProps {
 	title: string;
@@ -37,10 +37,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	loading,
 	error,
 }) => {
-	const listRef = useRef(null);
-
-	// Ref: https://reactnavigation.org/docs/use-scroll-to-top
-	useScrollToTop(listRef);
+	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
 
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
@@ -49,26 +46,26 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 		fetchArticles(page);
 	}, [page, fetchArticles]);
 
-	const navigation = useNavigation<NavigationProp<StackParamList>>();
+	const router = useRouter();
 
 	const onItemClick = (id: number) => {
 		const article = articles.find((a) => a.id === id);
 		if (!article) {
 			return;
 		}
-		navigation.navigate("Article", {
-			id: article.id,
-			title: article.title,
-			url: article.url,
-			cover: article.cover_image ?? "",
-			author: {
-				name: article.user.name,
-				image: article.user.profile_image_90,
-			},
-			date: article.readable_publish_date,
-			tags: article.tag_list,
-			organizationName: article.organization?.name,
-		});
+		router.push(
+			articleRoute({
+				id: article.id,
+				title: article.title,
+				url: article.url,
+				cover: article.cover_image ?? "",
+				authorName: article.user.name,
+				authorImage: article.user.profile_image_90,
+				date: article.readable_publish_date,
+				tags: article.tag_list,
+				organizationName: article.organization?.name,
+			}),
+		);
 	};
 
 	const onEndReached = () => {

@@ -1,6 +1,7 @@
 import {
 	FlashList,
 	type FlashListProps,
+	type FlashListRef,
 	type ListRenderItem,
 } from "@shopify/flash-list";
 import { forwardRef, memo } from "react";
@@ -11,13 +12,10 @@ import ArticleFeedItem from "../ArticleFeedItem";
 type Props = {
 	data: ApiArticleFeedItem[];
 	onItemClick: (id: number) => void;
-	listProps?: Omit<
-		FlashListProps<ApiArticleFeedItem>,
-		"renderItem" | "data" | "estimatedItemSize"
-	>;
+	listProps?: Omit<FlashListProps<ApiArticleFeedItem>, "renderItem" | "data">;
 };
 
-const ArticleFeed = forwardRef<FlashList<ApiArticleFeedItem>, Props>(
+const ArticleFeed = forwardRef<FlashListRef<ApiArticleFeedItem>, Props>(
 	(props, ref) => {
 		const { data, onItemClick, listProps = {} } = props;
 
@@ -49,7 +47,6 @@ const ArticleFeed = forwardRef<FlashList<ApiArticleFeedItem>, Props>(
 				{...listProps}
 				data={data}
 				renderItem={renderItem}
-				estimatedItemSize={377}
 				ItemSeparatorComponent={() => <View style={styles.separator} />}
 			/>
 		);

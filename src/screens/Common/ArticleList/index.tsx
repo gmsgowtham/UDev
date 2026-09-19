@@ -5,47 +5,45 @@ import {
 	type FunctionComponent,
 	memo,
 	useCallback,
-	useEffect,
 	useRef,
 	useState,
 } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ToastAndroid, View } from "react-native";
 import type { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
 import NetworkBanner from "../../../components/NetworkBanner";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
+import { HELP_TEXT } from "../../../utils/const";
 import { articleRoute } from "../../../utils/router";
 
 interface ArticleFeedProps {
 	title: string;
 	articles: ApiArticleFeedItem[];
-	fetchArticles: (page: number) => void;
-	refreshing: boolean;
-	refreshArticles: () => void;
-	page: number;
-	loading: boolean;
-	error: boolean;
+	fetchNextPage: () => void;
+	hasNextPage: boolean;
+	isFetchingNextPage: boolean;
+	isPending: boolean;
+	isRefetching: boolean;
+	refetch: () => Promise<{ isError: boolean }>;
+	isError: boolean;
 }
 
 const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	articles,
-	fetchArticles,
-	refreshing,
-	refreshArticles,
-	page,
-	loading,
-	error,
+	fetchNextPage,
+	hasNextPage,
+	isFetchingNextPage,
+	isPending,
+	isRefetching,
+	refetch,
+	isError,
 }) => {
 	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
 
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
-
-	useEffect(() => {
-		fetchArticles(page);
-	}, [page, fetchArticles]);
 
 	const router = useRouter();
 
@@ -74,14 +72,25 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	const onEndReached = useCallback(() => {
 		if (articles.length < 1) return;
+		if (!hasNextPage || isFetchingNextPage) return;
 
-		const next = page + 1;
-		fetchArticles(next);
-	}, [articles.length, page, fetchArticles]);
+		fetchNextPage();
+	}, [articles.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+	const onRefresh = useCallback(async () => {
+		const result = await refetch();
+		if (!result.isError) {
+			ToastAndroid.showWithGravity(
+				HELP_TEXT.FEED_REFRESHED,
+				ToastAndroid.SHORT,
+				ToastAndroid.TOP,
+			);
+		}
+	}, [refetch]);
 
 	const renderFooter = useCallback(
-		() => <ListFooterLoader loading={loading} />,
-		[loading],
+		() => <ListFooterLoader loading={isFetchingNextPage} />,
+		[isFetchingNextPage],
 	);
 
 	const onCloseBanner = useCallback(() => setShowNetworkBanner(false), []);
@@ -90,11 +99,11 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 		<View style={styles.container}>
 			<HomeAppbar />
 			<NetworkBanner
-				visible={error && !netInfo.isConnected && showNetworkBanner}
+				visible={isError && !netInfo.isConnected && showNetworkBanner}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
-			{loading && articles.length < 1 ? (
+			{isPending && articles.length < 1 ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
@@ -103,8 +112,8 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 						data={articles}
 						onItemClick={onItemClick}
 						listProps={{
-							refreshing,
-							onRefresh: refreshArticles,
+							refreshing: isRefetching,
+							onRefresh: onRefresh,
 							onEndReached: onEndReached,
 							onEndReachedThreshold: 0.75,
 							getItemType: (item) => item.type_of,

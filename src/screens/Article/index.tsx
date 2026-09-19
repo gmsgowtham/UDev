@@ -1,5 +1,5 @@
 import { useNetInfo } from "@react-native-community/netinfo";
-import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import {
 	Fragment,
 	type FunctionComponent,
@@ -24,6 +24,7 @@ import {
 	useAnimatedStyle,
 	useSharedValue,
 } from "react-native-reanimated";
+import { useArticleDetail } from "../../api/hooks";
 import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
 import RenderMarkdownAnimatedFlatList from "../../components/Markdown/AnimatedFlatList";
 import NetworkBanner from "../../components/NetworkBanner";
@@ -35,7 +36,6 @@ import {
 	removeBookmark,
 	savePostToBookmarks,
 } from "../../mmkv/bookmark";
-import useArticleStore from "../../store/articles/article";
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
 import { firstParam, parseIdParam, parseTagsParam } from "../../utils/router";
@@ -121,25 +121,7 @@ const ArticleScreen: FunctionComponent = () => {
 		};
 	});
 
-	const { article, fetchArticle, resetArticle, error } = useArticleStore(
-		(state) => ({
-			article: state.article,
-			fetchArticle: state.fetchArticle,
-			resetArticle: state.reset,
-			error: state.error,
-		}),
-	);
-
-	useFocusEffect(
-		useCallback(() => {
-			fetchArticle(id);
-
-			return () => {
-				// Resets article state
-				resetArticle();
-			};
-		}, [id, resetArticle, fetchArticle]),
-	);
+	const { data: article, isError: error } = useArticleDetail(id);
 
 	const onBackActionPress = useCallback(() => {
 		router.back();

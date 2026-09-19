@@ -10,8 +10,9 @@ import {
 } from "react";
 import { View } from "react-native";
 import type { TextInput } from "react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ToastAndroid } from "react-native";
 import { List, Searchbar } from "react-native-paper";
+import { useSearchArticles } from "../../api/hooks";
 import type { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeed from "../../components/ArticleFeed";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
@@ -20,7 +21,7 @@ import {
 	addItemToRecentSearchHistory,
 	getRecentSearchHistory,
 } from "../../mmkv/searchHistory";
-import useArticleFeedStore from "../../store/articles/feed";
+import { HELP_TEXT } from "../../utils/const";
 import { articleRoute } from "../../utils/router";
 
 const SearchScreen: FunctionComponent = () => {
@@ -31,23 +32,21 @@ const SearchScreen: FunctionComponent = () => {
 	);
 	const searchRef = useRef<TextInput>(null);
 	const [searchQuery, setSearchQuery] = useState("");
+	const [submittedQuery, setSubmittedQuery] = useState("");
 	const {
-		articles,
-		searchArticles,
-		refreshing,
-		refreshSearch,
-		page,
-		loading,
-		reset,
-	} = useArticleFeedStore((state) => ({
-		articles: state.search.articles,
-		searchArticles: state.search.searchArticles,
-		refreshing: state.search.refreshing,
-		refreshSearch: state.search.refreshSearch,
-		page: state.search.page,
-		loading: state.search.loading,
-		reset: state.search.reset,
-	}));
+		data,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+		isPending,
+		isFetching,
+		isRefetching,
+		refetch,
+	} = useSearchArticles(submittedQuery);
+
+	const articles = useMemo(() => data?.pages.flat() ?? [], [data]);
+	const isInitialLoading =
+		submittedQuery.length > 0 && isPending && articles.length < 1;
 
 	useEffect(() => {
 		focusSearchInput();
@@ -58,9 +57,8 @@ const SearchScreen: FunctionComponent = () => {
 	}, []);
 
 	const onBackIconPress = useCallback(() => {
-		reset();
 		router.back();
-	}, [reset, router]);
+	}, [router]);
 
 	const onSubmit = useCallback(() => {
 		if (searchQuery.trim().length < 1) {
@@ -68,7 +66,7 @@ const SearchScreen: FunctionComponent = () => {
 		}
 
 		const q = searchQuery.trim();
-		searchArticles(q, 1);
+		setSubmittedQuery(q);
 		addItemToRecentSearchHistory(q);
 		setSearchHistoryItems(getRecentSearchHistory());
 		if (articles.length > 0 && listRef.current) {
@@ -77,11 +75,18 @@ const SearchScreen: FunctionComponent = () => {
 				index: 0,
 			});
 		}
-	}, [searchQuery, searchArticles, articles.length]);
+	}, [searchQuery, articles.length]);
 
-	const refreshArticles = useCallback(() => {
-		refreshSearch(searchQuery);
-	}, [refreshSearch, searchQuery]);
+	const refreshArticles = useCallback(async () => {
+		const result = await refetch();
+		if (!result.isError) {
+			ToastAndroid.showWithGravity(
+				HELP_TEXT.FEED_REFRESHED,
+				ToastAndroid.SHORT,
+				ToastAndroid.TOP,
+			);
+		}
+	}, [refetch]);
 
 	const onItemClick = useCallback(
 		(id: number) => {
@@ -108,35 +113,32 @@ const SearchScreen: FunctionComponent = () => {
 
 	const onEndReached = useCallback(() => {
 		if (articles.length < 1) return;
+		if (!hasNextPage || isFetchingNextPage) return;
 
-		const next = page + 1;
-		searchArticles(searchQuery, next);
-	}, [articles.length, page, searchArticles, searchQuery]);
+		fetchNextPage();
+	}, [articles.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
 	const focusSearchInput = useCallback(() => {
 		searchRef.current?.focus();
 	}, []);
 
-	const onSearchHistoryItemPress = useCallback(
-		(item: string) => {
-			setSearchQuery(item);
-			searchArticles(item, 1);
-			addItemToRecentSearchHistory(item);
-			setSearchHistoryItems(getRecentSearchHistory());
-		},
-		[searchArticles],
-	);
+	const onSearchHistoryItemPress = useCallback((item: string) => {
+		setSearchQuery(item);
+		setSubmittedQuery(item);
+		addItemToRecentSearchHistory(item);
+		setSearchHistoryItems(getRecentSearchHistory());
+	}, []);
 
 	const renderFooter = useCallback(
-		() => <ListFooterLoader loading={loading} />,
-		[loading],
+		() => <ListFooterLoader loading={isFetchingNextPage} />,
+		[isFetchingNextPage],
 	);
 
 	const renderHistoryIcon = useCallback(() => <List.Icon icon="history" />, []);
 
 	const listProps = useMemo(
 		() => ({
-			refreshing,
+			refreshing: isRefetching,
 			onRefresh: refreshArticles,
 			onEndReached: onEndReached,
 			onEndReachedThreshold: 0.75 as const,
@@ -144,7 +146,7 @@ const SearchScreen: FunctionComponent = () => {
 			ListFooterComponent: renderFooter,
 			contentContainerStyle: styles.listContainer,
 		}),
-		[refreshing, refreshArticles, onEndReached, renderFooter],
+		[isRefetching, refreshArticles, onEndReached, renderFooter],
 	);
 
 	return (
@@ -159,10 +161,12 @@ const SearchScreen: FunctionComponent = () => {
 				placeholder="Search articles"
 				onChangeText={onSearchTextChange}
 				value={searchQuery}
-				loading={loading}
+				loading={submittedQuery.length > 0 && isFetching}
 				onClearIconPress={focusSearchInput}
 			/>
-			{!loading && articles.length < 1 && searchHistoryItems.length > 0 ? (
+			{!isInitialLoading &&
+			articles.length < 1 &&
+			searchHistoryItems.length > 0 ? (
 				<List.Section>
 					<List.Subheader>History</List.Subheader>
 					<View style={{ paddingHorizontal: 12 }}>
@@ -177,7 +181,7 @@ const SearchScreen: FunctionComponent = () => {
 					</View>
 				</List.Section>
 			) : null}
-			{loading && articles.length < 1 ? (
+			{isInitialLoading ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>

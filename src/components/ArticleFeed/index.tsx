@@ -4,7 +4,7 @@ import {
 	type FlashListRef,
 	type ListRenderItem,
 } from "@shopify/flash-list";
-import { forwardRef, memo } from "react";
+import { forwardRef, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import type { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeedItem from "../ArticleFeedItem";
@@ -15,30 +15,35 @@ type Props = {
 	listProps?: Omit<FlashListProps<ApiArticleFeedItem>, "renderItem" | "data">;
 };
 
+const FeedSeparator = () => <View style={styles.separator} />;
+
+const keyExtractor = (item: ApiArticleFeedItem) => String(item.id);
+
 const ArticleFeed = forwardRef<FlashListRef<ApiArticleFeedItem>, Props>(
 	(props, ref) => {
 		const { data, onItemClick, listProps = {} } = props;
 
-		const renderItem: ListRenderItem<ApiArticleFeedItem> = ({
-			item,
-		}: { item: ApiArticleFeedItem }) => {
-			return (
-				<ArticleFeedItem
-					id={item.id}
-					title={item.title}
-					description={item.description}
-					dateReadable={item.readable_publish_date}
-					coverImageUri={item.cover_image}
-					author={{
-						name: item.user.name,
-						imageUri: item.user.profile_image_90,
-					}}
-					onItemClick={onItemClick}
-					tags={item.tag_list}
-					organizationName={item.organization?.name}
-				/>
-			);
-		};
+		const renderItem: ListRenderItem<ApiArticleFeedItem> = useCallback(
+			({ item }: { item: ApiArticleFeedItem }) => {
+				return (
+					<ArticleFeedItem
+						id={item.id}
+						title={item.title}
+						description={item.description}
+						dateReadable={item.readable_publish_date}
+						coverImageUri={item.cover_image}
+						author={{
+							name: item.user.name,
+							imageUri: item.user.profile_image_90,
+						}}
+						onItemClick={onItemClick}
+						tags={item.tag_list}
+						organizationName={item.organization?.name}
+					/>
+				);
+			},
+			[onItemClick],
+		);
 
 		return (
 			<FlashList
@@ -47,7 +52,8 @@ const ArticleFeed = forwardRef<FlashListRef<ApiArticleFeedItem>, Props>(
 				{...listProps}
 				data={data}
 				renderItem={renderItem}
-				ItemSeparatorComponent={() => <View style={styles.separator} />}
+				keyExtractor={keyExtractor}
+				ItemSeparatorComponent={FeedSeparator}
 			/>
 		);
 	},

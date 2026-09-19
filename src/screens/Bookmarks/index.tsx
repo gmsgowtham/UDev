@@ -16,50 +16,57 @@ import VideoFeedItem from "../../components/VideoFeedItem";
 import { type PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
 import { articleRoute, videoRoute } from "../../utils/router";
 
+const FeedSeparator = () => <View style={styles.separator} />;
+
+const keyExtractor = (item: PostBookmarkItem) => String(item.id);
+
 const BookmarksScreen: FunctionComponent = () => {
 	const router = useRouter();
 	const { width } = useWindowDimensions();
 	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
 	const [dialogVisible, setDialogVisible] = useState(false);
 
-	const showDialog = () => setDialogVisible(true);
-	const hideDialog = () => setDialogVisible(false);
+	const showDialog = useCallback(() => setDialogVisible(true), []);
+	const hideDialog = useCallback(() => setDialogVisible(false), []);
 
-	const onItemClick = (id: number) => {
-		const post = bookmarks.find((b) => b.id === id);
-		if (!post) return;
+	const onItemClick = useCallback(
+		(id: number) => {
+			const post = bookmarks.find((b) => b.id === id);
+			if (!post) return;
 
-		switch (post.type) {
-			case "article":
-				router.push(
-					articleRoute({
-						id: post.id,
-						title: post.title,
-						url: post.url,
-						cover: post.cover ?? "",
-						authorName: post.author.name,
-						authorImage: post.author.imageUri,
-						date: post.date,
-						tags: post.tags,
-					}),
-				);
-				break;
-			case "video":
-				router.push(
-					videoRoute({
-						id: post.id,
-						title: post.title,
-						url: post.url,
-						source: post.source,
-						cover: post.cover,
-						authorName: post.author.name,
-						duration: post.duration,
-					}),
-				);
+			switch (post.type) {
+				case "article":
+					router.push(
+						articleRoute({
+							id: post.id,
+							title: post.title,
+							url: post.url,
+							cover: post.cover ?? "",
+							authorName: post.author.name,
+							authorImage: post.author.imageUri,
+							date: post.date,
+							tags: post.tags,
+						}),
+					);
+					break;
+				case "video":
+					router.push(
+						videoRoute({
+							id: post.id,
+							title: post.title,
+							url: post.url,
+							source: post.source,
+							cover: post.cover,
+							authorName: post.author.name,
+							duration: post.duration,
+						}),
+					);
 
-				break;
-		}
-	};
+					break;
+			}
+		},
+		[bookmarks, router],
+	);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -69,48 +76,51 @@ const BookmarksScreen: FunctionComponent = () => {
 		}, []),
 	);
 
-	const renderItem: ListRenderItem<PostBookmarkItem> = ({
-		item,
-	}: { item: PostBookmarkItem }) => {
-		switch (item.type) {
-			case "article": {
-				return (
-					<ArticleFeedItem
-						id={item.id}
-						title={item.title}
-						author={{
-							name: item.author.name,
-							imageUri: item.author.imageUri,
-						}}
-						coverImageUri={item.cover}
-						description=""
-						dateReadable={item.date}
-						onItemClick={onItemClick}
-						tags={item.tags}
-					/>
-				);
+	const renderItem: ListRenderItem<PostBookmarkItem> = useCallback(
+		({ item }: { item: PostBookmarkItem }) => {
+			switch (item.type) {
+				case "article": {
+					return (
+						<ArticleFeedItem
+							id={item.id}
+							title={item.title}
+							author={{
+								name: item.author.name,
+								imageUri: item.author.imageUri,
+							}}
+							coverImageUri={item.cover}
+							description=""
+							dateReadable={item.date}
+							onItemClick={onItemClick}
+							tags={item.tags}
+						/>
+					);
+				}
+				case "video": {
+					return (
+						<VideoFeedItem
+							id={item.id}
+							title={item.title}
+							duration={item.duration}
+							coverImageUri={item.cover}
+							author={{
+								name: item.author.name,
+							}}
+							onItemClick={onItemClick}
+						/>
+					);
+				}
 			}
-			case "video": {
-				return (
-					<VideoFeedItem
-						id={item.id}
-						title={item.title}
-						duration={item.duration}
-						coverImageUri={item.cover}
-						author={{
-							name: item.author.name,
-						}}
-						onItemClick={onItemClick}
-					/>
-				);
-			}
-		}
-	};
+		},
+		[onItemClick],
+	);
+
+	const onBackPress = useCallback(() => router.back(), [router]);
 
 	return (
 		<View style={styles.container}>
 			<Appbar.Header elevated>
-				<Appbar.BackAction onPress={() => router.back()} />
+				<Appbar.BackAction onPress={onBackPress} />
 				<Appbar.Content title={"Bookmarks"} />
 				<Tooltip title="Info">
 					<Appbar.Action icon={"info"} onPress={showDialog} />
@@ -130,7 +140,8 @@ const BookmarksScreen: FunctionComponent = () => {
 						contentContainerStyle={styles.listContainer}
 						data={bookmarks}
 						renderItem={renderItem}
-						ItemSeparatorComponent={() => <View style={styles.separator} />}
+						keyExtractor={keyExtractor}
+						ItemSeparatorComponent={FeedSeparator}
 					/>
 				</View>
 			)}

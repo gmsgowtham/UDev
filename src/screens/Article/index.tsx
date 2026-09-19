@@ -25,7 +25,7 @@ import {
 	useSharedValue,
 } from "react-native-reanimated";
 import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
-import { RenderMarkdownAnimatedFlatList } from "../../components/Markdown";
+import RenderMarkdownAnimatedFlatList from "../../components/Markdown/AnimatedFlatList";
 import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
 import { withAnimated } from "../../hoc/withAnimated";
@@ -141,11 +141,11 @@ const ArticleScreen: FunctionComponent = () => {
 		}, [id, resetArticle, fetchArticle]),
 	);
 
-	const onBackActionPress = () => {
+	const onBackActionPress = useCallback(() => {
 		router.back();
-	};
+	}, [router]);
 
-	const onShareActionPress = async () => {
+	const onShareActionPress = useCallback(async () => {
 		try {
 			await Share.share({
 				message: url,
@@ -155,13 +155,13 @@ const ArticleScreen: FunctionComponent = () => {
 		} catch (e) {
 			logError(e as Error, "fn: onShareActionPress exception");
 		}
-	};
+	}, [url, title]);
 
-	const onOpenInBrowserActionPress = async () => {
+	const onOpenInBrowserActionPress = useCallback(async () => {
 		await Linking.openURL(url);
-	};
+	}, [url]);
 
-	const onBookmarkActionPress = () => {
+	const onBookmarkActionPress = useCallback(() => {
 		if (isPostBookmarked) {
 			setIsPostBookmarked(false);
 			removeBookmark(id);
@@ -196,11 +196,11 @@ const ArticleScreen: FunctionComponent = () => {
 				ToastAndroid.TOP,
 			);
 		}
-	};
+	}, [isPostBookmarked, id, article, title, url]);
 
-	const onCoverLayout = (event: LayoutChangeEvent) => {
+	const onCoverLayout = useCallback((event: LayoutChangeEvent) => {
 		setHeaderHeight(Math.round(event.nativeEvent.layout.height));
-	};
+	}, []);
 
 	const renderContent = useCallback(() => {
 		if (article?.body_markdown && headerHeight > 0) {

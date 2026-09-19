@@ -6,6 +6,14 @@ const { getDefaultConfig } = require("expo/metro-config");
  *
  * @type {import('expo/metro-config').MetroConfig}
  */
-const config = {};
+const config = getDefaultConfig(__dirname);
 
-module.exports = getDefaultConfig(__dirname, config);
+// bundle-barrel-exports: enable experimental import support so unused
+// re-exports are dropped (Expo SDK 52+ tree-shaking companion).
+config.transformer.getTransformOptions = async () => ({
+	transform: {
+		experimentalImportSupport: true,
+	},
+});
+
+module.exports = config;

@@ -3,7 +3,7 @@ import type { FunctionComponent } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Appbar } from "react-native-paper";
-import { RenderMarkdownDefault } from "../../components/Markdown";
+import RenderMarkdownDefault from "../../components/Markdown/Default";
 import TERM_AND_CONDITION_MARKDOWN from "./md";
 
 const TermsAndConditionsScreen: FunctionComponent = () => {

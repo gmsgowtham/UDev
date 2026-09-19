@@ -1,6 +1,13 @@
 import type { FlashListRef } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
-import { type FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+	type FunctionComponent,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { View } from "react-native";
 import type { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
@@ -19,7 +26,9 @@ import { articleRoute } from "../../utils/router";
 const SearchScreen: FunctionComponent = () => {
 	const router = useRouter();
 	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
-	const searchHistoryItems = getRecentSearchHistory();
+	const [searchHistoryItems, setSearchHistoryItems] = useState<string[]>(() =>
+		getRecentSearchHistory(),
+	);
 	const searchRef = useRef<TextInput>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 	const {
@@ -37,7 +46,6 @@ const SearchScreen: FunctionComponent = () => {
 		refreshSearch: state.search.refreshSearch,
 		page: state.search.page,
 		loading: state.search.loading,
-		error: state.search.error,
 		reset: state.search.reset,
 	}));
 
@@ -45,16 +53,16 @@ const SearchScreen: FunctionComponent = () => {
 		focusSearchInput();
 	}, []);
 
-	const onSearchTextChange = (query: string) => {
+	const onSearchTextChange = useCallback((query: string) => {
 		setSearchQuery(query);
-	};
+	}, []);
 
-	const onBackIconPress = () => {
+	const onBackIconPress = useCallback(() => {
 		reset();
 		router.back();
-	};
+	}, [reset, router]);
 
-	const onSubmit = () => {
+	const onSubmit = useCallback(() => {
 		if (searchQuery.trim().length < 1) {
 			return;
 		}
@@ -62,54 +70,82 @@ const SearchScreen: FunctionComponent = () => {
 		const q = searchQuery.trim();
 		searchArticles(q, 1);
 		addItemToRecentSearchHistory(q);
+		setSearchHistoryItems(getRecentSearchHistory());
 		if (articles.length > 0 && listRef.current) {
 			void listRef.current.scrollToIndex({
 				animated: true,
 				index: 0,
 			});
 		}
-	};
+	}, [searchQuery, searchArticles, articles.length]);
 
-	const refreshArticles = () => {
+	const refreshArticles = useCallback(() => {
 		refreshSearch(searchQuery);
-	};
+	}, [refreshSearch, searchQuery]);
 
-	const onItemClick = (id: number) => {
-		const article = articles.find((a) => a.id === id);
-		if (!article) {
-			return;
-		}
-		router.push(
-			articleRoute({
-				id: article.id,
-				title: article.title,
-				url: article.canonical_url,
-				cover: article.cover_image ?? "",
-				authorName: article.user.name,
-				authorImage: article.user.profile_image_90,
-				date: article.readable_publish_date,
-				tags: article.tag_list,
-				organizationName: article.organization?.name,
-			}),
-		);
-	};
+	const onItemClick = useCallback(
+		(id: number) => {
+			const article = articles.find((a) => a.id === id);
+			if (!article) {
+				return;
+			}
+			router.push(
+				articleRoute({
+					id: article.id,
+					title: article.title,
+					url: article.canonical_url,
+					cover: article.cover_image ?? "",
+					authorName: article.user.name,
+					authorImage: article.user.profile_image_90,
+					date: article.readable_publish_date,
+					tags: article.tag_list,
+					organizationName: article.organization?.name,
+				}),
+			);
+		},
+		[articles, router],
+	);
 
-	const onEndReached = () => {
+	const onEndReached = useCallback(() => {
 		if (articles.length < 1) return;
 
 		const next = page + 1;
 		searchArticles(searchQuery, next);
-	};
+	}, [articles.length, page, searchArticles, searchQuery]);
 
-	const focusSearchInput = () => {
+	const focusSearchInput = useCallback(() => {
 		searchRef.current?.focus();
-	};
+	}, []);
 
-	const onSearchHistoryItemPress = (item: string) => {
-		setSearchQuery(item);
-		searchArticles(item, 1);
-		addItemToRecentSearchHistory(item);
-	};
+	const onSearchHistoryItemPress = useCallback(
+		(item: string) => {
+			setSearchQuery(item);
+			searchArticles(item, 1);
+			addItemToRecentSearchHistory(item);
+			setSearchHistoryItems(getRecentSearchHistory());
+		},
+		[searchArticles],
+	);
+
+	const renderFooter = useCallback(
+		() => <ListFooterLoader loading={loading} />,
+		[loading],
+	);
+
+	const renderHistoryIcon = useCallback(() => <List.Icon icon="history" />, []);
+
+	const listProps = useMemo(
+		() => ({
+			refreshing,
+			onRefresh: refreshArticles,
+			onEndReached: onEndReached,
+			onEndReachedThreshold: 0.75 as const,
+			getItemType: (item: ApiArticleFeedItem) => item.type_of,
+			ListFooterComponent: renderFooter,
+			contentContainerStyle: styles.listContainer,
+		}),
+		[refreshing, refreshArticles, onEndReached, renderFooter],
+	);
 
 	return (
 		<View style={styles.container}>
@@ -134,7 +170,7 @@ const SearchScreen: FunctionComponent = () => {
 							<List.Item
 								key={`search-history-item-${history}`}
 								title={history}
-								left={() => <List.Icon icon="history" />}
+								left={renderHistoryIcon}
 								onPress={() => onSearchHistoryItemPress(history)}
 							/>
 						))}
@@ -149,15 +185,7 @@ const SearchScreen: FunctionComponent = () => {
 						ref={listRef}
 						data={articles}
 						onItemClick={onItemClick}
-						listProps={{
-							refreshing,
-							onRefresh: refreshArticles,
-							onEndReached: onEndReached,
-							onEndReachedThreshold: 0.75,
-							getItemType: (item) => item.type_of,
-							ListFooterComponent: () => <ListFooterLoader loading={loading} />,
-							contentContainerStyle: styles.listContainer,
-						}}
+						listProps={listProps}
 					/>
 				</View>
 			)}

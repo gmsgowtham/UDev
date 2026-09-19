@@ -26,7 +26,16 @@
 				}
 			],
 			"expo-font",
-			"expo-build-properties",
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"enableMinifyInReleaseBuilds": true,
+						"enableShrinkResourcesInReleaseBuilds": true,
+						"enableBundleCompression": false
+					}
+				}
+			],
 			"expo-video",
 			"expo-image",
 			"@react-native-firebase/app",

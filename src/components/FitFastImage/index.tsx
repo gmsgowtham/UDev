@@ -25,8 +25,24 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 	const [aspectRatio, setAspectRatio] = useState<number>(DEFAULT_ASPECT_RATIO);
 
 	useEffect(() => {
-		fetchOriginalSizeFromRemoteImage();
-	}, []);
+		let mounted = true;
+		Image.getSize(
+			uri,
+			(width: number, height: number) => {
+				if (mounted && width > 0 && height > 0) {
+					setAspectRatio(width / height);
+				}
+			},
+			() => {
+				if (mounted) {
+					setAspectRatio(DEFAULT_ASPECT_RATIO);
+				}
+			},
+		);
+		return () => {
+			mounted = false;
+		};
+	}, [uri]);
 
 	const onLoadStart = () => {
 		if (isFirstLoad.current) {
@@ -41,12 +57,6 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 		}
 	};
 
-	const fetchOriginalSizeFromRemoteImage = () => {
-		Image.getSize(uri, (width: number, height: number) => {
-			setAspectRatio(width / height);
-		});
-	};
-
 	return (
 		<View style={[styles.image, { aspectRatio }]}>
 			<ExpoImage
@@ -58,7 +68,10 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 				contentFit="contain"
 				accessibilityLabel={label}
 				aria-label={label}
+				cachePolicy="memory-disk"
+				recyclingKey={uri}
 				placeholder={require("./../../../assets/image-fallback.png")}
+				placeholderContentFit="contain"
 			/>
 			{isLoading ? (
 				<View style={styles.skeletonOverlay}>

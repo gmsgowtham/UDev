@@ -1,0 +1,65 @@
+{
+	"version": 1,
+	"skills": {
+		"assess-react-native-migration": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/assess-react-native-migration/SKILL.md",
+			"computedHash": "c07f3265bc8d51ae6dfe929f2034bea3dfa3afd73d7a3fe9910cd8944cf3c970"
+		},
+		"create-react-native-library": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/create-react-native-library/SKILL.md",
+			"computedHash": "3bac367718298bbdb0a1169bc7ea2478d77e6c88b3f02d45406027cbf1e93169"
+		},
+		"github-actions": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/github-actions/SKILL.md",
+			"computedHash": "c90128be4f55bc8b6dbdcba75ba2a540f3fb89ba91be1ccbe487e01ea70be122"
+		},
+		"react-native-best-practices": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/react-native-best-practices/SKILL.md",
+			"computedHash": "4b2b9561ff7b4b9d15ff76d2dd2a6191e3cdc7f36c06d171e377bfefcbcb2bfb"
+		},
+		"react-native-brownfield-migration": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/react-native-brownfield-migration/SKILL.md",
+			"computedHash": "d4aa733c792b2a8d46c91f9bc009b8aeb5c8478d55bd02b8d904b93f7d25a061"
+		},
+		"react-native-tv-best-practices": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/react-native-tv-best-practices/SKILL.md",
+			"computedHash": "a451fa4bf7ba73a6cbd18a8e0a4c61e73e39d588f8f186e7c718540b7201862e"
+		},
+		"react-navigation": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/react-navigation/SKILL.md",
+			"computedHash": "f09111c137b0bac6e43ff5ff57297afc93ae51583797acf779733ace4d1ced60"
+		},
+		"upgrading-react-native": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/upgrading-react-native/SKILL.md",
+			"computedHash": "91434efaa15e8134ba1a388ac829d06d0c8746455ce1b4a0cb27cb4b6d701d2a"
+		},
+		"validate-skills": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": ".claude/skills/validate-skills/SKILL.md",
+			"computedHash": "330cb59114b97e7b4727ff838b637682fff8820f752a950de3e7bd703608b56f"
+		},
+		"writing-user-docs": {
+			"source": "callstackincubator/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/writing-user-docs/SKILL.md",
+			"computedHash": "0d6bde034487709b4be83647dad6d3be955e97c97739b3bd8cbcadfb832ab35b"
+		}
+	}
+}

@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
 	memo,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -48,32 +49,42 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	const router = useRouter();
 
-	const onItemClick = (id: number) => {
-		const article = articles.find((a) => a.id === id);
-		if (!article) {
-			return;
-		}
-		router.push(
-			articleRoute({
-				id: article.id,
-				title: article.title,
-				url: article.url,
-				cover: article.cover_image ?? "",
-				authorName: article.user.name,
-				authorImage: article.user.profile_image_90,
-				date: article.readable_publish_date,
-				tags: article.tag_list,
-				organizationName: article.organization?.name,
-			}),
-		);
-	};
+	const onItemClick = useCallback(
+		(id: number) => {
+			const article = articles.find((a) => a.id === id);
+			if (!article) {
+				return;
+			}
+			router.push(
+				articleRoute({
+					id: article.id,
+					title: article.title,
+					url: article.url,
+					cover: article.cover_image ?? "",
+					authorName: article.user.name,
+					authorImage: article.user.profile_image_90,
+					date: article.readable_publish_date,
+					tags: article.tag_list,
+					organizationName: article.organization?.name,
+				}),
+			);
+		},
+		[articles, router],
+	);
 
-	const onEndReached = () => {
+	const onEndReached = useCallback(() => {
 		if (articles.length < 1) return;
 
 		const next = page + 1;
 		fetchArticles(next);
-	};
+	}, [articles.length, page, fetchArticles]);
+
+	const renderFooter = useCallback(
+		() => <ListFooterLoader loading={loading} />,
+		[loading],
+	);
+
+	const onCloseBanner = useCallback(() => setShowNetworkBanner(false), []);
 
 	return (
 		<View style={styles.container}>
@@ -81,7 +92,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 			<NetworkBanner
 				visible={error && !netInfo.isConnected && showNetworkBanner}
 				showCloseAction
-				onCloseActionPress={() => setShowNetworkBanner(false)}
+				onCloseActionPress={onCloseBanner}
 			/>
 			{loading && articles.length < 1 ? (
 				<FeedSkeleton />
@@ -97,7 +108,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 							onEndReached: onEndReached,
 							onEndReachedThreshold: 0.75,
 							getItemType: (item) => item.type_of,
-							ListFooterComponent: () => <ListFooterLoader loading={loading} />,
+							ListFooterComponent: renderFooter,
 							contentContainerStyle: styles.listContainer,
 						}}
 					/>

@@ -19,7 +19,32 @@ import SyntaxHighlighter from "../SyntaxHighlighter";
 import { EmbedTypes } from "./tokenizer";
 
 class MDRenderer extends Renderer implements RendererInterface {
-	image = (uri: string, alt?: string, _style?: ImageStyle): ReactNode => {
+	image = (
+		uri: string,
+		alt?: string,
+		_style?: ImageStyle,
+		title?: string,
+	): ReactNode => {
+		// NOTE: liquid embeds/CTAs arrive here as image tokens with the
+		// embed kind in `title` (see tokenizer.ts).
+		if (title === EmbedTypes.CTA && isStringOf(alt)) {
+			return <CTAButton key={this.getKey()} text={alt as string} url={uri} />;
+		}
+
+		const urlEmbedsTypes = [
+			EmbedTypes.Link,
+			EmbedTypes.Youtube,
+			EmbedTypes.Stackoverflow,
+			EmbedTypes.Tweet,
+		];
+		if (urlEmbedsTypes.includes(title as unknown as EmbedTypes)) {
+			const url = getURLFromText(uri);
+			if (url) {
+				return <LinkPreview key={this.getKey()} url={url} type={title} />;
+			}
+			return null;
+		}
+
 		if (uri.includes(".svg")) {
 			return <SvgImage key={this.getKey()} uri={uri} label={alt} />;
 		}
@@ -50,44 +75,6 @@ class MDRenderer extends Renderer implements RendererInterface {
 				{unescapeHTML(text)}
 			</Text>
 		);
-	}
-
-	custom(
-		identifier: string,
-		_raw: string,
-		_children: ReactNode[],
-		args: Record<string, unknown> = {},
-	): ReactNode {
-		if (
-			identifier === EmbedTypes.CTA &&
-			isStringOf(args.text) &&
-			isStringOf(args.cta)
-		) {
-			return (
-				<CTAButton
-					key={this.getKey()}
-					text={args.text as string}
-					url={args.cta as string}
-				/>
-			);
-		}
-
-		const urlEmbedsTypes = [
-			EmbedTypes.Link,
-			EmbedTypes.Youtube,
-			EmbedTypes.Stackoverflow,
-			EmbedTypes.Tweet,
-		];
-		if (
-			urlEmbedsTypes.includes(identifier as unknown as EmbedTypes) &&
-			isStringOf(args.text)
-		) {
-			const url = getURLFromText(args.text as string);
-			if (url) {
-				return <LinkPreview key={this.getKey()} url={url} type={identifier} />;
-			}
-		}
-		return null;
 	}
 }
 

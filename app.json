@@ -8,6 +8,7 @@
 		"android": {
 			"package": "com.devtounofficial",
 			"versionCode": 7,
+			"googleServicesFile": "./google-services.json",
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/logo.png",
 				"backgroundColor": "#ffffff"
@@ -27,7 +28,9 @@
 			"expo-font",
 			"expo-build-properties",
 			"expo-video",
-			"expo-image"
+			"expo-image",
+			"@react-native-firebase/app",
+			"@react-native-firebase/crashlytics"
 		],
 		"experiments": {
 			"typedRoutes": false

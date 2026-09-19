@@ -1,3 +1,4 @@
+import { Image as ExpoImage } from "expo-image";
 import {
 	type FunctionComponent,
 	memo,
@@ -5,8 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Image, StyleSheet } from "react-native";
-import FastImage from "react-native-fast-image";
+import { Image, StyleSheet, View } from "react-native";
 import ImageSkeleton from "../Skeleton/ImageSkeleton";
 
 type FitFastImageProps = {
@@ -48,25 +48,33 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 	};
 
 	return (
-		<FastImage
-			onLoadStart={onLoadStart}
-			onLoadEnd={onLoadEndOrOnError}
-			onError={onLoadEndOrOnError}
-			source={{ uri: uri }}
-			style={[styles.image, { aspectRatio }]}
-			resizeMode={FastImage.resizeMode.contain}
-			aria-label={label}
-			accessibilityLabel={label}
-			defaultSource={require("./../../../assets/image-fallback.png")}
-		>
-			{isLoading ? <ImageSkeleton /> : null}
-		</FastImage>
+		<View style={[styles.image, { aspectRatio }]}>
+			<ExpoImage
+				onLoadStart={onLoadStart}
+				onLoad={onLoadEndOrOnError}
+				onError={onLoadEndOrOnError}
+				source={{ uri: uri }}
+				style={[styles.image, { aspectRatio }]}
+				contentFit="contain"
+				accessibilityLabel={label}
+				aria-label={label}
+				placeholder={require("./../../../assets/image-fallback.png")}
+			/>
+			{isLoading ? (
+				<View style={styles.skeletonOverlay}>
+					<ImageSkeleton />
+				</View>
+			) : null}
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	image: {
 		width: "100%",
+	},
+	skeletonOverlay: {
+		...StyleSheet.absoluteFill,
 	},
 	indicator: {
 		paddingVertical: 16,

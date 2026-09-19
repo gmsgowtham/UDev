@@ -1,5 +1,5 @@
 import type { ColorSchemeName } from "react-native";
-import { MMKV, useMMKVString } from "react-native-mmkv";
+import { type MMKV, createMMKV, useMMKVString } from "react-native-mmkv";
 import { logError } from "../utils/log";
 
 const COLOR_SCHEME_KEY = "udev_theme";
@@ -14,7 +14,7 @@ export const DEFAULT_COLOR_SCHEME: ColorSchemeName = COLOR_SCHEME_VALUES.Light;
 let colorSchemeStorage: MMKV;
 const getColorSchemeStorage = () => {
 	if (!colorSchemeStorage) {
-		colorSchemeStorage = new MMKV({
+		colorSchemeStorage = createMMKV({
 			id: COLOR_SCHEME_KEY,
 			encryptionKey: "THEME",
 		});

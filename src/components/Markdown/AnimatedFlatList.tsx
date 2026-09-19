@@ -23,7 +23,10 @@ import tokenizer from "./tokenizer";
 interface MarkdownRendererProps {
 	value?: string;
 	onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-	flatListProps?: Omit<FlatListProps<ReactNode>, "data" | "renderItem">;
+	flatListProps?: Omit<
+		FlatListProps<ReactNode>,
+		"data" | "renderItem" | "CellRendererComponent"
+	>;
 }
 
 const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =

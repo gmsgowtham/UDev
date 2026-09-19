@@ -1,7 +1,6 @@
-import { type NavigationProp, useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { Fragment, type FunctionComponent, memo, useState } from "react";
 import { Appbar, Avatar, Menu, Tooltip } from "react-native-paper";
-import type { StackParamList } from "../../router/types";
 
 type props = {
 	isVideoListScreen?: boolean;
@@ -10,28 +9,28 @@ type props = {
 const HomeAppbar: FunctionComponent<props> = ({
 	isVideoListScreen = false,
 }) => {
-	const navigation = useNavigation<NavigationProp<StackParamList>>();
+	const router = useRouter();
 
 	const [visible, setVisible] = useState(false);
 	const openMenu = () => setVisible(true);
 	const closeMenu = () => setVisible(false);
 
 	const onBookmarksItemPress = () => {
-		navigation.navigate("Bookmarks");
+		router.push("/bookmarks");
 	};
 
 	const onSearchItemPress = () => {
-		navigation.navigate("Search");
+		router.push("/search");
 	};
 
 	const onAboutItemPress = () => {
 		closeMenu();
-		navigation.navigate("About");
+		router.push("/about");
 	};
 
 	const onSettingItemPress = () => {
 		closeMenu();
-		navigation.navigate("Settings");
+		router.push("/settings");
 	};
 
 	return (

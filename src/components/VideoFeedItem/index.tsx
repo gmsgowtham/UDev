@@ -1,6 +1,6 @@
+import { Image } from "expo-image";
 import { type FunctionComponent, memo } from "react";
 import { StyleSheet, View } from "react-native";
-import FastImage from "react-native-fast-image";
 import { Card, Chip, Text } from "react-native-paper";
 import { VIDEO_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 
@@ -33,10 +33,10 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 		<Card onPress={onClick}>
 			{coverImageUri ? (
 				<View style={styles.coverWrapper}>
-					<FastImage
+					<Image
 						source={{ uri: coverImageUri }}
 						style={styles.cover}
-						resizeMode={FastImage.resizeMode.cover}
+						contentFit="cover"
 					/>
 					<Chip elevated icon="videocam" style={styles.playChip}>
 						{duration}

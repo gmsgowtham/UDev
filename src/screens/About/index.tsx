@@ -1,16 +1,14 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useRouter } from "expo-router";
 import React, { type FunctionComponent } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import Link from "../../components/Link";
 import LinkPreview from "../../components/LinkPreview";
-import type { StackParamList } from "../../router/types";
 import { NPM_HOST } from "../../utils/const";
 import meta from "./../../../package.json";
 
-type Props = NativeStackScreenProps<StackParamList, "About">;
-
-const AboutScreen: FunctionComponent<Props> = ({ navigation }) => {
+const AboutScreen: FunctionComponent = () => {
+	const router = useRouter();
 	const renderDeps = () => {
 		const dependencies = {
 			...meta.dependencies,
@@ -37,7 +35,7 @@ const AboutScreen: FunctionComponent<Props> = ({ navigation }) => {
 	return (
 		<>
 			<Appbar.Header elevated>
-				<Appbar.BackAction onPress={() => navigation.goBack()} />
+				<Appbar.BackAction onPress={() => router.back()} />
 				<Appbar.Content title={"About"} />
 			</Appbar.Header>
 			<ScrollView contentContainerStyle={styles.container}>

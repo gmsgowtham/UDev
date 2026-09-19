@@ -1,4 +1,4 @@
-import { MMKV } from "react-native-mmkv";
+import { type MMKV, createMMKV } from "react-native-mmkv";
 import { perfArrayConcat } from "../utils/array";
 import { HELP_TEXT, MAX_BOOKMARKS } from "../utils/const";
 import { logError } from "../utils/log";
@@ -42,7 +42,7 @@ interface BookmarkResponse {
 let bookmarkStorage: MMKV;
 const getBookmarkStorage = () => {
 	if (!bookmarkStorage) {
-		bookmarkStorage = new MMKV({
+		bookmarkStorage = createMMKV({
 			id: BOOKMARKS_KEY,
 			encryptionKey: "POST_BOOKMARKS",
 		});
@@ -112,7 +112,7 @@ export const isBookmarked = (id: number): boolean => {
 
 export const removeBookmark = (id: number): boolean => {
 	try {
-		getBookmarkStorage().delete(getPostIdCacheKey(id));
+		getBookmarkStorage().remove(getPostIdCacheKey(id));
 		const bookmarks = getBookmarks();
 		const filtered = bookmarks.filter((item) => {
 			return item.id !== id;

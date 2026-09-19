@@ -1,4 +1,4 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useRouter } from "expo-router";
 import { Fragment, type FunctionComponent, memo, useState } from "react";
 import { Linking, View } from "react-native";
 import { StyleSheet } from "react-native";
@@ -7,15 +7,13 @@ import { Appbar, Divider, List, Text } from "react-native-paper";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import ThemeSwitcher from "../../components/Modal/ThemeSwitcher";
 import { useUserColorSchemeMMKV } from "../../mmkv/colorScheme";
-import type { StackParamList } from "../../router/types";
 import { CONTACT_EMAIL, PRIVACY_POLICY_URL, REPO_URL } from "../../utils/const";
 import { toTitleCase } from "../../utils/string";
 
-type Props = NativeStackScreenProps<StackParamList, "Settings">;
-
 const version = getVersion();
 
-const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
+const SettingsScreen: FunctionComponent = () => {
+	const router = useRouter();
 	const [userColorScheme, setUserColorScheme] = useUserColorSchemeMMKV();
 	const [visible, setVisible] = useState(false);
 
@@ -36,7 +34,7 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 	};
 
 	const onTermsAndConditionsItemPress = () => {
-		navigation.navigate("TermsAndConditions");
+		router.push("/terms");
 	};
 
 	const onPrivacyPolicyItemPress = () => {
@@ -46,7 +44,7 @@ const SettingsScreen: FunctionComponent<Props> = ({ navigation }) => {
 	return (
 		<Fragment>
 			<Appbar.Header elevated>
-				<Appbar.BackAction onPress={() => navigation.goBack()} />
+				<Appbar.BackAction onPress={() => router.back()} />
 				<Appbar.Content title="Settings" />
 			</Appbar.Header>
 			<View style={styles.list}>

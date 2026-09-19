@@ -1,19 +1,17 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useRouter } from "expo-router";
 import type { FunctionComponent } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Appbar } from "react-native-paper";
 import { RenderMarkdownDefault } from "../../components/Markdown";
-import type { StackParamList } from "../../router/types";
 import TERM_AND_CONDITION_MARKDOWN from "./md";
 
-type Props = NativeStackScreenProps<StackParamList, "TermsAndConditions">;
-
-const TermsAndConditionsScreen: FunctionComponent<Props> = ({ navigation }) => {
+const TermsAndConditionsScreen: FunctionComponent = () => {
+	const router = useRouter();
 	return (
 		<View style={styles.container}>
 			<Appbar.Header elevated>
-				<Appbar.BackAction onPress={() => navigation.goBack()} />
+				<Appbar.BackAction onPress={() => router.back()} />
 				<Appbar.Content title="Terms & Conditions" />
 			</Appbar.Header>
 			<RenderMarkdownDefault value={TERM_AND_CONDITION_MARKDOWN} />

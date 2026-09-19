@@ -1,7 +1,7 @@
 import { type FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
 import { Surface } from "react-native-paper";
-import SVGImage from "react-native-remote-svg";
+import { SvgUri } from "react-native-svg";
 
 type SvgImageProps = {
 	uri: string;
@@ -16,11 +16,12 @@ const SvgImage: FunctionComponent<SvgImageProps> = ({
 }) => {
 	return (
 		<Surface style={styles.container}>
-			<SVGImage
-				source={{ uri: uri }}
-				style={[styles.svg]}
+			<SvgUri
+				uri={uri}
+				width="100%"
+				height="100%"
+				style={styles.svg}
 				accessibilityLabel={label}
-				aria-label={label}
 			/>
 		</Surface>
 	);

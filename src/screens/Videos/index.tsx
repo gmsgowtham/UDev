@@ -1,8 +1,6 @@
 import { useNetInfo } from "@react-native-community/netinfo";
-import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import type { CompositeScreenProps } from "@react-navigation/native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, type ListRenderItem } from "@shopify/flash-list";
+import { useRouter } from "expo-router";
 import { type FunctionComponent, memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import type { ApiVideoListItem } from "../../api/types";
@@ -11,16 +9,12 @@ import ListFooterLoader from "../../components/List/ListFooterLoader";
 import NetworkBanner from "../../components/NetworkBanner";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
-import type { StackParamList, TabParamList } from "../../router/types";
 import useVideoFeedStore from "../../store/videos/feed";
 import { DEV_TO_HOST } from "../../utils/const";
+import { videoRoute } from "../../utils/router";
 
-type VideosScreenProps = CompositeScreenProps<
-	BottomTabScreenProps<TabParamList, "Videos">,
-	NativeStackScreenProps<StackParamList>
->;
-
-const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
+const VideosScreen: FunctionComponent = () => {
+	const router = useRouter();
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
 
@@ -61,17 +55,17 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 			video_duration_in_minutes: duration,
 		} = video;
 
-		navigation.navigate("Video", {
-			id,
-			title,
-			source,
-			cover,
-			duration,
-			url: `${DEV_TO_HOST}${path}`,
-			author: {
-				name: user.name,
-			},
-		});
+		router.push(
+			videoRoute({
+				id,
+				title,
+				source,
+				cover,
+				duration,
+				url: `${DEV_TO_HOST}${path}`,
+				authorName: user.name,
+			}),
+		);
 	};
 
 	const onEndReached = () => {
@@ -110,7 +104,6 @@ const VideosScreen: FunctionComponent<VideosScreenProps> = ({ navigation }) => {
 						showsVerticalScrollIndicator={false}
 						data={videos}
 						renderItem={renderItem}
-						estimatedItemSize={377}
 						refreshing={refreshing}
 						onRefresh={refreshVideos}
 						onEndReached={onEndReached}

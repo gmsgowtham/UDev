@@ -1,4 +1,42 @@
 {
-	"name": "UDev",
-	"displayName": "UDev"
+	"expo": {
+		"name": "UDev",
+		"slug": "udev",
+		"scheme": "udev",
+		"version": "1.0.0-beta.4",
+		"icon": "./assets/logo.png",
+		"android": {
+			"package": "com.devtounofficial",
+			"versionCode": 7,
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/logo.png",
+				"backgroundColor": "#ffffff"
+			}
+		},
+		"plugins": [
+			"expo-router",
+			"expo-status-bar",
+			[
+				"expo-splash-screen",
+				{
+					"image": "./assets/bootsplash_logo.png",
+					"resizeMode": "contain",
+					"backgroundColor": "#ffffff"
+				}
+			],
+			"expo-font",
+			"expo-build-properties",
+			"expo-video",
+			"expo-image"
+		],
+		"experiments": {
+			"typedRoutes": false
+		},
+		"web": {
+			"bundler": "metro"
+		},
+		"ios": {
+			"bundleIdentifier": "com.devtounofficial"
+		}
+	}
 }

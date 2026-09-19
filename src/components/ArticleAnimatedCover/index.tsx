@@ -1,22 +1,21 @@
+import { Image } from "expo-image";
 import { type FunctionComponent, memo, useMemo } from "react";
 import {
-	type ImageStyle,
 	type LayoutChangeEvent,
 	StyleSheet,
 	View,
 	type ViewStyle,
 } from "react-native";
-import FastImage from "react-native-fast-image";
 import { Avatar, Text, useTheme } from "react-native-paper";
-import Animated, { type AnimatedStyleProp } from "react-native-reanimated";
+import Animated, { type AnimatedStyle } from "react-native-reanimated";
 import { ARTICLE_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 import TagList from "../TagList";
 
 interface ArticleAnimatedCoverProps {
 	onCoverLayout: (event: LayoutChangeEvent) => void;
 	animations: {
-		container?: AnimatedStyleProp<ViewStyle>;
-		image?: AnimatedStyleProp<ImageStyle>;
+		container?: AnimatedStyle<ViewStyle>;
+		image?: AnimatedStyle<ViewStyle>;
 	};
 	id: number;
 	cover?: string | null;
@@ -61,10 +60,10 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 		>
 			{cover ? (
 				<Animated.View style={animations.image}>
-					<FastImage
+					<Image
 						source={{ uri: cover }}
 						style={styles.image}
-						resizeMode={FastImage.resizeMode.contain}
+						contentFit="contain"
 					/>
 				</Animated.View>
 			) : null}

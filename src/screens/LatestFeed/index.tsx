@@ -1,36 +1,32 @@
-import { type FunctionComponent, memo } from "react";
-import useArticleFeedStore from "../../store/articles/feed";
+import { type FunctionComponent, memo, useMemo } from "react";
+import { useLatestArticles } from "../../api/hooks";
 import ArticleFeedScreen from "../Common/ArticleList";
 
 const LatestScreen: FunctionComponent = () => {
 	const {
-		articles,
-		fetchArticles,
-		refreshing,
-		refreshArticles,
-		page,
-		loading,
-		error,
-	} = useArticleFeedStore((state) => ({
-		articles: state.latest.articles,
-		fetchArticles: state.latest.fetchLatestArticles,
-		refreshing: state.latest.refreshing,
-		refreshArticles: state.latest.refreshLatestArticles,
-		page: state.latest.page,
-		loading: state.latest.loading,
-		error: state.latest.error,
-	}));
+		data,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+		isPending,
+		isRefetching,
+		refetch,
+		isError,
+	} = useLatestArticles();
+
+	const articles = useMemo(() => data?.pages.flat() ?? [], [data]);
 
 	return (
 		<ArticleFeedScreen
 			title="Latest"
 			articles={articles}
-			fetchArticles={fetchArticles}
-			refreshing={refreshing}
-			refreshArticles={refreshArticles}
-			page={page}
-			loading={loading}
-			error={error}
+			fetchNextPage={fetchNextPage}
+			hasNextPage={hasNextPage ?? false}
+			isFetchingNextPage={isFetchingNextPage}
+			isPending={isPending}
+			isRefetching={isRefetching}
+			refetch={refetch}
+			isError={isError}
 		/>
 	);
 };

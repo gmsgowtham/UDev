@@ -1,3 +1,4 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import {
 	DefaultTheme,
@@ -17,6 +18,7 @@ import { StatusBar, type StatusBarStyle } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { queryClient, setupQueryOnlineManager } from "../api/queryClient";
 import useUserColorScheme from "../hooks/useUserColorScheme";
 import { COLOR_SCHEME_VALUES } from "../mmkv/colorScheme";
 import { DarkTheme, LightTheme } from "../theme";
@@ -74,6 +76,10 @@ const RootLayout: FunctionComponent = () => {
 	}, [isDark, theme]);
 
 	useEffect(() => {
+		setupQueryOnlineManager();
+	}, []);
+
+	useEffect(() => {
 		StatusBar.setBackgroundColor(theme.colors.elevation.level2);
 		StatusBar.setBarStyle(statusBarStyle);
 	}, [theme, statusBarStyle]);
@@ -103,18 +109,20 @@ const RootLayout: FunctionComponent = () => {
 			}}
 		>
 			<SafeAreaProvider>
-				<ThemeProvider value={navigationTheme}>
-					<Stack screenOptions={{ headerShown: false }}>
-						<Stack.Screen name="(tabs)" />
-						<Stack.Screen name="article/[id]" />
-						<Stack.Screen name="video/[id]" />
-						<Stack.Screen name="bookmarks" />
-						<Stack.Screen name="search" />
-						<Stack.Screen name="settings" />
-						<Stack.Screen name="about" />
-						<Stack.Screen name="terms" />
-					</Stack>
-				</ThemeProvider>
+				<QueryClientProvider client={queryClient}>
+					<ThemeProvider value={navigationTheme}>
+						<Stack screenOptions={{ headerShown: false }}>
+							<Stack.Screen name="(tabs)" />
+							<Stack.Screen name="article/[id]" />
+							<Stack.Screen name="video/[id]" />
+							<Stack.Screen name="bookmarks" />
+							<Stack.Screen name="search" />
+							<Stack.Screen name="settings" />
+							<Stack.Screen name="about" />
+							<Stack.Screen name="terms" />
+						</Stack>
+					</ThemeProvider>
+				</QueryClientProvider>
 			</SafeAreaProvider>
 		</PaperProvider>
 	);

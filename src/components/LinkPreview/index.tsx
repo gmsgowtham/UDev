@@ -1,8 +1,7 @@
-import { type FunctionComponent, memo, useEffect, useState } from "react";
+import { type FunctionComponent, memo } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { Surface, Text, TouchableRipple, useTheme } from "react-native-paper";
-import { fetchContentFromURL } from "../../api";
-import { logError } from "../../utils/log";
+import { useLinkPreviewTitle } from "../../api/hooks";
 
 interface Props {
 	url: string;
@@ -11,27 +10,8 @@ interface Props {
 
 const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 	const theme = useTheme();
-	const [title, setTitle] = useState("External URL");
-
-	useEffect(() => {
-		const fetchContent = async () => {
-			try {
-				const resp = await fetchContentFromURL(url);
-				const html = resp.data;
-				const titleRegex = new RegExp(/<title>(.*?)<\/title>/gim);
-
-				const matches = titleRegex.exec(html);
-				if (matches && matches.length > 0) {
-					setTitle(matches[1]);
-				}
-			} catch (e) {
-				logError(e as Error, "Error while fetching url for preview");
-				console.error(e);
-			}
-		};
-
-		fetchContent();
-	}, [url]);
+	const { data } = useLinkPreviewTitle(url);
+	const title = data ?? "External URL";
 
 	const onPress = () => {
 		Linking.openURL(url);

@@ -5,18 +5,18 @@ import {
 	type FunctionComponent,
 	memo,
 	useCallback,
-	useEffect,
+	useMemo,
 	useState,
 } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ToastAndroid, View } from "react-native";
+import { useVideos } from "../../api/hooks";
 import type { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import NetworkBanner from "../../components/NetworkBanner";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
-import useVideoFeedStore from "../../store/videos/feed";
-import { DEV_TO_HOST } from "../../utils/const";
+import { DEV_TO_HOST, HELP_TEXT } from "../../utils/const";
 import { videoRoute } from "../../utils/router";
 
 const FeedSeparator = () => <View style={styles.separator} />;
@@ -29,26 +29,17 @@ const VideosScreen: FunctionComponent = () => {
 	const netInfo = useNetInfo();
 
 	const {
-		videos,
-		fetchVideos,
-		refreshing,
-		refreshVideos,
-		page,
-		loading,
-		error,
-	} = useVideoFeedStore((state) => ({
-		videos: state.videos,
-		fetchVideos: state.fetchVideos,
-		refreshing: state.refreshing,
-		refreshVideos: state.refreshVideos,
-		page: state.page,
-		loading: state.loading,
-		error: state.error,
-	}));
+		data,
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+		isPending,
+		isRefetching,
+		refetch,
+		isError,
+	} = useVideos();
 
-	useEffect(() => {
-		fetchVideos(page);
-	}, [page, fetchVideos]);
+	const videos = useMemo(() => data?.pages.flat() ?? [], [data]);
 
 	const onItemClick = useCallback(
 		(id: number) => {
@@ -82,9 +73,22 @@ const VideosScreen: FunctionComponent = () => {
 	);
 
 	const onEndReached = useCallback(() => {
-		const next = page + 1;
-		fetchVideos(next);
-	}, [page, fetchVideos]);
+		if (videos.length < 1) return;
+		if (!hasNextPage || isFetchingNextPage) return;
+
+		fetchNextPage();
+	}, [videos.length, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+	const onRefresh = useCallback(async () => {
+		const result = await refetch();
+		if (!result.isError) {
+			ToastAndroid.showWithGravity(
+				HELP_TEXT.FEED_REFRESHED,
+				ToastAndroid.SHORT,
+				ToastAndroid.TOP,
+			);
+		}
+	}, [refetch]);
 
 	const renderItem: ListRenderItem<ApiVideoListItem> = useCallback(
 		({ item }) => {
@@ -105,8 +109,8 @@ const VideosScreen: FunctionComponent = () => {
 	);
 
 	const renderFooter = useCallback(
-		() => <ListFooterLoader loading={loading} />,
-		[loading],
+		() => <ListFooterLoader loading={isFetchingNextPage} />,
+		[isFetchingNextPage],
 	);
 
 	const onCloseBanner = useCallback(() => setShowNetworkBanner(false), []);
@@ -115,11 +119,11 @@ const VideosScreen: FunctionComponent = () => {
 		<View style={styles.container}>
 			<HomeAppbar isVideoListScreen />
 			<NetworkBanner
-				visible={error && !netInfo.isConnected && showNetworkBanner}
+				visible={isError && !netInfo.isConnected && showNetworkBanner}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
-			{loading && videos.length < 1 ? (
+			{isPending && videos.length < 1 ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
@@ -128,8 +132,8 @@ const VideosScreen: FunctionComponent = () => {
 						data={videos}
 						renderItem={renderItem}
 						keyExtractor={keyExtractor}
-						refreshing={refreshing}
-						onRefresh={refreshVideos}
+						refreshing={isRefetching}
+						onRefresh={onRefresh}
 						onEndReached={onEndReached}
 						onEndReachedThreshold={0.75}
 						ListFooterComponent={renderFooter}

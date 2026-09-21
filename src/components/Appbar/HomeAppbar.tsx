@@ -1,7 +1,7 @@
-import { useRouter } from "expo-router";
-import { Fragment, type FunctionComponent, memo, useState } from "react";
+import { useNavigation, useRouter } from "expo-router";
+import { Fragment, type FunctionComponent, memo } from "react";
 import { StyleSheet } from "react-native";
-import { Appbar, Avatar, Menu, Tooltip, useTheme } from "react-native-paper";
+import { Appbar, Tooltip, useTheme } from "react-native-paper";
 import { HEADER_HEIGHT } from "../../theme/spacing";
 
 type props = {
@@ -12,53 +12,57 @@ const HomeAppbar: FunctionComponent<props> = ({
 	isVideoListScreen = false,
 }) => {
 	const router = useRouter();
+	const navigation = useNavigation();
 	const theme = useTheme();
 
-	const [visible, setVisible] = useState(false);
-	const openMenu = () => setVisible(true);
-	const closeMenu = () => setVisible(false);
-
-	const onBookmarksItemPress = () => {
-		router.push("/bookmarks");
+	const onMenuPress = () => {
+		// Walk up to the drawer navigator (toggleDrawer bubbles from no
+		// other level) instead of importing react-navigation directly,
+		// which expo-router forbids as of SDK 56.
+		let current: unknown = navigation;
+		while (
+			current &&
+			typeof current === "object" &&
+			"getParent" in current &&
+			typeof current.getParent === "function"
+		) {
+			if (
+				"toggleDrawer" in current &&
+				typeof current.toggleDrawer === "function"
+			) {
+				current.toggleDrawer();
+				return;
+			}
+			current = current.getParent();
+		}
 	};
 
 	const onSearchItemPress = () => {
 		router.push("/search");
 	};
 
-	const onAboutItemPress = () => {
-		closeMenu();
-		router.push("/about");
-	};
-
-	const onSettingItemPress = () => {
-		closeMenu();
-		router.push("/settings");
-	};
-
 	return (
-		<Appbar.Header
-			elevated={false}
-			style={[
-				styles.header,
-				{
-					backgroundColor: theme.colors.surface,
-					borderBottomColor: theme.colors.outlineVariant,
-				},
-			]}
-		>
-			<Appbar.Action
-				animated={false}
-				icon={({ size }) => (
-					<Avatar.Image
-						source={require("./../../../assets/logo.png")}
-						size={size}
+		<Fragment>
+			<Appbar.Header
+				elevated={false}
+				style={[
+					styles.header,
+					{
+						backgroundColor: theme.colors.surface,
+						borderBottomColor: theme.colors.outlineVariant,
+					},
+				]}
+			>
+				<Tooltip title="Menu">
+					<Appbar.Action
+						animated={false}
+						icon="menu"
+						onPress={onMenuPress}
+						testID="appbar-menu"
 					/>
-				)}
-			/>
-			<Appbar.Content title="UDev" />
-			{!isVideoListScreen ? (
-				<Fragment>
+				</Tooltip>
+				<Appbar.Content title="UDev" />
+				{!isVideoListScreen ? (
 					<Tooltip title="Search posts">
 						<Appbar.Action
 							animated={false}
@@ -66,42 +70,9 @@ const HomeAppbar: FunctionComponent<props> = ({
 							onPress={onSearchItemPress}
 						/>
 					</Tooltip>
-				</Fragment>
-			) : null}
-
-			<Tooltip title="Show Bookmarks">
-				<Appbar.Action
-					animated={false}
-					icon="bookmark-outline"
-					onPress={onBookmarksItemPress}
-				/>
-			</Tooltip>
-
-			<Tooltip title="Settings">
-				<Appbar.Action
-					animated={false}
-					icon="settings"
-					onPress={onSettingItemPress}
-				/>
-			</Tooltip>
-
-			<Menu
-				visible={visible}
-				onDismiss={closeMenu}
-				anchorPosition="bottom"
-				anchor={
-					<Tooltip title="More options">
-						<Appbar.Action icon="more-vert" onPress={openMenu} />
-					</Tooltip>
-				}
-			>
-				<Menu.Item
-					leadingIcon="info"
-					onPress={onAboutItemPress}
-					title="About"
-				/>
-			</Menu>
-		</Appbar.Header>
+				) : null}
+			</Appbar.Header>
+		</Fragment>
 	);
 };
 

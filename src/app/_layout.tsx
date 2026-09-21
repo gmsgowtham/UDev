@@ -14,7 +14,8 @@ import {
 	useMemo,
 	useState,
 } from "react";
-import { StatusBar, type StatusBarStyle } from "react-native";
+import { StatusBar, type StatusBarStyle, StyleSheet } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
@@ -108,27 +109,35 @@ const RootLayout: FunctionComponent = () => {
 				icon: (props) => <MaterialIcon {...props} />,
 			}}
 		>
-			<SafeAreaProvider>
-				<QueryClientProvider client={queryClient}>
-					<ThemeProvider value={navigationTheme}>
-						<Stack screenOptions={{ headerShown: false }}>
-							<Stack.Screen name="(tabs)" />
-							<Stack.Screen name="article/[id]" />
-							<Stack.Screen
-								name="video/[id]"
-								options={{ presentation: "modal" }}
-							/>
-							<Stack.Screen name="bookmarks" />
-							<Stack.Screen name="search" />
-							<Stack.Screen name="settings" />
-							<Stack.Screen name="about" />
-							<Stack.Screen name="terms" />
-						</Stack>
-					</ThemeProvider>
-				</QueryClientProvider>
-			</SafeAreaProvider>
+			<GestureHandlerRootView style={styles.gestureRoot}>
+				<SafeAreaProvider>
+					<QueryClientProvider client={queryClient}>
+						<ThemeProvider value={navigationTheme}>
+							<Stack screenOptions={{ headerShown: false }}>
+								<Stack.Screen name="(drawer)" />
+								<Stack.Screen name="article/[id]" />
+								<Stack.Screen
+									name="video/[id]"
+									options={{ presentation: "modal" }}
+								/>
+								<Stack.Screen name="bookmarks" />
+								<Stack.Screen name="search" />
+								<Stack.Screen name="settings" />
+								<Stack.Screen name="about" />
+								<Stack.Screen name="terms" />
+							</Stack>
+						</ThemeProvider>
+					</QueryClientProvider>
+				</SafeAreaProvider>
+			</GestureHandlerRootView>
 		</PaperProvider>
 	);
 };
+
+const styles = StyleSheet.create({
+	gestureRoot: {
+		flex: 1,
+	},
+});
 
 export default RootLayout;

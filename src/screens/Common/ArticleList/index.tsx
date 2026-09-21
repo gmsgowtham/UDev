@@ -3,6 +3,7 @@ import type { FlashListRef } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
+	type ReactNode,
 	memo,
 	useCallback,
 	useRef,
@@ -30,6 +31,7 @@ interface ArticleFeedProps {
 	isRefetching: boolean;
 	refetch: () => Promise<{ isError: boolean }>;
 	isError: boolean;
+	header?: ReactNode;
 }
 
 const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
@@ -41,6 +43,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	isRefetching,
 	refetch,
 	isError,
+	header,
 }) => {
 	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
 
@@ -112,6 +115,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
+			{header}
 			{(isError || netInfo.isConnected === false) && articles.length < 1 ? (
 				<ListErrorState
 					message={

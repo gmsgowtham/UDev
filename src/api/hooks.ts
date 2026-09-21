@@ -1,6 +1,10 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { unescape as unescapeHTML } from "html-escaper";
-import { DEFAULT_PAGE_SIZE, TOP_FEED_WINDOW_DAYS } from "../utils/const";
+import {
+	DEFAULT_PAGE_SIZE,
+	TOP_FEED_SCOPES,
+	type TopFeedScope,
+} from "../utils/const";
 import { getImageSize } from "../utils/image";
 import { processMarkdownContent } from "../utils/markdown";
 import {
@@ -14,7 +18,7 @@ import { ArticleFeedApiStates } from "./types";
 
 export const articleKeys = {
 	latest: ["articles", "latest"] as const,
-	top: ["articles", "top"] as const,
+	top: (scope: TopFeedScope) => ["articles", "top", scope] as const,
 	search: (q: string) => ["articles", "search", q] as const,
 	detail: (id: number) => ["article", id] as const,
 };
@@ -51,13 +55,13 @@ export function useLatestArticles() {
 	});
 }
 
-export function useTopArticles() {
+export function useTopArticles(scope: TopFeedScope) {
 	return useInfiniteQuery({
-		queryKey: articleKeys.top,
+		queryKey: articleKeys.top(scope),
 		queryFn: ({ pageParam, signal }) =>
 			getArticlesList(undefined, pageParam, DEFAULT_PAGE_SIZE, {
 				signal,
-				top: TOP_FEED_WINDOW_DAYS,
+				top: TOP_FEED_SCOPES[scope],
 			}),
 		initialPageParam: 1,
 		getNextPageParam,

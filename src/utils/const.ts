@@ -1,7 +1,13 @@
 export const API_BASE_URL = "https://dev.to/api";
 export const DEFAULT_PAGE_SIZE = 10;
-// Window (in days) for the Top feed: top articles from the last N days.
-export const TOP_FEED_WINDOW_DAYS = 7;
+// Top feed scopes (dev.to /top/week, /top/month, /top/year):
+// the API's `top` param is the number of days since publication.
+export const TOP_FEED_SCOPES = {
+	week: 7,
+	month: 30,
+	year: 365,
+} as const;
+export type TopFeedScope = keyof typeof TOP_FEED_SCOPES;
 export const HELP_TEXT = {
 	FEED_REFRESHED: "Feed refreshed",
 	CODE_COPY: "Code copied to clipboard",

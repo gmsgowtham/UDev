@@ -1,0 +1,55 @@
+import { type FunctionComponent, memo, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import {
+	YoutubeView,
+	useYouTubeEvent,
+	useYouTubePlayer,
+} from "react-native-youtube-bridge";
+import LinkPreview from "../LinkPreview";
+
+interface Props {
+	videoId: string;
+	url: string;
+}
+
+const YoutubeEmbed: FunctionComponent<Props> = ({ videoId, url }) => {
+	const player = useYouTubePlayer(videoId, {
+		autoplay: false,
+		controls: true,
+		playsinline: true,
+		rel: false,
+	});
+	const [hasError, setHasError] = useState(false);
+	useYouTubeEvent(player, "error", () => setHasError(true));
+
+	if (hasError) {
+		return <LinkPreview url={url} />;
+	}
+
+	return (
+		<View style={styles.wrapper}>
+			<YoutubeView
+				player={player}
+				width="100%"
+				height="100%"
+				style={styles.player}
+			/>
+		</View>
+	);
+};
+
+const styles = StyleSheet.create({
+	wrapper: {
+		width: "100%",
+		aspectRatio: 16 / 9,
+		marginVertical: 8,
+		borderRadius: 16,
+		overflow: "hidden",
+		backgroundColor: "#000",
+	},
+	player: {
+		flex: 1,
+	},
+});
+
+export default memo(YoutubeEmbed);

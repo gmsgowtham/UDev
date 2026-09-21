@@ -27,6 +27,13 @@ describe("MDTokenizer liquid embeds", () => {
 		expect(tokens[0].href).toContain("dQw4w9WgXcQ");
 	});
 
+	it("emits a youtube token for the article 4667014 video id", () => {
+		const tokens = imageTokens("{% youtube pXOTjxcNzdQ %}");
+		expect(tokens).toHaveLength(1);
+		expect(tokens[0].title).toBe(EmbedTypes.Youtube);
+		expect(tokens[0].href).toBe("https://www.youtube.com/watch?v=pXOTjxcNzdQ");
+	});
+
 	it("emits link, tweet and stackoverflow image tokens", () => {
 		const link = imageTokens("{% link https://example.com %}");
 		expect(link).toHaveLength(1);
@@ -48,6 +55,11 @@ describe("MDTokenizer liquid embeds", () => {
 		const tokens = lex("{% details summary %}");
 		expect(tokens).toHaveLength(1);
 		expect(tokens[0].type).toBe("space");
+	});
+
+	it("emits space tokens for stray card tags (renders nothing)", () => {
+		expect(lex("{% card %}")[0].type).toBe("space");
+		expect(lex("{% endcard %}")[0].type).toBe("space");
 	});
 
 	it("leaves regular paragraphs untouched", () => {

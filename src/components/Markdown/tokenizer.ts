@@ -86,6 +86,22 @@ class MDTokenizer extends MarkedTokenizer {
 		}
 
 		/**
+		 * Card tags
+		 *
+		 * `{% card %}...{% endcard %}` blocks are split out before lexing
+		 * (see `splitCardSections`); any stray tag that reaches the
+		 * tokenizer (unclosed, empty, or leftover) renders as nothing.
+		 */
+		const cardMatch = src.match(/^[*]?{%\s*(card|endcard)\s*%}[*]?/);
+		if (cardMatch) {
+			const token: Tokens.Space = {
+				type: "space",
+				raw: cardMatch[0],
+			};
+			return token as unknown as Tokens.Paragraph;
+		}
+
+		/**
 		 * Youtube embed
 		 *
 		 * Matches the following pattern

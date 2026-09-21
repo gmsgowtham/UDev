@@ -6,12 +6,10 @@ import {
 	useMemo,
 } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { useMarkdown, type useMarkdownHookOptions } from "react-native-marked";
 import { ActivityIndicator, useTheme } from "react-native-paper";
-import renderer from "./renderer";
-import getMarkdownStyles from "./styles";
-import getMarkdownTheme from "./theme";
-import tokenizer from "./tokenizer";
+import { type CardSection, splitCardSections } from "../../utils/card";
+import MarkdownCard from "./Card";
+import MarkdownChunk from "./Chunk";
 
 interface MarkdownRendererProps {
 	loadingState?: boolean;
@@ -19,6 +17,17 @@ interface MarkdownRendererProps {
 	headerComponent?: () => React.JSX.Element | null;
 	loadingPlaceholder?: ReactNode;
 }
+
+type ListItem = CardSection | ReactNode;
+
+const isCardSection = (item: ListItem): item is CardSection => {
+	return (
+		typeof item === "object" &&
+		item !== null &&
+		"type" in item &&
+		"content" in item
+	);
+};
 
 const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 	value = "",
@@ -28,36 +37,40 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 }) => {
 	const theme = useTheme();
 
-	const renderItem = useCallback(({ item }: { item: ReactNode }) => {
+	const sections = useMemo(() => splitCardSections(value), [value]);
+
+	const loadingElements: ReactNode[] = useMemo(() => {
+		if (!loadingState) {
+			return [];
+		}
+		if (loadingPlaceholder) {
+			return [loadingPlaceholder];
+		}
+		return [<ActivityIndicator />];
+	}, [loadingState, loadingPlaceholder]);
+
+	const renderItem = useCallback(({ item }: { item: ListItem }) => {
+		if (isCardSection(item)) {
+			if (item.type === "card") {
+				return (
+					<View style={styles.item}>
+						<MarkdownCard value={item.content} />
+					</View>
+				);
+			}
+			return (
+				<View style={styles.item}>
+					<MarkdownChunk value={item.content} />
+				</View>
+			);
+		}
 		return <View style={styles.item}>{item}</View>;
 	}, []);
 
 	const keyExtractor = useCallback(
-		(_: ReactNode, index: number) => index.toString(),
+		(_: ListItem, index: number) => index.toString(),
 		[],
 	);
-
-	const options: useMarkdownHookOptions = useMemo(() => {
-		return {
-			renderer: renderer,
-			tokenizer: tokenizer,
-			theme: getMarkdownTheme(theme),
-			styles: getMarkdownStyles(theme),
-		};
-	}, [theme]);
-
-	const rnElements = useMarkdown(value, options);
-
-	const elements: ReactNode[] = useMemo(() => {
-		if (loadingState && loadingPlaceholder) {
-			return [loadingPlaceholder];
-		}
-		if (loadingState && !loadingPlaceholder) {
-			return [<ActivityIndicator />];
-		}
-
-		return rnElements;
-	}, [loadingState, loadingPlaceholder, rnElements]);
 
 	return (
 		<FlatList
@@ -68,7 +81,7 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 			style={{
 				backgroundColor: theme.colors.background,
 			}}
-			data={elements}
+			data={loadingState ? loadingElements : sections}
 			renderItem={renderItem}
 			contentContainerStyle={styles.container}
 			ListHeaderComponent={headerComponent}

@@ -23,7 +23,7 @@ React Native 0.73 (RN CLI, not Expo) unofficial dev.to Android client. Entry: `i
 
 ## Gotchas
 
-- `babel.config.js`: `react-native-reanimated/plugin` must stay last; `moti/skeleton` alias to `moti/skeleton/react-native-linear-gradient` is required — do not remove.
+- `babel.config.js`: `react-native-worklets/plugin` must stay last (Reanimated 4 moved the Babel plugin out of `react-native-reanimated/plugin`).
 - Pre-commit hook runs `npm run lint` (blocking); commits must pass commitlint conventional format (`commit-msg` hook, `.commitlintrc.json`).
 - Biome ignores `android/ ios/ node_modules vendor coverage` — don't run Biome inside native dirs.
 - Android-only behaviors (`ToastAndroid` in stores) — don't replace with cross-platform abstractions unprompted.

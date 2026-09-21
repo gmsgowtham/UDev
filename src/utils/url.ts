@@ -18,11 +18,30 @@ export const buildURLParams = (
 };
 
 export const getYoutubeEmbedURL = (str: string) => {
-	const parsed = new Url(str, {});
+	const trimmed = str.trim();
+	const parsed = new Url(trimmed, {});
 	if (parsed.host) {
 		return parsed.toString();
 	}
-	return `${YOUTUBE_HOST}/watch?v=${str}`;
+	return `${YOUTUBE_HOST}/watch?v=${trimmed}`;
+};
+
+const YOUTUBE_ID_PATTERN = /^[A-Za-z0-9_-]{11}$/;
+
+export const getYoutubeVideoId = (input: string): string | null => {
+	const str = input.trim();
+	if (!str) return null;
+	if (YOUTUBE_ID_PATTERN.test(str)) return str;
+
+	const watchMatch = str.match(/[?&]v=([A-Za-z0-9_-]{11})/);
+	if (watchMatch) return watchMatch[1];
+
+	const pathMatch = str.match(
+		/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|shorts\/|live\/|v\/))([A-Za-z0-9_-]{11})/,
+	);
+	if (pathMatch) return pathMatch[1];
+
+	return null;
 };
 
 export const getStackoverflowEmbedURL = (str: string) => {

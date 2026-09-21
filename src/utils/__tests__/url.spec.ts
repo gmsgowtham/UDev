@@ -1,4 +1,8 @@
-import { buildURLParams, getYoutubeEmbedURL } from "./../url";
+import {
+	buildURLParams,
+	getYoutubeEmbedURL,
+	getYoutubeVideoId,
+} from "./../url";
 describe(buildURLParams, () => {
 	it("empty input", () => {
 		expect(buildURLParams({})).toBe("");
@@ -34,5 +38,37 @@ describe(getYoutubeEmbedURL, () => {
 		expect(
 			getYoutubeEmbedURL("https://www.youtube.com/watch?v=840TmQNxjKY"),
 		).toBe("https://www.youtube.com/watch?v=840TmQNxjKY");
+	});
+});
+
+describe(getYoutubeVideoId, () => {
+	it("bare id", () => {
+		expect(getYoutubeVideoId("pXOTjxcNzdQ")).toBe("pXOTjxcNzdQ");
+	});
+	it("watch URL", () => {
+		expect(
+			getYoutubeVideoId("https://www.youtube.com/watch?v=pXOTjxcNzdQ"),
+		).toBe("pXOTjxcNzdQ");
+	});
+	it("watch URL with extra params", () => {
+		expect(
+			getYoutubeVideoId("https://www.youtube.com/watch?v=pXOTjxcNzdQ&t=10s"),
+		).toBe("pXOTjxcNzdQ");
+	});
+	it("short and embed URLs", () => {
+		expect(getYoutubeVideoId("https://youtu.be/pXOTjxcNzdQ")).toBe(
+			"pXOTjxcNzdQ",
+		);
+		expect(getYoutubeVideoId("https://www.youtube.com/embed/pXOTjxcNzdQ")).toBe(
+			"pXOTjxcNzdQ",
+		);
+		expect(
+			getYoutubeVideoId("https://www.youtube.com/shorts/pXOTjxcNzdQ"),
+		).toBe("pXOTjxcNzdQ");
+	});
+	it("invalid input returns null", () => {
+		expect(getYoutubeVideoId("")).toBeNull();
+		expect(getYoutubeVideoId("not-a-video-id!!")).toBeNull();
+		expect(getYoutubeVideoId("https://example.com")).toBeNull();
 	});
 });

@@ -16,20 +16,19 @@ import {
 	View,
 } from "react-native";
 import { AnimatedFAB, Appbar, Tooltip, useTheme } from "react-native-paper";
-import {
+import Animated, {
 	Extrapolation,
 	interpolate,
-	runOnJS,
 	useAnimatedScrollHandler,
 	useAnimatedStyle,
 	useSharedValue,
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 import { useArticleDetail } from "../../api/hooks";
 import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
 import RenderMarkdownAnimatedFlatList from "../../components/Markdown/AnimatedFlatList";
 import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
-import { withAnimated } from "../../hoc/withAnimated";
 import {
 	type ArticleBookmarkItem,
 	isBookmarked,
@@ -39,8 +38,6 @@ import {
 import { HELP_TEXT } from "../../utils/const";
 import { logError } from "../../utils/log";
 import { firstParam, parseIdParam, parseTagsParam } from "../../utils/router";
-
-const AnimatedAppbarContent = withAnimated(Appbar.Content);
 
 const ArticleScreen: FunctionComponent = () => {
 	const params = useLocalSearchParams();
@@ -64,18 +61,25 @@ const ArticleScreen: FunctionComponent = () => {
 	const [headerHeight, setHeaderHeight] = useState(0);
 	const [isShareFabExtended, setIsShareFabExtended] = useState(true);
 
-	const setShareFabExtendedValue = (value: boolean) => {
-		setIsShareFabExtended(value);
-	};
-
 	// Animation primitives
+	// scrollY lives on the UI thread; FAB extended state is mirrored there so
+	// the RN bridge is only crossed when the boolean actually flips instead of
+	// on every scroll frame.
 	const scrollY = useSharedValue(0);
+	const fabExtendedShared = useSharedValue(true);
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		scrollY.value = event.contentOffset.y;
-		runOnJS(setShareFabExtendedValue)(scrollY.value <= 0);
+		const shouldExtend = event.contentOffset.y <= 0;
+		if (shouldExtend !== fabExtendedShared.value) {
+			fabExtendedShared.value = shouldExtend;
+			scheduleOnRN(setIsShareFabExtended, shouldExtend);
+		}
 	});
 
 	const appbarContentOpacity = useAnimatedStyle(() => {
+		if (headerHeight <= 0) {
+			return { opacity: 0 };
+		}
 		const opacity = interpolate(
 			scrollY.value,
 			[headerHeight * 0.66, headerHeight * 0.86],
@@ -88,6 +92,9 @@ const ArticleScreen: FunctionComponent = () => {
 	});
 
 	const coverContainerAnimations = useAnimatedStyle(() => {
+		if (headerHeight <= 0) {
+			return { transform: [{ translateY: 0 }] };
+		}
 		const translateY = interpolate(
 			scrollY.value,
 			[0, headerHeight],
@@ -100,8 +107,8 @@ const ArticleScreen: FunctionComponent = () => {
 	});
 
 	const coverImageAnimations = useAnimatedStyle(() => {
-		if (!cover) {
-			return {};
+		if (!cover || headerHeight <= 0) {
+			return { opacity: 1 };
 		}
 		const translateY = interpolate(
 			scrollY.value,
@@ -181,7 +188,8 @@ const ArticleScreen: FunctionComponent = () => {
 	}, [isPostBookmarked, id, article, title, url]);
 
 	const onCoverLayout = useCallback((event: LayoutChangeEvent) => {
-		setHeaderHeight(Math.round(event.nativeEvent.layout.height));
+		const height = Math.round(event.nativeEvent.layout.height);
+		setHeaderHeight((prev) => (prev === height ? prev : height));
 	}, []);
 
 	const renderContent = useCallback(() => {
@@ -212,7 +220,7 @@ const ArticleScreen: FunctionComponent = () => {
 							onPress={onShareActionPress}
 							animateFrom="right"
 							iconMode="dynamic"
-							style={{ position: "absolute", bottom: 16, right: 16 }}
+							style={styles.fab}
 						/>
 					</Tooltip>
 				</Fragment>
@@ -243,7 +251,9 @@ const ArticleScreen: FunctionComponent = () => {
 		<View style={styles.container}>
 			<Appbar.Header elevated style={styles.nav}>
 				<Appbar.BackAction onPress={onBackActionPress} />
-				<AnimatedAppbarContent title={title} style={[appbarContentOpacity]} />
+				<Animated.View style={[styles.appbarTitle, appbarContentOpacity]}>
+					<Appbar.Content title={title} />
+				</Animated.View>
 				<Tooltip title="Bookmark">
 					<Appbar.Action
 						icon={isPostBookmarked ? "bookmark-added" : "bookmark-add"}
@@ -271,24 +281,26 @@ const ArticleScreen: FunctionComponent = () => {
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
 
-			<ArticleAnimatedCover
-				id={id}
-				title={title}
-				cover={cover}
-				author={{
-					name: authorName,
-					imageUri: authorImage,
-				}}
-				organizationName={organizationName}
-				dateReadable={date}
-				tags={tags}
-				onCoverLayout={onCoverLayout}
-				animations={{
-					container: coverContainerAnimations,
-					image: coverImageAnimations,
-				}}
-			/>
-			{renderContent()}
+			<View style={styles.content}>
+				<ArticleAnimatedCover
+					id={id}
+					title={title}
+					cover={cover}
+					author={{
+						name: authorName,
+						imageUri: authorImage,
+					}}
+					organizationName={organizationName}
+					dateReadable={date}
+					tags={tags}
+					onCoverLayout={onCoverLayout}
+					animations={{
+						container: coverContainerAnimations,
+						image: coverImageAnimations,
+					}}
+				/>
+				{renderContent()}
+			</View>
 		</View>
 	);
 };
@@ -297,18 +309,23 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	content: {
+		flex: 1,
+	},
 	skeletonContainer: {
 		padding: 12,
 	},
 	nav: {
 		zIndex: 2,
 	},
-	header: {
+	appbarTitle: {
+		flex: 1,
+		paddingTop: 18,
+	},
+	fab: {
 		position: "absolute",
-		left: 0,
-		right: 0,
-		top: 64,
-		zIndex: 1,
+		bottom: 16,
+		right: 16,
 	},
 });
 

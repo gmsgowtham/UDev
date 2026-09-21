@@ -52,6 +52,7 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 	return (
 		<Animated.View
 			onLayout={onCoverLayout}
+			pointerEvents="none"
 			style={[
 				styles.header,
 				{ backgroundColor: theme.colors.background },
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		left: 0,
 		right: 0,
-		top: 64,
+		top: 0,
 		zIndex: 1,
 	},
 });

@@ -10,12 +10,13 @@ import {
 import { Renderer, type RendererInterface } from "react-native-marked";
 import { getActualLangForCodeSnippet } from "../../utils/markdown";
 import { isStringOf } from "../../utils/typeof";
-import { getURLFromText } from "../../utils/url";
+import { getURLFromText, getYoutubeVideoId } from "../../utils/url";
 import CTAButton from "../CTAButton";
 import FitFastImage from "../FitFastImage";
 import LinkPreview from "../LinkPreview";
 import SvgImage from "../SvgImage";
 import SyntaxHighlighter from "../SyntaxHighlighter";
+import YoutubeEmbed from "../YoutubeEmbed";
 import { EmbedTypes } from "./tokenizer";
 
 class MDRenderer extends Renderer implements RendererInterface {
@@ -33,10 +34,18 @@ class MDRenderer extends Renderer implements RendererInterface {
 
 		const urlEmbedsTypes = [
 			EmbedTypes.Link,
-			EmbedTypes.Youtube,
 			EmbedTypes.Stackoverflow,
 			EmbedTypes.Tweet,
 		];
+		if (title === EmbedTypes.Youtube) {
+			const url = getURLFromText(uri);
+			if (!url) return null;
+			const videoId = getYoutubeVideoId(url);
+			if (!videoId) {
+				return <LinkPreview key={this.getKey()} url={url} type={title} />;
+			}
+			return <YoutubeEmbed key={this.getKey()} videoId={videoId} url={url} />;
+		}
 		if (urlEmbedsTypes.includes(title as unknown as EmbedTypes)) {
 			const url = getURLFromText(uri);
 			if (url) {

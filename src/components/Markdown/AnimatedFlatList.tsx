@@ -1,10 +1,4 @@
-import {
-	type FunctionComponent,
-	type ReactNode,
-	memo,
-	useCallback,
-	useMemo,
-} from "react";
+import { type FunctionComponent, memo, useCallback, useMemo } from "react";
 import {
 	type FlatListProps,
 	type NativeScrollEvent,
@@ -12,19 +6,17 @@ import {
 	StyleSheet,
 	View,
 } from "react-native";
-import { useMarkdown, type useMarkdownHookOptions } from "react-native-marked";
 import { useTheme } from "react-native-paper";
 import Animated from "react-native-reanimated";
-import renderer from "./renderer";
-import getMarkdownStyles from "./styles";
-import getMarkdownTheme from "./theme";
-import tokenizer from "./tokenizer";
+import { type CardSection, splitCardSections } from "../../utils/card";
+import MarkdownCard from "./Card";
+import MarkdownChunk from "./Chunk";
 
 interface MarkdownRendererProps {
 	value?: string;
 	onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 	flatListProps?: Omit<
-		FlatListProps<ReactNode>,
+		FlatListProps<CardSection>,
 		"data" | "renderItem" | "CellRendererComponent"
 	>;
 }
@@ -33,38 +25,47 @@ const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
 	({ onScroll, value = "", flatListProps }) => {
 		const theme = useTheme();
 
-		const renderItem = useCallback(({ item }: { item: ReactNode }) => {
-			return <View style={styles.item}>{item}</View>;
+		const sections = useMemo(() => splitCardSections(value), [value]);
+
+		const renderItem = useCallback(({ item }: { item: CardSection }) => {
+			if (item.type === "card") {
+				return (
+					<View style={styles.item}>
+						<MarkdownCard value={item.content} />
+					</View>
+				);
+			}
+			return (
+				<View style={styles.item}>
+					<MarkdownChunk value={item.content} />
+				</View>
+			);
 		}, []);
 
 		const keyExtractor = useCallback(
-			(_: ReactNode, index: number) => index.toString(),
+			(_: CardSection, index: number) => index.toString(),
 			[],
 		);
 
-		const options: useMarkdownHookOptions = useMemo(() => {
-			return {
-				renderer: renderer,
-				tokenizer: tokenizer,
-				theme: getMarkdownTheme(theme),
-				styles: getMarkdownStyles(theme),
-			};
-		}, [theme]);
-
-		const rnElements = useMarkdown(value, options);
+		const {
+			style: flatListStyle,
+			contentContainerStyle,
+			...restFlatListProps
+		} = flatListProps ?? {};
 
 		return (
 			<Animated.FlatList
-				contentContainerStyle={styles.container}
 				removeClippedSubviews={false}
-				style={{
-					backgroundColor: theme.colors.background,
-				}}
-				{...flatListProps}
+				style={[
+					{ flex: 1, backgroundColor: theme.colors.background },
+					flatListStyle,
+				]}
+				contentContainerStyle={[styles.container, contentContainerStyle]}
+				{...restFlatListProps}
 				keyExtractor={keyExtractor}
 				maxToRenderPerBatch={8}
 				initialNumToRender={8}
-				data={rnElements}
+				data={sections}
 				renderItem={renderItem}
 				onScroll={onScroll}
 			/>

@@ -1,8 +1,8 @@
 import { memo, useMemo } from "react";
-import { useFeaturedArticles } from "../../api/hooks";
+import { useTopArticles } from "../../api/hooks";
 import ArticleFeedScreen from "../Common/ArticleList";
 
-const LandingScreen = () => {
+const TopFeedScreen = () => {
 	const {
 		data,
 		fetchNextPage,
@@ -12,13 +12,13 @@ const LandingScreen = () => {
 		isRefetching,
 		refetch,
 		isError,
-	} = useFeaturedArticles();
+	} = useTopArticles();
 
 	const articles = useMemo(() => data?.pages.flat() ?? [], [data]);
 
 	return (
 		<ArticleFeedScreen
-			title="Featured"
+			title="Top"
 			articles={articles}
 			fetchNextPage={fetchNextPage}
 			hasNextPage={hasNextPage ?? false}
@@ -31,4 +31,4 @@ const LandingScreen = () => {
 	);
 };
 
-export default memo(LandingScreen);
+export default memo(TopFeedScreen);

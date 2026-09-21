@@ -53,9 +53,14 @@ export const getArticlesList = (
 	state?: ArticleFeedApiStates,
 	page = 1,
 	perPage = DEFAULT_PAGE_SIZE,
-	options?: RequestOptions,
+	options?: RequestOptions & { top?: number },
 ) => {
-	const params = buildURLParams({ state, page, per_page: perPage });
+	const params = buildURLParams({
+		state,
+		top: options?.top,
+		page,
+		per_page: perPage,
+	});
 	return fetchJSON<ApiArticleFeedItem[]>(`${API_BASE_URL}/articles?${params}`, {
 		signal: options?.signal,
 	});

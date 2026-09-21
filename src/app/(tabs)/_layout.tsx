@@ -75,9 +75,11 @@ const TabsLayout: FunctionComponent = () => {
 			<Tabs.Screen
 				name="home"
 				options={{
-					tabBarLabel: "Featured",
+					tabBarLabel: "Top",
 					tabBarIcon: ({ color, size }) => {
-						return <Icon source="home" size={size} color={String(color)} />;
+						return (
+							<Icon source="trending-up" size={size} color={String(color)} />
+						);
 					},
 				}}
 			/>

@@ -1,5 +1,7 @@
 export const API_BASE_URL = "https://dev.to/api";
 export const DEFAULT_PAGE_SIZE = 10;
+// Window (in days) for the Top feed: top articles from the last N days.
+export const TOP_FEED_WINDOW_DAYS = 7;
 export const HELP_TEXT = {
 	FEED_REFRESHED: "Feed refreshed",
 	CODE_COPY: "Code copied to clipboard",

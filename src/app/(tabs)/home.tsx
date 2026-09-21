@@ -1,8 +1,8 @@
 import type { FunctionComponent } from "react";
-import LandingScreen from "../../screens/LandingFeed";
+import TopFeedScreen from "../../screens/TopFeed";
 
 const HomeTab: FunctionComponent = () => {
-	return <LandingScreen />;
+	return <TopFeedScreen />;
 };
 
 export default HomeTab;

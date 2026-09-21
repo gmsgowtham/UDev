@@ -1,6 +1,18 @@
 {
 	"version": 1,
 	"skills": {
+		"agent-device": {
+			"source": "callstack/agent-device",
+			"sourceType": "github",
+			"skillPath": "skills/agent-device/SKILL.md",
+			"computedHash": "3187ae73a1a8b055e20630d64c86e5bb7576341b495c9a755f5e3ec7927c0302"
+		},
+		"android-emulator": {
+			"source": "callstack/agent-device",
+			"sourceType": "github",
+			"skillPath": "skills/android-emulator/SKILL.md",
+			"computedHash": "20b3ca719cceeb25a7442f167f5ae60a816e03cd2b05dc3574cdd9d9056e8dac"
+		},
 		"assess-react-native-migration": {
 			"source": "callstackincubator/agent-skills",
 			"sourceType": "github",
@@ -13,11 +25,23 @@
 			"skillPath": "skills/create-react-native-library/SKILL.md",
 			"computedHash": "3bac367718298bbdb0a1169bc7ea2478d77e6c88b3f02d45406027cbf1e93169"
 		},
+		"dogfood": {
+			"source": "callstack/agent-device",
+			"sourceType": "github",
+			"skillPath": "skills/dogfood/SKILL.md",
+			"computedHash": "8e6dfbff0633e355210ce7ae109cb39a3e1347946b6e92aaa607271154526b6b"
+		},
 		"github-actions": {
 			"source": "callstackincubator/agent-skills",
 			"sourceType": "github",
 			"skillPath": "skills/github-actions/SKILL.md",
 			"computedHash": "c90128be4f55bc8b6dbdcba75ba2a540f3fb89ba91be1ccbe487e01ea70be122"
+		},
+		"ios-simulator": {
+			"source": "callstack/agent-device",
+			"sourceType": "github",
+			"skillPath": "skills/ios-simulator/SKILL.md",
+			"computedHash": "a0196ca78c5af1e2f25f4d534b3971fe8d9e5e6aa02a2d0f35a53b222bca57da"
 		},
 		"react-native-best-practices": {
 			"source": "callstackincubator/agent-skills",

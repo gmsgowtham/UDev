@@ -44,6 +44,18 @@ export const getYoutubeVideoId = (input: string): string | null => {
 	return null;
 };
 
+export const getYoutubeThumbnailUrl = (
+	videoId: string,
+	quality:
+		| "default"
+		| "mqdefault"
+		| "hqdefault"
+		| "sddefault"
+		| "maxresdefault" = "hqdefault",
+): string => {
+	return `https://i.ytimg.com/vi/${videoId}/${quality}.jpg`;
+};
+
 export const getStackoverflowEmbedURL = (str: string) => {
 	const parsed = new Url(str, {});
 	if (parsed.host) {

@@ -20,6 +20,7 @@ import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { DEV_TO_HOST, HELP_TEXT } from "../../utils/const";
 import { videoRoute } from "../../utils/router";
+import { getYoutubeThumbnailUrl, getYoutubeVideoId } from "../../utils/url";
 
 const FeedSeparator = () => <View style={styles.separator} />;
 
@@ -95,12 +96,13 @@ const VideosScreen: FunctionComponent = () => {
 
 	const renderItem: ListRenderItem<ApiVideoListItem> = useCallback(
 		({ item }) => {
+			const youtubeId = getYoutubeVideoId(item.video_source_url ?? "");
 			return (
 				<VideoFeedItem
 					id={item.id}
 					title={item.title}
 					duration={item.video_duration_in_minutes}
-					coverImageUri={item.cloudinary_video_url}
+					thumbnailUri={youtubeId ? getYoutubeThumbnailUrl(youtubeId) : null}
 					author={{
 						name: item.user.name,
 					}}

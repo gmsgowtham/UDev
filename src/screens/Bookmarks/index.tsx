@@ -16,6 +16,7 @@ import FloatingSvg from "../../components/Svg/Floating";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { type PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
 import { articleRoute, videoRoute } from "../../utils/router";
+import { getYoutubeThumbnailUrl, getYoutubeVideoId } from "../../utils/url";
 
 const FeedSeparator = () => <View style={styles.separator} />;
 
@@ -99,12 +100,15 @@ const BookmarksScreen: FunctionComponent = () => {
 					);
 				}
 				case "video": {
+					const youtubeId = getYoutubeVideoId(item.source ?? "");
 					return (
 						<VideoFeedItem
 							id={item.id}
 							title={item.title}
 							duration={item.duration}
-							coverImageUri={item.cover}
+							thumbnailUri={
+								youtubeId ? getYoutubeThumbnailUrl(youtubeId) : null
+							}
 							author={{
 								name: item.author.name,
 							}}

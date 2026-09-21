@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { type FunctionComponent, memo } from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Chip, Text, useTheme } from "react-native-paper";
+import { Card, Chip, Icon, Text, useTheme } from "react-native-paper";
 import { RADIUS, SPACING } from "../../theme/spacing";
 import { VIDEO_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 
@@ -14,7 +14,7 @@ interface VideoFeedItemProps {
 	title: string;
 	author: author;
 	duration: string;
-	coverImageUri: string;
+	thumbnailUri?: string | null;
 	onItemClick: (id: number) => void;
 }
 
@@ -22,7 +22,7 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	id,
 	title,
 	author,
-	coverImageUri,
+	thumbnailUri,
 	duration,
 	onItemClick,
 }) => {
@@ -30,6 +30,10 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	const onClick = () => {
 		onItemClick(id);
 	};
+
+	// The videos API reports "00:00" for every item, so only show
+	// the duration badge when a real value is present.
+	const showDuration = !!duration && duration !== "00:00";
 
 	return (
 		<Card
@@ -43,21 +47,27 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 				},
 			]}
 		>
-			{coverImageUri ? (
+			{thumbnailUri ? (
 				<View style={styles.coverWrapper}>
 					<Image
-						source={{ uri: coverImageUri }}
+						source={{ uri: thumbnailUri }}
 						style={styles.cover}
 						contentFit="cover"
 					/>
-					<Chip
-						mode="flat"
-						icon="play-arrow"
-						style={styles.playChip}
-						textStyle={styles.playChipText}
-					>
-						{duration}
-					</Chip>
+					<View style={styles.playOverlay} pointerEvents="none">
+						<View style={styles.playCircle}>
+							<Icon source="play-arrow" size={40} color="#FFFFFF" />
+						</View>
+					</View>
+					{showDuration ? (
+						<Chip
+							mode="flat"
+							style={styles.durationChip}
+							textStyle={styles.durationChipText}
+						>
+							{duration}
+						</Chip>
+					) : null}
 				</View>
 			) : null}
 			<Card.Content style={styles.content}>
@@ -94,6 +104,35 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: RADIUS.small,
 		borderTopRightRadius: RADIUS.small,
 	},
+	playOverlay: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	playCircle: {
+		width: 72,
+		height: 72,
+		borderRadius: 36,
+		backgroundColor: "rgba(0, 0, 0, 0.6)",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	durationChip: {
+		position: "absolute",
+		bottom: 8,
+		right: 8,
+		backgroundColor: "rgba(0, 0, 0, 0.8)",
+		borderRadius: RADIUS.small,
+	},
+	durationChipText: {
+		color: "#FFFFFF",
+		fontSize: 12,
+		fontFamily: "Inter-Medium",
+	},
 	content: {
 		paddingHorizontal: SPACING.cardPadding,
 		paddingTop: SPACING.cardPadding,
@@ -102,18 +141,6 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		marginBottom: 4,
-	},
-	playChip: {
-		position: "absolute",
-		bottom: 8,
-		right: 8,
-		backgroundColor: "rgba(0, 0, 0, 0.8)",
-		borderRadius: RADIUS.small,
-	},
-	playChipText: {
-		color: "#FFFFFF",
-		fontSize: 12,
-		fontFamily: "Inter-Medium",
 	},
 });
 

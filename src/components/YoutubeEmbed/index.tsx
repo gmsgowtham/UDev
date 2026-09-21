@@ -11,11 +11,16 @@ import LinkPreview from "../LinkPreview";
 interface Props {
 	videoId: string;
 	url: string;
+	autoplay?: boolean;
 }
 
-const YoutubeEmbed: FunctionComponent<Props> = ({ videoId, url }) => {
+const YoutubeEmbed: FunctionComponent<Props> = ({
+	videoId,
+	url,
+	autoplay = false,
+}) => {
 	const player = useYouTubePlayer(videoId, {
-		autoplay: false,
+		autoplay,
 		controls: true,
 		playsinline: true,
 		rel: false,

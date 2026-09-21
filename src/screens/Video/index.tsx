@@ -108,7 +108,7 @@ const VideoScreen: FunctionComponent = () => {
 			<View style={styles.youtubeContainer}>
 				{topBar}
 				<View style={styles.youtubePlayer}>
-					<YoutubeEmbed videoId={youtubeId} url={url} />
+					<YoutubeEmbed videoId={youtubeId} url={url} autoplay />
 				</View>
 				<View style={styles.youtubeMeta}>
 					<Text
@@ -170,11 +170,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#000",
 	},
 	youtubePlayer: {
-		paddingHorizontal: 8,
+		width: "100%",
 	},
 	youtubeMeta: {
 		paddingHorizontal: 16,
-		paddingTop: 8,
+		paddingTop: 16,
 		gap: 4,
 	},
 	unavailableContainer: {

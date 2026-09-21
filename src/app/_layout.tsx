@@ -114,7 +114,10 @@ const RootLayout: FunctionComponent = () => {
 						<Stack screenOptions={{ headerShown: false }}>
 							<Stack.Screen name="(tabs)" />
 							<Stack.Screen name="article/[id]" />
-							<Stack.Screen name="video/[id]" />
+							<Stack.Screen
+								name="video/[id]"
+								options={{ presentation: "modal" }}
+							/>
 							<Stack.Screen name="bookmarks" />
 							<Stack.Screen name="search" />
 							<Stack.Screen name="settings" />

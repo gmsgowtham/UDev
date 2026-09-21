@@ -22,8 +22,9 @@ const MarkdownCard: FunctionComponent<MarkdownCardProps> = ({ value }) => {
 			style={[
 				styles.wrapper,
 				{
-					borderColor: theme.colors.outlineVariant,
-					backgroundColor: theme.colors.elevation.level1,
+					// White fill with a defined border instead of a gray fill.
+					borderColor: theme.dark ? theme.colors.outline : "#E3E3E0",
+					backgroundColor: theme.colors.surface,
 				},
 			]}
 			mode="flat"
@@ -35,9 +36,10 @@ const MarkdownCard: FunctionComponent<MarkdownCardProps> = ({ value }) => {
 
 const styles = StyleSheet.create({
 	wrapper: {
-		borderRadius: 16,
+		borderRadius: 4,
 		borderWidth: 1,
 		marginVertical: 8,
+		overflow: "hidden",
 	},
 	container: {
 		padding: 16,

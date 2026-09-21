@@ -5,6 +5,7 @@ import {
 	useYouTubeEvent,
 	useYouTubePlayer,
 } from "react-native-youtube-bridge";
+import { RADIUS } from "../../theme/spacing";
 import LinkPreview from "../LinkPreview";
 
 interface Props {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		aspectRatio: 16 / 9,
 		marginVertical: 8,
-		borderRadius: 16,
+		borderRadius: RADIUS.small,
 		overflow: "hidden",
 		backgroundColor: "#000",
 	},

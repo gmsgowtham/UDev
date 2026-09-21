@@ -3,7 +3,7 @@ import { Fragment, type FunctionComponent, memo, useState } from "react";
 import { Linking, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { getVersion } from "react-native-device-info";
-import { Appbar, Divider, List, Text } from "react-native-paper";
+import { Appbar, Divider, List, Text, useTheme } from "react-native-paper";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import ThemeSwitcher from "../../components/Modal/ThemeSwitcher";
 import { useUserColorSchemeMMKV } from "../../mmkv/colorScheme";
@@ -14,6 +14,7 @@ const version = getVersion();
 
 const SettingsScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
 	const [userColorScheme, setUserColorScheme] = useUserColorSchemeMMKV();
 	const [visible, setVisible] = useState(false);
 
@@ -43,7 +44,16 @@ const SettingsScreen: FunctionComponent = () => {
 
 	return (
 		<Fragment>
-			<Appbar.Header elevated>
+			<Appbar.Header
+				elevated={false}
+				style={[
+					styles.header,
+					{
+						backgroundColor: theme.colors.surface,
+						borderBottomColor: theme.colors.outlineVariant,
+					},
+				]}
+			>
 				<Appbar.BackAction onPress={() => router.back()} />
 				<Appbar.Content title="Settings" />
 			</Appbar.Header>
@@ -51,6 +61,7 @@ const SettingsScreen: FunctionComponent = () => {
 				<List.Section>
 					<List.Subheader>Appearance</List.Subheader>
 					<List.Item
+						testID="settings-theme"
 						title="Theme"
 						description={toTitleCase(userColorScheme)}
 						left={() => <List.Icon icon="palette" />}
@@ -62,12 +73,14 @@ const SettingsScreen: FunctionComponent = () => {
 				<List.Section>
 					<List.Subheader>Support</List.Subheader>
 					<List.Item
+						testID="settings-terms"
 						title="Terms & Conditions"
 						left={() => <List.Icon icon="security" />}
 						onPress={onTermsAndConditionsItemPress}
 						style={styles.item}
 					/>
 					<List.Item
+						testID="settings-privacy"
 						title="Privacy Policy"
 						left={() => <List.Icon icon="privacy-tip" />}
 						right={() => <List.Icon icon="launch" />}
@@ -75,6 +88,7 @@ const SettingsScreen: FunctionComponent = () => {
 						style={styles.item}
 					/>
 					<List.Item
+						testID="settings-github"
 						title="Github"
 						left={() => (
 							<List.Icon
@@ -88,6 +102,7 @@ const SettingsScreen: FunctionComponent = () => {
 						style={styles.item}
 					/>
 					<List.Item
+						testID="settings-contact"
 						title="Contact us"
 						left={() => <List.Icon icon="email" />}
 						right={() => <List.Icon icon="launch" />}
@@ -97,7 +112,12 @@ const SettingsScreen: FunctionComponent = () => {
 				</List.Section>
 			</View>
 			<View style={styles.footer}>
-				<Text variant="labelSmall">Version: {version}</Text>
+				<Text
+					variant="labelSmall"
+					style={{ color: theme.colors.onSurfaceVariant }}
+				>
+					Version: {version}
+				</Text>
 			</View>
 			<ThemeSwitcher
 				visible={visible}
@@ -109,6 +129,9 @@ const SettingsScreen: FunctionComponent = () => {
 };
 
 const styles = StyleSheet.create({
+	header: {
+		borderBottomWidth: 1,
+	},
 	list: {
 		flex: 1,
 	},

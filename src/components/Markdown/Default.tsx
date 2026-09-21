@@ -79,7 +79,7 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 			maxToRenderPerBatch={8}
 			initialNumToRender={8}
 			style={{
-				backgroundColor: theme.colors.background,
+				backgroundColor: theme.colors.surface,
 			}}
 			data={loadingState ? loadingElements : sections}
 			renderItem={renderItem}

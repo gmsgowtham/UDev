@@ -23,9 +23,11 @@ import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
 import { useArticleDetail } from "../../api/hooks";
 import ArticleAnimatedCover from "../../components/ArticleAnimatedCover";
+import ListErrorState from "../../components/List/ListErrorState";
 import RenderMarkdownAnimatedFlatList from "../../components/Markdown/AnimatedFlatList";
 import NetworkBanner from "../../components/NetworkBanner";
 import ArticleSkeleton from "../../components/Skeleton/ArticleSkeleton";
@@ -53,6 +55,7 @@ const ArticleScreen: FunctionComponent = () => {
 	const tags = parseTagsParam(params.tags);
 	const theme = useTheme();
 	const netInfo = useNetInfo();
+	const insets = useSafeAreaInsets();
 	const _isPostBookmarked = useMemo(() => {
 		return isBookmarked(id);
 	}, [id]);
@@ -128,7 +131,12 @@ const ArticleScreen: FunctionComponent = () => {
 		};
 	});
 
-	const { data: article, isError: error } = useArticleDetail(id);
+	const {
+		data: article,
+		isError: error,
+		isFetching,
+		refetch,
+	} = useArticleDetail(id);
 
 	const onBackActionPress = useCallback(() => {
 		router.back();
@@ -192,7 +200,27 @@ const ArticleScreen: FunctionComponent = () => {
 		setHeaderHeight((prev) => (prev === height ? prev : height));
 	}, []);
 
+	const onRetryActionPress = useCallback(() => {
+		refetch();
+	}, [refetch]);
+
 	const renderContent = useCallback(() => {
+		// TanStack Query pauses retries while offline (onlineManager), so the
+		// query can sit in pending forever — treat offline + no data as an
+		// error instead of an infinite skeleton.
+		const isOffline = netInfo.isConnected === false;
+		if ((error || isOffline) && !article?.body_markdown && headerHeight > 0) {
+			return (
+				<View style={[styles.errorContainer, { paddingTop: headerHeight }]}>
+					<ListErrorState
+						message={isOffline ? HELP_TEXT.NETWORK_DISCONNECTED : undefined}
+						onRetry={onRetryActionPress}
+						retrying={isFetching && !isOffline}
+					/>
+				</View>
+			);
+		}
+
 		if (article?.body_markdown && headerHeight > 0) {
 			return (
 				<Fragment>
@@ -220,7 +248,7 @@ const ArticleScreen: FunctionComponent = () => {
 							onPress={onShareActionPress}
 							animateFrom="right"
 							iconMode="dynamic"
-							style={styles.fab}
+							style={[styles.fab, { bottom: insets.bottom + 16 }]}
 						/>
 					</Tooltip>
 				</Fragment>
@@ -241,15 +269,29 @@ const ArticleScreen: FunctionComponent = () => {
 		return null;
 	}, [
 		article?.body_markdown,
+		error,
 		headerHeight,
+		insets.bottom,
+		isFetching,
 		isShareFabExtended,
+		netInfo.isConnected,
+		onRetryActionPress,
 		onShareActionPress,
 		scrollHandler,
 	]);
 
 	return (
-		<View style={styles.container}>
-			<Appbar.Header elevated style={styles.nav}>
+		<View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+			<Appbar.Header
+				elevated={false}
+				style={[
+					styles.nav,
+					{
+						backgroundColor: theme.colors.surface,
+						borderBottomColor: theme.colors.outlineVariant,
+					},
+				]}
+			>
 				<Appbar.BackAction onPress={onBackActionPress} />
 				<Animated.View style={[styles.appbarTitle, appbarContentOpacity]}>
 					<Appbar.Content title={title} />
@@ -313,10 +355,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	skeletonContainer: {
-		padding: 12,
+		padding: 8,
+	},
+	errorContainer: {
+		flex: 1,
 	},
 	nav: {
 		zIndex: 2,
+		borderBottomWidth: 1,
 	},
 	appbarTitle: {
 		flex: 1,
@@ -324,8 +370,8 @@ const styles = StyleSheet.create({
 	},
 	fab: {
 		position: "absolute",
-		bottom: 16,
 		right: 16,
+		borderRadius: 4,
 	},
 });
 

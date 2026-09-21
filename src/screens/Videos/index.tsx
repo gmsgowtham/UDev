@@ -9,9 +9,11 @@ import {
 	useState,
 } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
+import { useTheme } from "react-native-paper";
 import { useVideos } from "../../api/hooks";
 import type { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
+import ListErrorState from "../../components/List/ListErrorState";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import NetworkBanner from "../../components/NetworkBanner";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
@@ -25,6 +27,7 @@ const keyExtractor = (item: ApiVideoListItem) => String(item.id);
 
 const VideosScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
 
@@ -115,15 +118,31 @@ const VideosScreen: FunctionComponent = () => {
 
 	const onCloseBanner = useCallback(() => setShowNetworkBanner(false), []);
 
+	const onRetry = useCallback(() => {
+		refetch();
+	}, [refetch]);
+
 	return (
-		<View style={styles.container}>
+		<View
+			style={[styles.container, { backgroundColor: theme.colors.background }]}
+		>
 			<HomeAppbar isVideoListScreen />
 			<NetworkBanner
 				visible={isError && !netInfo.isConnected && showNetworkBanner}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
-			{isPending && videos.length < 1 ? (
+			{(isError || netInfo.isConnected === false) && videos.length < 1 ? (
+				<ListErrorState
+					message={
+						netInfo.isConnected === false
+							? HELP_TEXT.NETWORK_DISCONNECTED
+							: undefined
+					}
+					onRetry={onRetry}
+					retrying={isRefetching && netInfo.isConnected !== false}
+				/>
+			) : isPending && videos.length < 1 ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
@@ -159,10 +178,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	listContainer: {
-		padding: 12,
+		padding: 8,
 	},
 	separator: {
-		height: 12,
+		height: 8,
 		backgroundColor: "transparent",
 	},
 });

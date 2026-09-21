@@ -39,6 +39,9 @@ const ArticleFeed = forwardRef<FlashListRef<ApiArticleFeedItem>, Props>(
 						onItemClick={onItemClick}
 						tags={item.tag_list}
 						organizationName={item.organization?.name}
+						reactionsCount={item.public_reactions_count}
+						commentsCount={item.comments_count}
+						readingTimeMinutes={item.reading_time_minutes}
 					/>
 				);
 			},
@@ -61,7 +64,7 @@ const ArticleFeed = forwardRef<FlashListRef<ApiArticleFeedItem>, Props>(
 
 const styles = StyleSheet.create({
 	separator: {
-		height: 12,
+		height: 8,
 		backgroundColor: "transparent",
 	},
 });

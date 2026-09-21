@@ -1,4 +1,5 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { unescape as unescapeHTML } from "html-escaper";
 import { DEFAULT_PAGE_SIZE } from "../utils/const";
 import { getImageSize } from "../utils/image";
 import { processMarkdownContent } from "../utils/markdown";
@@ -110,9 +111,11 @@ export function useLinkPreviewTitle(url: string) {
 		queryKey: linkPreviewKeys.title(url),
 		queryFn: async ({ signal }) => {
 			const html = await fetchContentFromURL(url, { signal });
-			const matches = /<title>(.*?)<\/title>/i.exec(html);
+			const matches = /<title>(.*?)<\/title>/is.exec(html);
 			if (matches?.[1]) {
-				return matches[1];
+				// Titles arrive raw from the page HTML, so decode entities
+				// (e.g. Fetch&#39;d) and collapse whitespace before display.
+				return unescapeHTML(matches[1]).replace(/\s+/g, " ").trim();
 			}
 			return "External URL";
 		},

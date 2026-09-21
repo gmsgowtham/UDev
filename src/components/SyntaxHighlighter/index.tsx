@@ -14,6 +14,7 @@ import {
 	Surface,
 	Text,
 	Tooltip,
+	useTheme,
 } from "react-native-paper";
 import {
 	sunburst as darkStyle,
@@ -22,6 +23,7 @@ import {
 import useUserColorScheme from "../../hooks/useUserColorScheme";
 import { COLOR_SCHEME_VALUES } from "../../mmkv/colorScheme";
 import { HELP_TEXT } from "../../utils/const";
+import getMarkdownTheme from "../Markdown/theme";
 
 interface HighlighterProps {
 	code: string;
@@ -37,6 +39,9 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 	language,
 }) => {
 	const colorScheme = useUserColorScheme();
+	const theme = useTheme();
+	const mdBorder =
+		getMarkdownTheme(theme).colors?.border ?? theme.colors.outline;
 
 	const onCopyCodePress = async () => {
 		await Clipboard.setStringAsync(code);
@@ -57,7 +62,11 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 			mode="flat"
 			style={[
 				styles.container,
-				{ backgroundColor: containerStyle?.backgroundColor },
+				{
+					backgroundColor:
+						containerStyle?.backgroundColor ?? theme.colors.surface,
+					borderColor: mdBorder,
+				},
 			]}
 		>
 			<View style={styles.header}>
@@ -74,7 +83,7 @@ export const SyntaxHighlighter: FunctionComponent<HighlighterProps> = ({
 					/>
 				</Tooltip>
 			</View>
-			<Divider />
+			<Divider style={{ backgroundColor: mdBorder }} />
 			<CodeHighlighter
 				hljsStyle={hlsStyles}
 				language={language}
@@ -99,7 +108,8 @@ const styles = StyleSheet.create({
 	container: {
 		paddingVertical: 8,
 		paddingHorizontal: 16,
-		borderRadius: 16,
+		borderRadius: 4,
+		borderWidth: 1,
 		overflow: "hidden",
 	},
 	title: {

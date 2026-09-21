@@ -1,6 +1,8 @@
 import { useRouter } from "expo-router";
 import { Fragment, type FunctionComponent, memo, useState } from "react";
-import { Appbar, Avatar, Menu, Tooltip } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { Appbar, Avatar, Menu, Tooltip, useTheme } from "react-native-paper";
+import { HEADER_HEIGHT } from "../../theme/spacing";
 
 type props = {
 	isVideoListScreen?: boolean;
@@ -10,6 +12,7 @@ const HomeAppbar: FunctionComponent<props> = ({
 	isVideoListScreen = false,
 }) => {
 	const router = useRouter();
+	const theme = useTheme();
 
 	const [visible, setVisible] = useState(false);
 	const openMenu = () => setVisible(true);
@@ -34,7 +37,16 @@ const HomeAppbar: FunctionComponent<props> = ({
 	};
 
 	return (
-		<Appbar.Header elevated>
+		<Appbar.Header
+			elevated={false}
+			style={[
+				styles.header,
+				{
+					backgroundColor: theme.colors.surface,
+					borderBottomColor: theme.colors.outlineVariant,
+				},
+			]}
+		>
 			<Appbar.Action
 				animated={false}
 				icon={({ size }) => (
@@ -92,5 +104,12 @@ const HomeAppbar: FunctionComponent<props> = ({
 		</Appbar.Header>
 	);
 };
+
+const styles = StyleSheet.create({
+	header: {
+		height: HEADER_HEIGHT,
+		borderBottomWidth: 1,
+	},
+});
 
 export default memo(HomeAppbar);

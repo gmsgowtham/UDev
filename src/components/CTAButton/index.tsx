@@ -16,7 +16,7 @@ const CTAButton: FunctionComponent<CTAButtonProps> = ({ url, text }) => {
 		<Button
 			style={styles.button}
 			icon={"link"}
-			mode="elevated"
+			mode="contained"
 			compact
 			onPress={onButtonPress}
 		>
@@ -28,6 +28,7 @@ const CTAButton: FunctionComponent<CTAButtonProps> = ({ url, text }) => {
 const styles = StyleSheet.create({
 	button: {
 		marginVertical: 16,
+		borderRadius: 4,
 	},
 });
 

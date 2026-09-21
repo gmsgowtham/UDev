@@ -1,7 +1,8 @@
 import { Image } from "expo-image";
 import { type FunctionComponent, memo } from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Chip, Text } from "react-native-paper";
+import { Card, Chip, Text, useTheme } from "react-native-paper";
+import { RADIUS, SPACING } from "../../theme/spacing";
 import { VIDEO_COVER_IMAGE_ASPECT_RATIO } from "../../utils/const";
 
 interface author {
@@ -25,12 +26,23 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 	duration,
 	onItemClick,
 }) => {
+	const theme = useTheme();
 	const onClick = () => {
 		onItemClick(id);
 	};
 
 	return (
-		<Card onPress={onClick}>
+		<Card
+			mode="contained"
+			onPress={onClick}
+			style={[
+				styles.card,
+				{
+					backgroundColor: theme.colors.surface,
+					borderColor: theme.colors.outline,
+				},
+			]}
+		>
 			{coverImageUri ? (
 				<View style={styles.coverWrapper}>
 					<Image
@@ -38,22 +50,40 @@ const VideoFeedItem: FunctionComponent<VideoFeedItemProps> = ({
 						style={styles.cover}
 						contentFit="cover"
 					/>
-					<Chip elevated icon="videocam" style={styles.playChip}>
+					<Chip
+						mode="flat"
+						icon="play-arrow"
+						style={styles.playChip}
+						textStyle={styles.playChipText}
+					>
 						{duration}
 					</Chip>
 				</View>
 			) : null}
 			<Card.Content style={styles.content}>
-				<Text variant="titleLarge" style={styles.title}>
+				<Text
+					variant="titleLarge"
+					style={[styles.title, { color: theme.colors.onSurface }]}
+				>
 					{title}
 				</Text>
+				<Text
+					variant="bodySmall"
+					style={{ color: theme.colors.onSurfaceVariant }}
+				>
+					{author.name}
+				</Text>
 			</Card.Content>
-			<Card.Title title={author.name} subtitleVariant="bodySmall" />
 		</Card>
 	);
 };
 
 const styles = StyleSheet.create({
+	card: {
+		borderWidth: 1,
+		borderRadius: RADIUS.small,
+		overflow: "hidden",
+	},
 	coverWrapper: {
 		position: "relative",
 		flex: 1,
@@ -61,19 +91,29 @@ const styles = StyleSheet.create({
 	cover: {
 		width: "100%",
 		aspectRatio: VIDEO_COVER_IMAGE_ASPECT_RATIO,
-		borderTopLeftRadius: 12,
-		borderTopRightRadius: 12,
+		borderTopLeftRadius: RADIUS.small,
+		borderTopRightRadius: RADIUS.small,
 	},
 	content: {
-		marginTop: 16,
+		paddingHorizontal: SPACING.cardPadding,
+		paddingTop: SPACING.cardPadding,
+		paddingBottom: SPACING.cardPaddingBottom,
+		gap: 4,
 	},
 	title: {
-		marginBottom: 8,
+		marginBottom: 4,
 	},
 	playChip: {
 		position: "absolute",
-		bottom: 12,
-		right: 12,
+		bottom: 8,
+		right: 8,
+		backgroundColor: "rgba(0, 0, 0, 0.8)",
+		borderRadius: RADIUS.small,
+	},
+	playChipText: {
+		color: "#FFFFFF",
+		fontSize: 12,
+		fontFamily: "Inter-Medium",
 	},
 });
 

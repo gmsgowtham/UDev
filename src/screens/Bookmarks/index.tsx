@@ -9,6 +9,7 @@ import {
 	Portal,
 	Text,
 	Tooltip,
+	useTheme,
 } from "react-native-paper";
 import ArticleFeedItem from "../../components/ArticleFeedItem";
 import FloatingSvg from "../../components/Svg/Floating";
@@ -22,6 +23,7 @@ const keyExtractor = (item: PostBookmarkItem) => String(item.id);
 
 const BookmarksScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
 	const { width } = useWindowDimensions();
 	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
 	const [dialogVisible, setDialogVisible] = useState(false);
@@ -118,8 +120,19 @@ const BookmarksScreen: FunctionComponent = () => {
 	const onBackPress = useCallback(() => router.back(), [router]);
 
 	return (
-		<View style={styles.container}>
-			<Appbar.Header elevated>
+		<View
+			style={[styles.container, { backgroundColor: theme.colors.background }]}
+		>
+			<Appbar.Header
+				elevated={false}
+				style={[
+					styles.header,
+					{
+						backgroundColor: theme.colors.surface,
+						borderBottomColor: theme.colors.outlineVariant,
+					},
+				]}
+			>
 				<Appbar.BackAction onPress={onBackPress} />
 				<Appbar.Content title={"Bookmarks"} />
 				<Tooltip title="Info">
@@ -177,11 +190,14 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	header: {
+		borderBottomWidth: 1,
+	},
 	listWrapper: {
 		flex: 1,
 	},
 	listContainer: {
-		padding: 12,
+		padding: 8,
 	},
 	noDataContainer: {
 		flex: 1,
@@ -190,7 +206,7 @@ const styles = StyleSheet.create({
 		gap: 24,
 	},
 	separator: {
-		height: 12,
+		height: 8,
 		backgroundColor: "transparent",
 	},
 });

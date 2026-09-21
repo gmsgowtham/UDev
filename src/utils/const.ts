@@ -12,6 +12,10 @@ export const HELP_TEXT = {
 	EXTERNAL_LINK: "External Link",
 	NETWORK_DISCONNECTED:
 		"Uh-oh! It seems like you're not connected to the internet at the moment. Please check your network connection and try again.",
+	LOAD_FAILED: "Something went wrong while loading. Please try again.",
+	RETRY: "Retry",
+	VIDEO_UNAVAILABLE:
+		"This video has no playable source. Open it in your browser instead.",
 };
 export const LANG_ALIAS_MAP: Record<string, string> = {
 	js: "javascript",

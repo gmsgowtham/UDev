@@ -1,3 +1,4 @@
+import { useNetInfo } from "@react-native-community/netinfo";
 import type { FlashListRef } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
@@ -11,10 +12,12 @@ import {
 import { View } from "react-native";
 import type { TextInput } from "react-native";
 import { StyleSheet, ToastAndroid } from "react-native";
-import { List, Searchbar } from "react-native-paper";
+import { List, Searchbar, useTheme } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSearchArticles } from "../../api/hooks";
 import type { ApiArticleFeedItem } from "../../api/types";
 import ArticleFeed from "../../components/ArticleFeed";
+import ListErrorState from "../../components/List/ListErrorState";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import {
@@ -26,6 +29,9 @@ import { articleRoute } from "../../utils/router";
 
 const SearchScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
+	const netInfo = useNetInfo();
+	const insets = useSafeAreaInsets();
 	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
 	const [searchHistoryItems, setSearchHistoryItems] = useState<string[]>(() =>
 		getRecentSearchHistory(),
@@ -41,6 +47,7 @@ const SearchScreen: FunctionComponent = () => {
 		isPending,
 		isFetching,
 		isRefetching,
+		isError,
 		refetch,
 	} = useSearchArticles(submittedQuery);
 
@@ -122,6 +129,11 @@ const SearchScreen: FunctionComponent = () => {
 		searchRef.current?.focus();
 	}, []);
 
+	const onClearIconPress = useCallback(() => {
+		setSearchQuery("");
+		searchRef.current?.focus();
+	}, []);
+
 	const onSearchHistoryItemPress = useCallback((item: string) => {
 		setSearchQuery(item);
 		setSubmittedQuery(item);
@@ -133,6 +145,10 @@ const SearchScreen: FunctionComponent = () => {
 		() => <ListFooterLoader loading={isFetchingNextPage} />,
 		[isFetchingNextPage],
 	);
+
+	const onRetry = useCallback(() => {
+		refetch();
+	}, [refetch]);
 
 	const renderHistoryIcon = useCallback(() => <List.Icon icon="history" />, []);
 
@@ -150,29 +166,46 @@ const SearchScreen: FunctionComponent = () => {
 	);
 
 	return (
-		<View style={styles.container}>
-			<Searchbar
-				showDivider={false}
-				onSubmitEditing={onSubmit}
-				ref={searchRef}
-				mode="view"
-				icon="arrow-back"
-				onIconPress={onBackIconPress}
-				placeholder="Search articles"
-				onChangeText={onSearchTextChange}
-				value={searchQuery}
-				loading={submittedQuery.length > 0 && isFetching}
-				onClearIconPress={focusSearchInput}
-			/>
+		<View
+			style={[styles.container, { backgroundColor: theme.colors.background }]}
+		>
+			<View
+				style={{
+					paddingTop: insets.top,
+					backgroundColor: theme.colors.surface,
+				}}
+			>
+				<Searchbar
+					showDivider={false}
+					onSubmitEditing={onSubmit}
+					ref={searchRef}
+					mode="view"
+					icon="arrow-back"
+					onIconPress={onBackIconPress}
+					placeholder="Search articles"
+					onChangeText={onSearchTextChange}
+					value={searchQuery}
+					loading={submittedQuery.length > 0 && isFetching}
+					onClearIconPress={onClearIconPress}
+					style={[
+						styles.searchbar,
+						{
+							backgroundColor: theme.colors.surface,
+							borderBottomColor: theme.colors.outlineVariant,
+						},
+					]}
+				/>
+			</View>
 			{!isInitialLoading &&
 			articles.length < 1 &&
 			searchHistoryItems.length > 0 ? (
 				<List.Section>
 					<List.Subheader>History</List.Subheader>
 					<View style={{ paddingHorizontal: 12 }}>
-						{searchHistoryItems.map((history) => (
+						{searchHistoryItems.map((history, index) => (
 							<List.Item
 								key={`search-history-item-${history}`}
+								testID={`search-history-item-${index}`}
 								title={history}
 								left={renderHistoryIcon}
 								onPress={() => onSearchHistoryItemPress(history)}
@@ -181,7 +214,19 @@ const SearchScreen: FunctionComponent = () => {
 					</View>
 				</List.Section>
 			) : null}
-			{isInitialLoading ? (
+			{(isError || netInfo.isConnected === false) &&
+			submittedQuery.length > 0 &&
+			articles.length < 1 ? (
+				<ListErrorState
+					message={
+						netInfo.isConnected === false
+							? HELP_TEXT.NETWORK_DISCONNECTED
+							: undefined
+					}
+					onRetry={onRetry}
+					retrying={isRefetching && netInfo.isConnected !== false}
+				/>
+			) : isInitialLoading ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
@@ -201,11 +246,14 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	searchbar: {
+		borderBottomWidth: 1,
+	},
 	listWrapper: {
 		flex: 1,
 	},
 	listContainer: {
-		padding: 12,
+		padding: 8,
 	},
 });
 

@@ -18,7 +18,17 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 	};
 
 	return (
-		<Surface style={styles.wrapper} mode="flat">
+		<Surface
+			style={[
+				styles.wrapper,
+				{
+					// White fill with a defined border instead of a gray fill.
+					backgroundColor: theme.colors.surface,
+					borderColor: theme.dark ? theme.colors.outline : "#E3E3E0",
+				},
+			]}
+			mode="flat"
+		>
 			<TouchableRipple style={styles.touchable} onPress={onPress}>
 				<View style={styles.container}>
 					<Text variant="labelSmall" numberOfLines={1}>
@@ -39,9 +49,11 @@ const LinkPreview: FunctionComponent<Props> = ({ url }) => {
 
 const styles = StyleSheet.create({
 	wrapper: {
-		borderRadius: 16,
+		borderRadius: 4,
+		borderWidth: 1,
 		minHeight: 60,
 		marginVertical: 8,
+		overflow: "hidden",
 	},
 	touchable: {
 		flex: 1,

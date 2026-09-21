@@ -57,7 +57,7 @@ const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
 			<Animated.FlatList
 				removeClippedSubviews={false}
 				style={[
-					{ flex: 1, backgroundColor: theme.colors.background },
+					{ flex: 1, backgroundColor: theme.colors.surface },
 					flatListStyle,
 				]}
 				contentContainerStyle={[styles.container, contentContainerStyle]}

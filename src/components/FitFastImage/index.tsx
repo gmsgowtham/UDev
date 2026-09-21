@@ -7,6 +7,7 @@ import {
 	useState,
 } from "react";
 import { Image, StyleSheet, View } from "react-native";
+import { RADIUS } from "../../theme/spacing";
 import ImageSkeleton from "../Skeleton/ImageSkeleton";
 
 type FitFastImageProps = {
@@ -85,6 +86,8 @@ const FitFastImage: FunctionComponent<FitFastImageProps> = ({
 const styles = StyleSheet.create({
 	image: {
 		width: "100%",
+		borderRadius: RADIUS.small,
+		overflow: "hidden",
 	},
 	skeletonOverlay: {
 		...StyleSheet.absoluteFill,

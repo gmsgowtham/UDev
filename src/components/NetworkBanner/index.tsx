@@ -1,5 +1,7 @@
 import { type FunctionComponent, memo, useMemo } from "react";
-import { Banner, Icon } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { Banner, Icon, useTheme } from "react-native-paper";
+import { RADIUS } from "../../theme/spacing";
 import { HELP_TEXT } from "../../utils/const";
 
 interface NetworkBannerProps {
@@ -24,10 +26,18 @@ const NetworkBanner: FunctionComponent<NetworkBannerProps> = ({
 		}
 		return [];
 	}, [showCloseAction, onCloseActionPress]);
+	const theme = useTheme();
 	return (
 		<Banner
 			visible={visible}
 			actions={actions}
+			style={[
+				styles.banner,
+				{
+					backgroundColor: theme.colors.surface,
+					borderColor: theme.colors.outline,
+				},
+			]}
 			icon={({ size, color }) => (
 				<Icon
 					source="signal-wifi-statusbar-connected-no-internet-4"
@@ -35,11 +45,18 @@ const NetworkBanner: FunctionComponent<NetworkBannerProps> = ({
 					color={color}
 				/>
 			)}
-			elevation={5}
+			elevation={0}
 		>
 			{HELP_TEXT.NETWORK_DISCONNECTED}
 		</Banner>
 	);
 };
+
+const styles = StyleSheet.create({
+	banner: {
+		borderWidth: 1,
+		borderRadius: RADIUS.small,
+	},
+});
 
 export default memo(NetworkBanner);

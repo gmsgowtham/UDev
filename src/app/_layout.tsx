@@ -67,9 +67,9 @@ const RootLayout: FunctionComponent = () => {
 				...base.colors,
 				primary: theme.colors.primary,
 				background: theme.colors.background,
-				card: theme.colors.elevation.level2,
+				card: theme.colors.surface,
 				text: theme.colors.onBackground,
-				border: theme.colors.outline,
+				border: theme.colors.outlineVariant,
 				notification: theme.colors.error,
 			},
 		};
@@ -80,7 +80,7 @@ const RootLayout: FunctionComponent = () => {
 	}, []);
 
 	useEffect(() => {
-		StatusBar.setBackgroundColor(theme.colors.elevation.level2);
+		StatusBar.setBackgroundColor(theme.colors.surface);
 		StatusBar.setBarStyle(statusBarStyle);
 	}, [theme, statusBarStyle]);
 
@@ -90,7 +90,7 @@ const RootLayout: FunctionComponent = () => {
 		await SplashScreen.hideAsync();
 		// hack: to avoid status bar styles being mixed with splash screen
 		StatusBar.setBarStyle(statusBarStyle);
-		StatusBar.setBackgroundColor(theme.colors.elevation.level2);
+		StatusBar.setBackgroundColor(theme.colors.surface);
 	}, [fontsLoaded, ready, statusBarStyle, theme]);
 
 	useEffect(() => {

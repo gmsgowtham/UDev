@@ -86,6 +86,24 @@ class MDTokenizer extends MarkedTokenizer {
 		}
 
 		/**
+		 * Table of contents
+		 *
+		 * Matches the following pattern
+		 * {% toc %}
+		 * In-page anchor links have no target in the app renderer, so the
+		 * TOC is stripped from content (see `stripTableOfContents`); any
+		 * stray tag that reaches the tokenizer renders as nothing.
+		 */
+		const tocMatch = src.match(/^[*]?{%\s*toc\s*%}[*]?/i);
+		if (tocMatch) {
+			const token: Tokens.Space = {
+				type: "space",
+				raw: tocMatch[0],
+			};
+			return token as unknown as Tokens.Paragraph;
+		}
+
+		/**
 		 * Card tags
 		 *
 		 * `{% card %}...{% endcard %}` blocks are split out before lexing

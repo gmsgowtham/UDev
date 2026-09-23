@@ -50,12 +50,142 @@ export const fixTurndownConversion = (markdown: string): string => {
 	return processed;
 };
 
+const TOC_HEADING_PATTERN =
+	/^#{1,6}\s*[*_~]*\s*(table\s+of\s+contents?|toc)\s*[*_~:]*\s*$/i;
+const TOC_HTML_HEADING_PATTERN =
+	/^<h[1-6][^>]*>\s*(table\s+of\s+contents?|toc)\s*<\/h[1-6]>\s*$/i;
+const TOC_MARKER_START_PATTERN = /<!--\s*toc\s*-->/i;
+const TOC_MARKER_END_PATTERN = /<!--\s*tocstop\s*-->/i;
+const TOC_LIQUID_PATTERN = /^[*]?\s*{%\s*toc\s*%}\s*[*]?\s*$/i;
+const TOC_SINGLE_MARKER_PATTERN = /^\s*\[{1,2}toc\]{1,2}\s*$/i;
+const TOC_ANCHOR_LINK_PATTERN = /\[[^\]]+\]\([^)]*#[^)]*\)/;
+const TOC_LIST_ITEM_PATTERN = /^\s*(?:[-*+]\s+|\d+[.)]\s+)/;
+const TOC_BREAK_PATTERN = /^\s*(?:---+|\*\*\*+|___+)\s*$/;
+const MD_HEADING_PATTERN = /^#{1,6}\s+\S/;
+const FENCE_PATTERN = /^\s*(```|~~~)/;
+
+/**
+ * Removes table-of-contents blocks from article markdown.
+ *
+ * Authors typically add a `## Table of Contents` heading followed by a list
+ * of in-page anchor links (`[Section](#anchor)`). Those anchors have no
+ * target in the app renderer, so the TOC is dead weight — strip the heading
+ * plus its link list (and an optional trailing `---` rule).
+ *
+ * Also drops TOC markers that would otherwise leak into rendered output:
+ * `{% toc %}`, `[TOC]`, and `<!-- toc -->...<!-- tocstop -->` blocks.
+ * Fenced code blocks are left untouched.
+ */
+export const stripTableOfContents = (markdown: string): string => {
+	if (!markdown) return markdown;
+	if (!/toc|table of contents?|\[toc\]/i.test(markdown)) return markdown;
+
+	const lines = markdown.split("\n");
+	const out: string[] = [];
+	let inFence = false;
+	let i = 0;
+
+	while (i < lines.length) {
+		const line = lines[i];
+		if (FENCE_PATTERN.test(line)) {
+			inFence = !inFence;
+			out.push(line);
+			i++;
+			continue;
+		}
+		if (inFence) {
+			out.push(line);
+			i++;
+			continue;
+		}
+
+		if (TOC_LIQUID_PATTERN.test(line) || TOC_SINGLE_MARKER_PATTERN.test(line)) {
+			i++;
+			continue;
+		}
+		if (TOC_MARKER_END_PATTERN.test(line)) {
+			i++;
+			continue;
+		}
+		if (TOC_MARKER_START_PATTERN.test(line)) {
+			let j = i + 1;
+			let found = false;
+			while (j < lines.length) {
+				if (TOC_MARKER_END_PATTERN.test(lines[j])) {
+					found = true;
+					break;
+				}
+				j++;
+			}
+			i = found ? j + 1 : i + 1;
+			continue;
+		}
+
+		const trimmed = line.trim();
+		if (
+			TOC_HEADING_PATTERN.test(trimmed) ||
+			TOC_HTML_HEADING_PATTERN.test(trimmed)
+		) {
+			let k = i + 1;
+			let end = k;
+			let anchorItems = 0;
+			while (k < lines.length) {
+				const cur = lines[k];
+				if (FENCE_PATTERN.test(cur)) break;
+				const curTrimmed = cur.trim();
+				if (curTrimmed === "") {
+					k++;
+					continue;
+				}
+				if (
+					TOC_MARKER_START_PATTERN.test(cur) ||
+					TOC_MARKER_END_PATTERN.test(cur) ||
+					TOC_LIQUID_PATTERN.test(cur) ||
+					TOC_SINGLE_MARKER_PATTERN.test(cur) ||
+					TOC_BREAK_PATTERN.test(cur)
+				) {
+					k++;
+					end = k;
+					continue;
+				}
+				if (TOC_LIST_ITEM_PATTERN.test(cur)) {
+					if (TOC_ANCHOR_LINK_PATTERN.test(cur)) anchorItems++;
+					k++;
+					end = k;
+					continue;
+				}
+				if (MD_HEADING_PATTERN.test(curTrimmed)) break;
+				break;
+			}
+			if (anchorItems >= 1) {
+				while (end < lines.length && lines[end].trim() === "") end++;
+				if (end < lines.length && TOC_BREAK_PATTERN.test(lines[end])) {
+					end++;
+					while (end < lines.length && lines[end].trim() === "") end++;
+				}
+				i = end;
+				continue;
+			}
+			out.push(line);
+			i++;
+			continue;
+		}
+
+		out.push(line);
+		i++;
+	}
+
+	return out.join("\n");
+};
+
 export const processMarkdownContent = (markdown: string): string => {
 	let mdProcessed = markdown.trim();
 	// Check if markdown contains metadata information, if found strip the metadata
 	if (mdProcessed.startsWith("---")) {
 		mdProcessed = stripMetaData(mdProcessed);
 	}
+
+	mdProcessed = stripTableOfContents(mdProcessed);
 
 	// Add new line before and after embeds to ensure it gets picked up by the tokenizer
 	mdProcessed = mdProcessed.replace(/([*]?{%)/gm, "\n\n$1");
@@ -71,6 +201,7 @@ export const processMarkdownContent = (markdown: string): string => {
 		mdProcessed = convertHtmlInMarkdownToMarkdown(
 			prepareTurndownContent(mdProcessed),
 		);
+		mdProcessed = stripTableOfContents(mdProcessed);
 	}
 
 	return mdProcessed;

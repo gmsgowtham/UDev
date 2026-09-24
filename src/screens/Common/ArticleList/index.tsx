@@ -1,5 +1,5 @@
+import type { LegendListRef } from "@legendapp/list/react-native";
 import { useNetInfo } from "@react-native-community/netinfo";
-import type { FlashListRef } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
@@ -45,7 +45,7 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	isError,
 	header,
 }) => {
-	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
+	const listRef = useRef<LegendListRef>(null);
 
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();

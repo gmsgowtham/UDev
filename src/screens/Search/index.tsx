@@ -1,5 +1,5 @@
+import type { LegendListRef } from "@legendapp/list/react-native";
 import { useNetInfo } from "@react-native-community/netinfo";
-import type { FlashListRef } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
@@ -32,7 +32,7 @@ const SearchScreen: FunctionComponent = () => {
 	const theme = useTheme();
 	const netInfo = useNetInfo();
 	const insets = useSafeAreaInsets();
-	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
+	const listRef = useRef<LegendListRef>(null);
 	const [searchHistoryItems, setSearchHistoryItems] = useState<string[]>(() =>
 		getRecentSearchHistory(),
 	);

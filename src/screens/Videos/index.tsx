@@ -1,5 +1,8 @@
+import {
+	LegendList,
+	type LegendListRenderItemProps,
+} from "@legendapp/list/react-native";
 import { useNetInfo } from "@react-native-community/netinfo";
-import { FlashList, type ListRenderItem } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
@@ -94,8 +97,8 @@ const VideosScreen: FunctionComponent = () => {
 		}
 	}, [refetch]);
 
-	const renderItem: ListRenderItem<ApiVideoListItem> = useCallback(
-		({ item }) => {
+	const renderItem = useCallback(
+		({ item }: LegendListRenderItemProps<ApiVideoListItem>) => {
 			const youtubeId = getYoutubeVideoId(item.video_source_url ?? "");
 			return (
 				<VideoFeedItem
@@ -148,11 +151,12 @@ const VideosScreen: FunctionComponent = () => {
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
-					<FlashList
+					<LegendList
 						showsVerticalScrollIndicator={false}
 						data={videos}
 						renderItem={renderItem}
 						keyExtractor={keyExtractor}
+						estimatedItemSize={300}
 						refreshing={isRefetching}
 						onRefresh={onRefresh}
 						onEndReached={onEndReached}

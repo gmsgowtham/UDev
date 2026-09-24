@@ -1,4 +1,7 @@
-import { FlashList, type ListRenderItem } from "@shopify/flash-list";
+import {
+	LegendList,
+	type LegendListRenderItemProps,
+} from "@legendapp/list/react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { type FunctionComponent, memo, useCallback, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
@@ -79,8 +82,8 @@ const BookmarksScreen: FunctionComponent = () => {
 		}, []),
 	);
 
-	const renderItem: ListRenderItem<PostBookmarkItem> = useCallback(
-		({ item }: { item: PostBookmarkItem }) => {
+	const renderItem = useCallback(
+		({ item }: LegendListRenderItemProps<PostBookmarkItem>) => {
 			switch (item.type) {
 				case "article": {
 					return (
@@ -150,10 +153,11 @@ const BookmarksScreen: FunctionComponent = () => {
 				</View>
 			) : (
 				<View style={styles.listWrapper}>
-					<FlashList
+					<LegendList
 						showsVerticalScrollIndicator={false}
 						onEndReachedThreshold={0.75}
 						getItemType={(item) => item.type}
+						estimatedItemSize={300}
 						contentContainerStyle={styles.listContainer}
 						data={bookmarks}
 						renderItem={renderItem}

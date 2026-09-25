@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import React, { type FunctionComponent } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Appbar, Text } from "react-native-paper";
+import { Appbar, Text, useTheme } from "react-native-paper";
 import Link from "../../components/Link";
 import LinkPreview from "../../components/LinkPreview";
 import { NPM_HOST } from "../../utils/const";
@@ -9,6 +9,7 @@ import meta from "./../../../package.json";
 
 const AboutScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
 	const renderDeps = () => {
 		const dependencies = {
 			...meta.dependencies,
@@ -34,7 +35,16 @@ const AboutScreen: FunctionComponent = () => {
 
 	return (
 		<>
-			<Appbar.Header elevated>
+			<Appbar.Header
+				elevated={false}
+				style={[
+					styles.header,
+					{
+						backgroundColor: theme.colors.surface,
+						borderBottomColor: theme.colors.outlineVariant,
+					},
+				]}
+			>
 				<Appbar.BackAction onPress={() => router.back()} />
 				<Appbar.Content title={"About"} />
 			</Appbar.Header>
@@ -82,6 +92,9 @@ const AboutScreen: FunctionComponent = () => {
 };
 
 const styles = StyleSheet.create({
+	header: {
+		borderBottomWidth: 1,
+	},
 	container: {
 		padding: 16,
 	},

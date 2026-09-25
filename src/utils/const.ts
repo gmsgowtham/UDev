@@ -1,5 +1,13 @@
 export const API_BASE_URL = "https://dev.to/api";
 export const DEFAULT_PAGE_SIZE = 10;
+// Top feed scopes (dev.to /top/week, /top/month, /top/year):
+// the API's `top` param is the number of days since publication.
+export const TOP_FEED_SCOPES = {
+	week: 7,
+	month: 30,
+	year: 365,
+} as const;
+export type TopFeedScope = keyof typeof TOP_FEED_SCOPES;
 export const HELP_TEXT = {
 	FEED_REFRESHED: "Feed refreshed",
 	CODE_COPY: "Code copied to clipboard",
@@ -12,6 +20,11 @@ export const HELP_TEXT = {
 	EXTERNAL_LINK: "External Link",
 	NETWORK_DISCONNECTED:
 		"Uh-oh! It seems like you're not connected to the internet at the moment. Please check your network connection and try again.",
+	LOAD_FAILED: "Something went wrong while loading. Please try again.",
+	RETRY: "Retry",
+	VIDEO_UNAVAILABLE:
+		"This video has no playable source. Open it in your browser instead.",
+	ARTICLE_EMPTY: "This article has no content.",
 };
 export const LANG_ALIAS_MAP: Record<string, string> = {
 	js: "javascript",

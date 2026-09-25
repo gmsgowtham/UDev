@@ -1,6 +1,7 @@
 import {
 	buildURLParams,
 	getYoutubeEmbedURL,
+	getYoutubeThumbnailUrl,
 	getYoutubeVideoId,
 } from "./../url";
 describe(buildURLParams, () => {
@@ -70,5 +71,18 @@ describe(getYoutubeVideoId, () => {
 		expect(getYoutubeVideoId("")).toBeNull();
 		expect(getYoutubeVideoId("not-a-video-id!!")).toBeNull();
 		expect(getYoutubeVideoId("https://example.com")).toBeNull();
+	});
+});
+
+describe(getYoutubeThumbnailUrl, () => {
+	it("defaults to hqdefault", () => {
+		expect(getYoutubeThumbnailUrl("pXOTjxcNzdQ")).toBe(
+			"https://i.ytimg.com/vi/pXOTjxcNzdQ/hqdefault.jpg",
+		);
+	});
+	it("supports other qualities", () => {
+		expect(getYoutubeThumbnailUrl("pXOTjxcNzdQ", "maxresdefault")).toBe(
+			"https://i.ytimg.com/vi/pXOTjxcNzdQ/maxresdefault.jpg",
+		);
 	});
 });

@@ -1,8 +1,10 @@
 import { Tabs } from "expo-router";
 import type { FunctionComponent } from "react";
-import { BottomNavigation, Icon } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { BottomNavigation, Icon, useTheme } from "react-native-paper";
 
 const TabsLayout: FunctionComponent = () => {
+	const theme = useTheme();
 	return (
 		<Tabs
 			initialRouteName="home"
@@ -11,9 +13,18 @@ const TabsLayout: FunctionComponent = () => {
 			}}
 			tabBar={({ navigation, state, descriptors, insets }) => (
 				<BottomNavigation.Bar
-					shifting
+					shifting={false}
 					navigationState={state}
 					safeAreaInsets={insets}
+					activeColor={theme.colors.primary}
+					inactiveColor={theme.colors.onSurfaceVariant}
+					style={[
+						styles.bar,
+						{
+							backgroundColor: theme.colors.surface,
+							borderTopColor: theme.colors.outlineVariant,
+						},
+					]}
 					onTabPress={({ route, preventDefault }) => {
 						const event = navigation.emit({
 							type: "tabPress",
@@ -64,9 +75,11 @@ const TabsLayout: FunctionComponent = () => {
 			<Tabs.Screen
 				name="home"
 				options={{
-					tabBarLabel: "Featured",
+					tabBarLabel: "Top",
 					tabBarIcon: ({ color, size }) => {
-						return <Icon source="home" size={size} color={String(color)} />;
+						return (
+							<Icon source="trending-up" size={size} color={String(color)} />
+						);
 					},
 				}}
 			/>
@@ -84,5 +97,11 @@ const TabsLayout: FunctionComponent = () => {
 		</Tabs>
 	);
 };
+
+const styles = StyleSheet.create({
+	bar: {
+		borderTopWidth: 1,
+	},
+});
 
 export default TabsLayout;

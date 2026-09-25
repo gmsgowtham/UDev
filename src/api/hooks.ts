@@ -1,5 +1,10 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { DEFAULT_PAGE_SIZE } from "../utils/const";
+import { unescape as unescapeHTML } from "html-escaper";
+import {
+	DEFAULT_PAGE_SIZE,
+	TOP_FEED_SCOPES,
+	type TopFeedScope,
+} from "../utils/const";
 import { getImageSize } from "../utils/image";
 import { processMarkdownContent } from "../utils/markdown";
 import {
@@ -13,7 +18,7 @@ import { ArticleFeedApiStates } from "./types";
 
 export const articleKeys = {
 	latest: ["articles", "latest"] as const,
-	featured: ["articles", "featured"] as const,
+	top: (scope: TopFeedScope) => ["articles", "top", scope] as const,
 	search: (q: string) => ["articles", "search", q] as const,
 	detail: (id: number) => ["article", id] as const,
 };
@@ -50,11 +55,14 @@ export function useLatestArticles() {
 	});
 }
 
-export function useFeaturedArticles() {
+export function useTopArticles(scope: TopFeedScope) {
 	return useInfiniteQuery({
-		queryKey: articleKeys.featured,
+		queryKey: articleKeys.top(scope),
 		queryFn: ({ pageParam, signal }) =>
-			getArticlesList(undefined, pageParam, DEFAULT_PAGE_SIZE, { signal }),
+			getArticlesList(undefined, pageParam, DEFAULT_PAGE_SIZE, {
+				signal,
+				top: TOP_FEED_SCOPES[scope],
+			}),
 		initialPageParam: 1,
 		getNextPageParam,
 	});
@@ -110,9 +118,11 @@ export function useLinkPreviewTitle(url: string) {
 		queryKey: linkPreviewKeys.title(url),
 		queryFn: async ({ signal }) => {
 			const html = await fetchContentFromURL(url, { signal });
-			const matches = /<title>(.*?)<\/title>/i.exec(html);
+			const matches = /<title>(.*?)<\/title>/is.exec(html);
 			if (matches?.[1]) {
-				return matches[1];
+				// Titles arrive raw from the page HTML, so decode entities
+				// (e.g. Fetch&#39;d) and collapse whitespace before display.
+				return unescapeHTML(matches[1]).replace(/\s+/g, " ").trim();
 			}
 			return "External URL";
 		},

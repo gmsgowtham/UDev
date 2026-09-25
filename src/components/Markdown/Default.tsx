@@ -1,11 +1,15 @@
 import {
+	LegendList,
+	type LegendListRenderItemProps,
+} from "@legendapp/list/react-native";
+import {
 	type FunctionComponent,
 	type ReactNode,
 	memo,
 	useCallback,
 	useMemo,
 } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ActivityIndicator, useTheme } from "react-native-paper";
 import { type CardSection, splitCardSections } from "../../utils/card";
 import MarkdownCard from "./Card";
@@ -49,23 +53,26 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 		return [<ActivityIndicator />];
 	}, [loadingState, loadingPlaceholder]);
 
-	const renderItem = useCallback(({ item }: { item: ListItem }) => {
-		if (isCardSection(item)) {
-			if (item.type === "card") {
+	const renderItem = useCallback(
+		({ item }: LegendListRenderItemProps<ListItem>) => {
+			if (isCardSection(item)) {
+				if (item.type === "card") {
+					return (
+						<View style={styles.item}>
+							<MarkdownCard value={item.content} />
+						</View>
+					);
+				}
 				return (
 					<View style={styles.item}>
-						<MarkdownCard value={item.content} />
+						<MarkdownChunk value={item.content} />
 					</View>
 				);
 			}
-			return (
-				<View style={styles.item}>
-					<MarkdownChunk value={item.content} />
-				</View>
-			);
-		}
-		return <View style={styles.item}>{item}</View>;
-	}, []);
+			return <View style={styles.item}>{item}</View>;
+		},
+		[],
+	);
 
 	const keyExtractor = useCallback(
 		(_: ListItem, index: number) => index.toString(),
@@ -73,13 +80,11 @@ const RenderMarkdownDefault: FunctionComponent<MarkdownRendererProps> = ({
 	);
 
 	return (
-		<FlatList
-			removeClippedSubviews={false}
+		<LegendList
 			keyExtractor={keyExtractor}
-			maxToRenderPerBatch={8}
-			initialNumToRender={8}
+			estimatedItemSize={300}
 			style={{
-				backgroundColor: theme.colors.background,
+				backgroundColor: theme.colors.surface,
 			}}
 			data={loadingState ? loadingElements : sections}
 			renderItem={renderItem}

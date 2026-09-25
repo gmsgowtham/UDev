@@ -43,8 +43,8 @@ type VideoLike = {
 	id: number;
 	title: string;
 	url: string;
-	source: string;
-	cover: string;
+	source?: string | null;
+	cover?: string | null;
 	authorName: string;
 	duration: string;
 };
@@ -75,8 +75,8 @@ export const videoRoute = (video: VideoLike) => {
 			id: String(video.id),
 			title: video.title,
 			url: video.url,
-			source: video.source,
-			cover: video.cover,
+			source: video.source ?? "",
+			cover: video.cover ?? "",
 			authorName: video.authorName,
 			duration: video.duration,
 		},

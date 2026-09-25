@@ -1,17 +1,20 @@
+import type { LegendListRef } from "@legendapp/list/react-native";
 import { useNetInfo } from "@react-native-community/netinfo";
-import type { FlashListRef } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
+	type ReactNode,
 	memo,
 	useCallback,
 	useRef,
 	useState,
 } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
+import { useTheme } from "react-native-paper";
 import type { ApiArticleFeedItem } from "../../../api/types";
 import HomeAppbar from "../../../components/Appbar/HomeAppbar";
 import ArticleFeed from "../../../components/ArticleFeed";
+import ListErrorState from "../../../components/List/ListErrorState";
 import ListFooterLoader from "../../../components/List/ListFooterLoader";
 import NetworkBanner from "../../../components/NetworkBanner";
 import FeedSkeleton from "../../../components/Skeleton/FeedSkeleton";
@@ -28,6 +31,7 @@ interface ArticleFeedProps {
 	isRefetching: boolean;
 	refetch: () => Promise<{ isError: boolean }>;
 	isError: boolean;
+	header?: ReactNode;
 }
 
 const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
@@ -39,13 +43,15 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 	isRefetching,
 	refetch,
 	isError,
+	header,
 }) => {
-	const listRef = useRef<FlashListRef<ApiArticleFeedItem>>(null);
+	const listRef = useRef<LegendListRef>(null);
 
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
 
 	const router = useRouter();
+	const theme = useTheme();
 
 	const onItemClick = useCallback(
 		(id: number) => {
@@ -95,15 +101,37 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 
 	const onCloseBanner = useCallback(() => setShowNetworkBanner(false), []);
 
+	const onRetry = useCallback(() => {
+		refetch();
+	}, [refetch]);
+
 	return (
-		<View style={styles.container}>
+		<View
+			style={[styles.container, { backgroundColor: theme.colors.background }]}
+		>
 			<HomeAppbar />
 			<NetworkBanner
-				visible={isError && !netInfo.isConnected && showNetworkBanner}
+				visible={
+					isError &&
+					netInfo.isConnected === false &&
+					showNetworkBanner &&
+					articles.length > 0
+				}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
-			{isPending && articles.length < 1 ? (
+			{header}
+			{(isError || netInfo.isConnected === false) && articles.length < 1 ? (
+				<ListErrorState
+					message={
+						netInfo.isConnected === false
+							? HELP_TEXT.NETWORK_DISCONNECTED
+							: undefined
+					}
+					onRetry={onRetry}
+					retrying={isRefetching && netInfo.isConnected !== false}
+				/>
+			) : isPending && articles.length < 1 ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
@@ -135,7 +163,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	listContainer: {
-		padding: 12,
+		padding: 8,
 	},
 });
 

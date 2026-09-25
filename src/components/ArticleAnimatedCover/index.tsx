@@ -55,7 +55,7 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 			pointerEvents="none"
 			style={[
 				styles.header,
-				{ backgroundColor: theme.colors.background },
+				{ backgroundColor: theme.colors.surface },
 				animations.container,
 			]}
 		>
@@ -64,20 +64,31 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 					<Image
 						source={{ uri: cover }}
 						style={styles.image}
-						contentFit="contain"
+						contentFit="cover"
 					/>
 				</Animated.View>
 			) : null}
 			<View style={styles.wrapper}>
-				<Text variant="headlineMedium">{title}</Text>
+				<Text variant="headlineLarge" style={{ color: theme.colors.onSurface }}>
+					{title}
+				</Text>
 				<TagList tags={tags} />
 				<View style={styles.authorContainer}>
 					<Avatar.Image size={40} source={{ uri: author.imageUri }} />
 					<View style={styles.authorInfo}>
-						<Text variant="titleMedium" numberOfLines={1}>
+						<Text
+							variant="titleMedium"
+							numberOfLines={1}
+							style={{ color: theme.colors.onSurface }}
+						>
 							{authorTitle}
 						</Text>
-						<Text variant="labelMedium">{dateReadable}</Text>
+						<Text
+							variant="bodySmall"
+							style={{ color: theme.colors.onSurfaceVariant }}
+						>
+							{dateReadable}
+						</Text>
 					</View>
 				</View>
 			</View>
@@ -87,7 +98,7 @@ const ArticleAnimatedCover: FunctionComponent<ArticleAnimatedCoverProps> = ({
 
 const styles = StyleSheet.create({
 	wrapper: {
-		paddingHorizontal: 12,
+		paddingHorizontal: 16,
 		marginVertical: 16,
 		gap: 8,
 	},
@@ -99,7 +110,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 16,
+		gap: 8,
 		marginTop: 8,
 	},
 	authorInfo: {

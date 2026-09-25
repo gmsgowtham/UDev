@@ -38,7 +38,7 @@ const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 					// biome-ignore lint/suspicious/noArrayIndexKey: this is an controlled array
 					key={`skeleton_item_${i}`}
 					colorMode={colorMode}
-					radius={16}
+					radius={4}
 					height={SKELETON_ITEM_HEIGHT}
 					width={"100%"}
 				/>
@@ -50,8 +50,8 @@ const FeedSkeleton: FunctionComponent<FeedSkeletonProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		gap: 12,
-		padding: 12,
+		gap: 8,
+		padding: 8,
 	},
 });
 

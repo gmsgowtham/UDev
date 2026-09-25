@@ -1,5 +1,5 @@
 import type { FunctionComponent } from "react";
-import LatestScreen from "../../screens/LatestFeed";
+import LatestScreen from "../../../screens/LatestFeed";
 
 const LatestTab: FunctionComponent = () => {
 	return <LatestScreen />;

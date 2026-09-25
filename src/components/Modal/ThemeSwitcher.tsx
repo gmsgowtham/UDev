@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
 	modal: {
 		padding: 20,
 		marginHorizontal: "10%",
+		borderRadius: 4,
 	},
 	modalWrapper: {
 		gap: 24,

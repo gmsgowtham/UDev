@@ -5,22 +5,34 @@ import {
 	useYouTubeEvent,
 	useYouTubePlayer,
 } from "react-native-youtube-bridge";
+import { RADIUS } from "../../theme/spacing";
 import LinkPreview from "../LinkPreview";
 
 interface Props {
 	videoId: string;
 	url: string;
+	autoplay?: boolean;
 }
 
-const YoutubeEmbed: FunctionComponent<Props> = ({ videoId, url }) => {
+const YoutubeEmbed: FunctionComponent<Props> = ({
+	videoId,
+	url,
+	autoplay = false,
+}) => {
 	const player = useYouTubePlayer(videoId, {
-		autoplay: false,
+		autoplay,
+		muted: autoplay,
 		controls: true,
 		playsinline: true,
 		rel: false,
 	});
 	const [hasError, setHasError] = useState(false);
 	useYouTubeEvent(player, "error", () => setHasError(true));
+	useYouTubeEvent(player, "autoplayBlocked", () => {
+		if (!autoplay) return;
+		player.mute();
+		player.play();
+	});
 
 	if (hasError) {
 		return <LinkPreview url={url} />;
@@ -43,7 +55,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		aspectRatio: 16 / 9,
 		marginVertical: 8,
-		borderRadius: 16,
+		borderRadius: RADIUS.small,
 		overflow: "hidden",
 		backgroundColor: "#000",
 	},

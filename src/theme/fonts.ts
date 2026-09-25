@@ -3,22 +3,22 @@ const fontsConfig = {
 		fontFamily: "Inter-Regular",
 	},
 	displaySmall: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-Bold",
 	},
 	displayMedium: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-Bold",
 	},
 	displayLarge: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-Bold",
 	},
 	headlineSmall: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-SemiBold",
 	},
 	headlineMedium: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-Bold",
 	},
 	headlineLarge: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-Bold",
 	},
 	titleSmall: {
 		fontFamily: "Inter-Medium",
@@ -27,7 +27,7 @@ const fontsConfig = {
 		fontFamily: "Inter-Medium",
 	},
 	titleLarge: {
-		fontFamily: "Inter-Regular",
+		fontFamily: "Inter-SemiBold",
 	},
 	labelSmall: {
 		fontFamily: "Inter-Medium",

@@ -1,13 +1,15 @@
+import {
+	AnimatedLegendList,
+	type AnimatedLegendListProps,
+} from "@legendapp/list/reanimated";
 import { type FunctionComponent, memo, useCallback, useMemo } from "react";
 import {
-	type FlatListProps,
 	type NativeScrollEvent,
 	type NativeSyntheticEvent,
 	StyleSheet,
 	View,
 } from "react-native";
 import { useTheme } from "react-native-paper";
-import Animated from "react-native-reanimated";
 import { type CardSection, splitCardSections } from "../../utils/card";
 import MarkdownCard from "./Card";
 import MarkdownChunk from "./Chunk";
@@ -16,8 +18,8 @@ interface MarkdownRendererProps {
 	value?: string;
 	onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 	flatListProps?: Omit<
-		FlatListProps<CardSection>,
-		"data" | "renderItem" | "CellRendererComponent"
+		AnimatedLegendListProps<CardSection>,
+		"data" | "renderItem"
 	>;
 }
 
@@ -54,20 +56,21 @@ const RenderMarkdownAnimatedFlatList: FunctionComponent<MarkdownRendererProps> =
 		} = flatListProps ?? {};
 
 		return (
-			<Animated.FlatList
-				removeClippedSubviews={false}
+			<AnimatedLegendList
 				style={[
-					{ flex: 1, backgroundColor: theme.colors.background },
+					{ flex: 1, backgroundColor: theme.colors.surface },
 					flatListStyle,
 				]}
 				contentContainerStyle={[styles.container, contentContainerStyle]}
 				{...restFlatListProps}
 				keyExtractor={keyExtractor}
-				maxToRenderPerBatch={8}
-				initialNumToRender={8}
+				estimatedItemSize={300}
 				data={sections}
 				renderItem={renderItem}
-				onScroll={onScroll}
+				// AnimatedLegendList types onScroll with its own synthetic event
+				// shapes, so a Reanimated worklet scroll handler needs a cast
+				// (runtime-compatible, see legend-list#398).
+				onScroll={onScroll as AnimatedLegendListProps<CardSection>["onScroll"]}
 			/>
 		);
 	};

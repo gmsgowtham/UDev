@@ -49,6 +49,13 @@
 		},
 		"ios": {
 			"bundleIdentifier": "com.devtounofficial"
-		}
+		},
+		"extra": {
+			"router": {},
+			"eas": {
+				"projectId": "4ed060a7-5f6c-4344-8e4a-a864f61334d1"
+			}
+		},
+		"owner": "gmsgowtham"
 	}
 }

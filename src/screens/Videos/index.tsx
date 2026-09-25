@@ -1,5 +1,8 @@
+import {
+	LegendList,
+	type LegendListRenderItemProps,
+} from "@legendapp/list/react-native";
 import { useNetInfo } from "@react-native-community/netinfo";
-import { FlashList, type ListRenderItem } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import {
 	type FunctionComponent,
@@ -9,15 +12,18 @@ import {
 	useState,
 } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
+import { useTheme } from "react-native-paper";
 import { useVideos } from "../../api/hooks";
 import type { ApiVideoListItem } from "../../api/types";
 import HomeAppbar from "../../components/Appbar/HomeAppbar";
+import ListErrorState from "../../components/List/ListErrorState";
 import ListFooterLoader from "../../components/List/ListFooterLoader";
 import NetworkBanner from "../../components/NetworkBanner";
 import FeedSkeleton from "../../components/Skeleton/FeedSkeleton";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { DEV_TO_HOST, HELP_TEXT } from "../../utils/const";
 import { videoRoute } from "../../utils/router";
+import { getYoutubeThumbnailUrl, getYoutubeVideoId } from "../../utils/url";
 
 const FeedSeparator = () => <View style={styles.separator} />;
 
@@ -25,6 +31,7 @@ const keyExtractor = (item: ApiVideoListItem) => String(item.id);
 
 const VideosScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
 	const [showNetworkBanner, setShowNetworkBanner] = useState(true);
 	const netInfo = useNetInfo();
 
@@ -90,14 +97,19 @@ const VideosScreen: FunctionComponent = () => {
 		}
 	}, [refetch]);
 
-	const renderItem: ListRenderItem<ApiVideoListItem> = useCallback(
-		({ item }) => {
+	const renderItem = useCallback(
+		({ item }: LegendListRenderItemProps<ApiVideoListItem>) => {
+			const youtubeId = getYoutubeVideoId(item.video_source_url ?? "");
 			return (
 				<VideoFeedItem
 					id={item.id}
 					title={item.title}
 					duration={item.video_duration_in_minutes}
-					coverImageUri={item.cloudinary_video_url}
+					thumbnailUri={
+						youtubeId
+							? getYoutubeThumbnailUrl(youtubeId)
+							: item.cloudinary_video_url
+					}
 					author={{
 						name: item.user.name,
 					}}
@@ -115,23 +127,45 @@ const VideosScreen: FunctionComponent = () => {
 
 	const onCloseBanner = useCallback(() => setShowNetworkBanner(false), []);
 
+	const onRetry = useCallback(() => {
+		refetch();
+	}, [refetch]);
+
 	return (
-		<View style={styles.container}>
+		<View
+			style={[styles.container, { backgroundColor: theme.colors.background }]}
+		>
 			<HomeAppbar isVideoListScreen />
 			<NetworkBanner
-				visible={isError && !netInfo.isConnected && showNetworkBanner}
+				visible={
+					isError &&
+					netInfo.isConnected === false &&
+					showNetworkBanner &&
+					videos.length > 0
+				}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
-			{isPending && videos.length < 1 ? (
+			{(isError || netInfo.isConnected === false) && videos.length < 1 ? (
+				<ListErrorState
+					message={
+						netInfo.isConnected === false
+							? HELP_TEXT.NETWORK_DISCONNECTED
+							: undefined
+					}
+					onRetry={onRetry}
+					retrying={isRefetching && netInfo.isConnected !== false}
+				/>
+			) : isPending && videos.length < 1 ? (
 				<FeedSkeleton />
 			) : (
 				<View style={styles.listWrapper}>
-					<FlashList
+					<LegendList
 						showsVerticalScrollIndicator={false}
 						data={videos}
 						renderItem={renderItem}
 						keyExtractor={keyExtractor}
+						estimatedItemSize={300}
 						refreshing={isRefetching}
 						onRefresh={onRefresh}
 						onEndReached={onEndReached}
@@ -159,10 +193,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	listContainer: {
-		padding: 12,
+		padding: 8,
 	},
 	separator: {
-		height: 12,
+		height: 8,
 		backgroundColor: "transparent",
 	},
 });

@@ -1,4 +1,7 @@
-import { FlashList, type ListRenderItem } from "@shopify/flash-list";
+import {
+	LegendList,
+	type LegendListRenderItemProps,
+} from "@legendapp/list/react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { type FunctionComponent, memo, useCallback, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
@@ -9,12 +12,14 @@ import {
 	Portal,
 	Text,
 	Tooltip,
+	useTheme,
 } from "react-native-paper";
 import ArticleFeedItem from "../../components/ArticleFeedItem";
 import FloatingSvg from "../../components/Svg/Floating";
 import VideoFeedItem from "../../components/VideoFeedItem";
 import { type PostBookmarkItem, getBookmarks } from "../../mmkv/bookmark";
 import { articleRoute, videoRoute } from "../../utils/router";
+import { getYoutubeThumbnailUrl, getYoutubeVideoId } from "../../utils/url";
 
 const FeedSeparator = () => <View style={styles.separator} />;
 
@@ -22,6 +27,7 @@ const keyExtractor = (item: PostBookmarkItem) => String(item.id);
 
 const BookmarksScreen: FunctionComponent = () => {
 	const router = useRouter();
+	const theme = useTheme();
 	const { width } = useWindowDimensions();
 	const [bookmarks, setBookmarks] = useState<PostBookmarkItem[]>([]);
 	const [dialogVisible, setDialogVisible] = useState(false);
@@ -76,8 +82,8 @@ const BookmarksScreen: FunctionComponent = () => {
 		}, []),
 	);
 
-	const renderItem: ListRenderItem<PostBookmarkItem> = useCallback(
-		({ item }: { item: PostBookmarkItem }) => {
+	const renderItem = useCallback(
+		({ item }: LegendListRenderItemProps<PostBookmarkItem>) => {
 			switch (item.type) {
 				case "article": {
 					return (
@@ -97,12 +103,15 @@ const BookmarksScreen: FunctionComponent = () => {
 					);
 				}
 				case "video": {
+					const youtubeId = getYoutubeVideoId(item.source ?? "");
 					return (
 						<VideoFeedItem
 							id={item.id}
 							title={item.title}
 							duration={item.duration}
-							coverImageUri={item.cover}
+							thumbnailUri={
+								youtubeId ? getYoutubeThumbnailUrl(youtubeId) : item.cover
+							}
 							author={{
 								name: item.author.name,
 							}}
@@ -118,8 +127,19 @@ const BookmarksScreen: FunctionComponent = () => {
 	const onBackPress = useCallback(() => router.back(), [router]);
 
 	return (
-		<View style={styles.container}>
-			<Appbar.Header elevated>
+		<View
+			style={[styles.container, { backgroundColor: theme.colors.background }]}
+		>
+			<Appbar.Header
+				elevated={false}
+				style={[
+					styles.header,
+					{
+						backgroundColor: theme.colors.surface,
+						borderBottomColor: theme.colors.outlineVariant,
+					},
+				]}
+			>
 				<Appbar.BackAction onPress={onBackPress} />
 				<Appbar.Content title={"Bookmarks"} />
 				<Tooltip title="Info">
@@ -133,10 +153,11 @@ const BookmarksScreen: FunctionComponent = () => {
 				</View>
 			) : (
 				<View style={styles.listWrapper}>
-					<FlashList
+					<LegendList
 						showsVerticalScrollIndicator={false}
 						onEndReachedThreshold={0.75}
 						getItemType={(item) => item.type}
+						estimatedItemSize={300}
 						contentContainerStyle={styles.listContainer}
 						data={bookmarks}
 						renderItem={renderItem}
@@ -177,11 +198,14 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	header: {
+		borderBottomWidth: 1,
+	},
 	listWrapper: {
 		flex: 1,
 	},
 	listContainer: {
-		padding: 12,
+		padding: 8,
 	},
 	noDataContainer: {
 		flex: 1,
@@ -190,7 +214,7 @@ const styles = StyleSheet.create({
 		gap: 24,
 	},
 	separator: {
-		height: 12,
+		height: 8,
 		backgroundColor: "transparent",
 	},
 });

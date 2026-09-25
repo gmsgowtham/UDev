@@ -38,7 +38,7 @@ const ArticleSkeleton: FunctionComponent<ArticleSkeletonProps> = ({
 			<Skeleton colorMode={colorMode} height={32} width={"100%"} />
 			<Skeleton
 				colorMode={colorMode}
-				radius={16}
+				radius={4}
 				height={height}
 				width={"100%"}
 			/>

@@ -105,7 +105,11 @@ const VideosScreen: FunctionComponent = () => {
 					id={item.id}
 					title={item.title}
 					duration={item.video_duration_in_minutes}
-					thumbnailUri={youtubeId ? getYoutubeThumbnailUrl(youtubeId) : null}
+					thumbnailUri={
+						youtubeId
+							? getYoutubeThumbnailUrl(youtubeId)
+							: item.cloudinary_video_url
+					}
 					author={{
 						name: item.user.name,
 					}}
@@ -133,7 +137,12 @@ const VideosScreen: FunctionComponent = () => {
 		>
 			<HomeAppbar isVideoListScreen />
 			<NetworkBanner
-				visible={isError && !netInfo.isConnected && showNetworkBanner}
+				visible={
+					isError &&
+					netInfo.isConnected === false &&
+					showNetworkBanner &&
+					videos.length > 0
+				}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>

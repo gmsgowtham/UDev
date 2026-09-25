@@ -28,6 +28,7 @@ const TopFeedScreen = () => {
 
 	return (
 		<ArticleFeedScreen
+			key={scope}
 			title="Top"
 			articles={articles}
 			fetchNextPage={fetchNextPage}

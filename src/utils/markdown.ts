@@ -61,8 +61,57 @@ const TOC_SINGLE_MARKER_PATTERN = /^\s*\[{1,2}toc\]{1,2}\s*$/i;
 const TOC_ANCHOR_LINK_PATTERN = /\[[^\]]+\]\([^)]*#[^)]*\)/;
 const TOC_LIST_ITEM_PATTERN = /^\s*(?:[-*+]\s+|\d+[.)]\s+)/;
 const TOC_BREAK_PATTERN = /^\s*(?:---+|\*\*\*+|___+)\s*$/;
-const MD_HEADING_PATTERN = /^#{1,6}\s+\S/;
 const FENCE_PATTERN = /^\s*(```|~~~)/;
+
+const consumeTocAnchorList = (lines: string[], start: number) => {
+	let index = start;
+	let found = false;
+
+	while (index < lines.length) {
+		const line = lines[index];
+		const trimmed = line.trim();
+
+		if (trimmed.length === 0) {
+			index++;
+			continue;
+		}
+
+		if (
+			TOC_MARKER_START_PATTERN.test(line) ||
+			TOC_MARKER_END_PATTERN.test(line) ||
+			TOC_LIQUID_PATTERN.test(line) ||
+			TOC_SINGLE_MARKER_PATTERN.test(line)
+		) {
+			index++;
+			continue;
+		}
+
+		if (TOC_LIST_ITEM_PATTERN.test(line)) {
+			if (!TOC_ANCHOR_LINK_PATTERN.test(line)) {
+				break;
+			}
+			found = true;
+			index++;
+			continue;
+		}
+
+		if (TOC_BREAK_PATTERN.test(trimmed)) {
+			if (found) {
+				index++;
+				while (index < lines.length && lines[index].trim() === "") {
+					index++;
+				}
+				break;
+			}
+			index++;
+			continue;
+		}
+
+		break;
+	}
+
+	return { end: found ? index : start, found };
+};
 
 /**
  * Removes table-of-contents blocks from article markdown.
@@ -100,7 +149,8 @@ export const stripTableOfContents = (markdown: string): string => {
 		}
 
 		if (TOC_LIQUID_PATTERN.test(line) || TOC_SINGLE_MARKER_PATTERN.test(line)) {
-			i++;
+			const tocList = consumeTocAnchorList(lines, i + 1);
+			i = tocList.found ? tocList.end : i + 1;
 			continue;
 		}
 		if (TOC_MARKER_END_PATTERN.test(line)) {
@@ -109,15 +159,20 @@ export const stripTableOfContents = (markdown: string): string => {
 		}
 		if (TOC_MARKER_START_PATTERN.test(line)) {
 			let j = i + 1;
-			let found = false;
+			let hasEndMarker = false;
 			while (j < lines.length) {
 				if (TOC_MARKER_END_PATTERN.test(lines[j])) {
-					found = true;
+					hasEndMarker = true;
 					break;
 				}
 				j++;
 			}
-			i = found ? j + 1 : i + 1;
+			if (hasEndMarker) {
+				i = j + 1;
+			} else {
+				const tocList = consumeTocAnchorList(lines, i + 1);
+				i = tocList.found ? tocList.end : i + 1;
+			}
 			continue;
 		}
 
@@ -126,49 +181,11 @@ export const stripTableOfContents = (markdown: string): string => {
 			TOC_HEADING_PATTERN.test(trimmed) ||
 			TOC_HTML_HEADING_PATTERN.test(trimmed)
 		) {
-			let k = i + 1;
-			let end = k;
-			let anchorItems = 0;
-			while (k < lines.length) {
-				const cur = lines[k];
-				if (FENCE_PATTERN.test(cur)) break;
-				const curTrimmed = cur.trim();
-				if (curTrimmed === "") {
-					k++;
-					continue;
-				}
-				if (
-					TOC_MARKER_START_PATTERN.test(cur) ||
-					TOC_MARKER_END_PATTERN.test(cur) ||
-					TOC_LIQUID_PATTERN.test(cur) ||
-					TOC_SINGLE_MARKER_PATTERN.test(cur) ||
-					TOC_BREAK_PATTERN.test(cur)
-				) {
-					k++;
-					end = k;
-					continue;
-				}
-				if (TOC_LIST_ITEM_PATTERN.test(cur)) {
-					if (TOC_ANCHOR_LINK_PATTERN.test(cur)) anchorItems++;
-					k++;
-					end = k;
-					continue;
-				}
-				if (MD_HEADING_PATTERN.test(curTrimmed)) break;
-				break;
-			}
-			if (anchorItems >= 1) {
-				while (end < lines.length && lines[end].trim() === "") end++;
-				if (end < lines.length && TOC_BREAK_PATTERN.test(lines[end])) {
-					end++;
-					while (end < lines.length && lines[end].trim() === "") end++;
-				}
-				i = end;
+			const tocList = consumeTocAnchorList(lines, i + 1);
+			if (tocList.found) {
+				i = tocList.end;
 				continue;
 			}
-			out.push(line);
-			i++;
-			continue;
 		}
 
 		out.push(line);

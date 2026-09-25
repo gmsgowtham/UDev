@@ -25,7 +25,11 @@ const CTAButton: FunctionComponent<CTAButtonProps> = ({ url, text }) => {
 			style={[styles.wrapper, { backgroundColor: theme.colors.primary }]}
 			mode="flat"
 		>
-			<TouchableRipple onPress={onButtonPress}>
+			<TouchableRipple
+				accessibilityLabel={text}
+				accessibilityRole="button"
+				onPress={onButtonPress}
+			>
 				<View style={styles.container}>
 					<Icon source="link" size={18} color={theme.colors.onPrimary} />
 					<Text

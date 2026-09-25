@@ -15,7 +15,13 @@ import {
 	ToastAndroid,
 	View,
 } from "react-native";
-import { AnimatedFAB, Appbar, Tooltip, useTheme } from "react-native-paper";
+import {
+	AnimatedFAB,
+	Appbar,
+	Text,
+	Tooltip,
+	useTheme,
+} from "react-native-paper";
 import Animated, {
 	Extrapolation,
 	interpolate,
@@ -209,7 +215,7 @@ const ArticleScreen: FunctionComponent = () => {
 		// query can sit in pending forever — treat offline + no data as an
 		// error instead of an infinite skeleton.
 		const isOffline = netInfo.isConnected === false;
-		if ((error || isOffline) && !article?.body_markdown && headerHeight > 0) {
+		if ((error || isOffline) && !article && headerHeight > 0) {
 			return (
 				<View style={[styles.errorContainer, { paddingTop: headerHeight }]}>
 					<ListErrorState
@@ -221,41 +227,54 @@ const ArticleScreen: FunctionComponent = () => {
 			);
 		}
 
-		if (article?.body_markdown && headerHeight > 0) {
-			return (
-				<Fragment>
-					<RenderMarkdownAnimatedFlatList
-						onScroll={scrollHandler}
-						value={article?.body_markdown}
-						flatListProps={{
-							scrollEventThrottle: 16,
-							contentContainerStyle: {
-								paddingTop: headerHeight,
-								paddingBottom: 80,
-							},
-							bounces: false,
-							alwaysBounceVertical: false,
-							bouncesZoom: false,
-							overScrollMode: "never",
-							scrollToOverflowEnabled: true,
-						}}
-					/>
-					<Tooltip title="Share">
-						<AnimatedFAB
-							extended={isShareFabExtended}
-							icon="share"
-							label="Share"
-							onPress={onShareActionPress}
-							animateFrom="right"
-							iconMode="dynamic"
-							style={[styles.fab, { bottom: insets.bottom + 16 }]}
+		if (article && headerHeight > 0) {
+			if (article.body_markdown) {
+				return (
+					<Fragment>
+						<RenderMarkdownAnimatedFlatList
+							onScroll={scrollHandler}
+							value={article.body_markdown}
+							flatListProps={{
+								scrollEventThrottle: 16,
+								contentContainerStyle: {
+									paddingTop: headerHeight,
+									paddingBottom: 80,
+								},
+								bounces: false,
+								alwaysBounceVertical: false,
+								bouncesZoom: false,
+								overScrollMode: "never",
+								scrollToOverflowEnabled: true,
+							}}
 						/>
-					</Tooltip>
-				</Fragment>
+						<Tooltip title="Share">
+							<AnimatedFAB
+								extended={isShareFabExtended}
+								icon="share"
+								label="Share"
+								onPress={onShareActionPress}
+								animateFrom="right"
+								iconMode="dynamic"
+								style={[styles.fab, { bottom: insets.bottom + 16 }]}
+							/>
+						</Tooltip>
+					</Fragment>
+				);
+			}
+
+			return (
+				<View style={[styles.emptyContent, { paddingTop: headerHeight }]}>
+					<Text
+						variant="bodyLarge"
+						style={[styles.emptyText, { color: theme.colors.onSurfaceVariant }]}
+					>
+						{HELP_TEXT.ARTICLE_EMPTY}
+					</Text>
+				</View>
 			);
 		}
 
-		if (!article?.body_markdown && headerHeight > 0) {
+		if (!article && headerHeight > 0) {
 			return (
 				<ArticleSkeleton
 					containerStyle={[
@@ -268,7 +287,7 @@ const ArticleScreen: FunctionComponent = () => {
 
 		return null;
 	}, [
-		article?.body_markdown,
+		article,
 		error,
 		headerHeight,
 		insets.bottom,
@@ -278,6 +297,7 @@ const ArticleScreen: FunctionComponent = () => {
 		onRetryActionPress,
 		onShareActionPress,
 		scrollHandler,
+		theme.colors.onSurfaceVariant,
 	]);
 
 	return (
@@ -319,7 +339,12 @@ const ArticleScreen: FunctionComponent = () => {
 
 			<NetworkBanner
 				showCloseAction
-				visible={error && !netInfo.isConnected && showNetworkBanner}
+				visible={
+					error &&
+					netInfo.isConnected === false &&
+					showNetworkBanner &&
+					Boolean(article?.body_markdown)
+				}
 				onCloseActionPress={() => setShowNetworkBanner(false)}
 			/>
 
@@ -359,6 +384,15 @@ const styles = StyleSheet.create({
 	},
 	errorContainer: {
 		flex: 1,
+	},
+	emptyContent: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		paddingHorizontal: 32,
+	},
+	emptyText: {
+		textAlign: "center",
 	},
 	nav: {
 		zIndex: 2,

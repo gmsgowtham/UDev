@@ -24,6 +24,7 @@ export const HELP_TEXT = {
 	RETRY: "Retry",
 	VIDEO_UNAVAILABLE:
 		"This video has no playable source. Open it in your browser instead.",
+	ARTICLE_EMPTY: "This article has no content.",
 };
 export const LANG_ALIAS_MAP: Record<string, string> = {
 	js: "javascript",

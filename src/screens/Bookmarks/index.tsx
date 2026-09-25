@@ -110,7 +110,7 @@ const BookmarksScreen: FunctionComponent = () => {
 							title={item.title}
 							duration={item.duration}
 							thumbnailUri={
-								youtubeId ? getYoutubeThumbnailUrl(youtubeId) : null
+								youtubeId ? getYoutubeThumbnailUrl(youtubeId) : item.cover
 							}
 							author={{
 								name: item.author.name,

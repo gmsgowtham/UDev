@@ -1,4 +1,9 @@
+jest.mock("../../../utils/log", () => ({
+	logError: jest.fn(),
+}));
+
 import { MarkedLexer, type Token, type Tokens } from "react-native-marked";
+import { processMarkdownContent } from "../../../utils/markdown";
 import tokenizer, { EmbedTypes } from "../tokenizer";
 
 const lex = (src: string): Token[] =>
@@ -72,5 +77,42 @@ describe("MDTokenizer liquid embeds", () => {
 		const tokens = lex("```\n{% youtube dQw4w9WgXcQ %}\n```");
 		expect(tokens).toHaveLength(1);
 		expect(tokens[0].type).toBe("code");
+	});
+});
+
+describe("table of contents processing", () => {
+	it("removes a marker and its anchor list", () => {
+		const result = processMarkdownContent(
+			"{% toc %}\n\n- [Introduction](#introduction)\n- [Details](#details)\n\nContent",
+		);
+
+		expect(result).toBe("Content");
+	});
+
+	it("preserves non-anchor list items", () => {
+		const result = processMarkdownContent(
+			"## Table of Contents\n- [Introduction](#introduction)\n- Important caveat\n\n## Details\n\nContent",
+		);
+
+		expect(result).toContain("Important caveat");
+		expect(result).toContain("## Details");
+		expect(result).not.toContain("## Table of Contents");
+		expect(result).not.toContain("[Introduction](#introduction)");
+	});
+
+	it("handles a table-of-contents-only body", () => {
+		const result = processMarkdownContent(
+			"## Table of Contents\n- [Introduction](#introduction)",
+		);
+
+		expect(result).toBe("");
+	});
+
+	it("does not change a table of contents inside a code fence", () => {
+		const markdown =
+			"```md\n## Table of Contents\n- [Introduction](#introduction)\n```";
+		const result = processMarkdownContent(markdown);
+
+		expect(result).toBe(markdown);
 	});
 });

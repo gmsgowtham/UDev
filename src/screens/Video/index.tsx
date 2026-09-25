@@ -108,7 +108,12 @@ const VideoScreen: FunctionComponent = () => {
 			<View style={styles.youtubeContainer}>
 				{topBar}
 				<View style={styles.youtubePlayer}>
-					<YoutubeEmbed videoId={youtubeId} url={url} autoplay />
+					<YoutubeEmbed
+						key={youtubeId}
+						videoId={youtubeId}
+						url={url}
+						autoplay
+					/>
 				</View>
 				<View style={styles.youtubeMeta}>
 					<Text

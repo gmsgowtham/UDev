@@ -21,12 +21,18 @@ const YoutubeEmbed: FunctionComponent<Props> = ({
 }) => {
 	const player = useYouTubePlayer(videoId, {
 		autoplay,
+		muted: autoplay,
 		controls: true,
 		playsinline: true,
 		rel: false,
 	});
 	const [hasError, setHasError] = useState(false);
 	useYouTubeEvent(player, "error", () => setHasError(true));
+	useYouTubeEvent(player, "autoplayBlocked", () => {
+		if (!autoplay) return;
+		player.mute();
+		player.play();
+	});
 
 	if (hasError) {
 		return <LinkPreview url={url} />;

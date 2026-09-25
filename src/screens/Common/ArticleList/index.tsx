@@ -111,7 +111,12 @@ const ArticleFeedScreen: FunctionComponent<ArticleFeedProps> = ({
 		>
 			<HomeAppbar />
 			<NetworkBanner
-				visible={isError && !netInfo.isConnected && showNetworkBanner}
+				visible={
+					isError &&
+					netInfo.isConnected === false &&
+					showNetworkBanner &&
+					articles.length > 0
+				}
 				showCloseAction
 				onCloseActionPress={onCloseBanner}
 			/>
